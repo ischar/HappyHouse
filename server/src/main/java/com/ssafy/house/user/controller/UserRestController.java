@@ -32,26 +32,20 @@ public class UserRestController {
 		this.userService = userService;
 	}
 	
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody UserDto userinfo, HttpSession session ) {
-			
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("id", userinfo.getId());
-		map.put("pwd", userinfo.getPwd());
-		
-		try {
-			ResponseEntity<UserDto> entity = new ResponseEntity<UserDto>(userService.loginUser(map), HttpStatus.OK);
-			if (entity.getBody() != null) {
-				session.setAttribute("userinfo", entity.getBody());
-				System.out.println(entity.getBody());
-				return entity;
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	   @PostMapping("/login")
+	    public ResponseEntity<?> login(@RequestBody UserDto userinfo, HttpSession session ) throws Exception {
+	        
+	        Map<String, String> map = new HashMap<String, String>();
+	        map.put("id", userinfo.getId());
+	        map.put("pwd", userinfo.getPwd());
+	    
+	        if (userService.loginUser(map) != null) {
+	            ResponseEntity<UserDto> entity = new ResponseEntity<UserDto>(userService.loginUser(map), HttpStatus.OK);
+	            return entity;
+	        }
+	        return new ResponseEntity<String>("fail", HttpStatus.UNAUTHORIZED);
+	    }
+	    
 	
 
 	@PutMapping("/update") public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, HttpSession session) {
