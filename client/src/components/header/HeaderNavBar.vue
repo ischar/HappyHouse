@@ -39,44 +39,44 @@
               </li>
 
               <div>
-                <li class="nav-item">
-                  <a
-                    class="nav-link active text-black"
-                    href="${root }/member/memberInsert.jsp"
-                    id="mypage"
-                    >마이페이지</a
-                  >
-                </li>
+                <router-link :to="{name: 'userinfo'}">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link active text-black"
+                      href="${root }/member/memberInsert.jsp"
+                      id="mypage"
+                      >마이페이지</a
+                    >
+                  </li>
+                </router-link>
               </div>
             </ul>
-            {{ loginName }} 님 환영합니다.
+            <div v-if="isLogin">{{ loginName }} 님 환영합니다.</div>
             <ul class="navbar-nav mb-lg-0">
               <div>
                 <button
                   class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
                   id="login"
-                  @click="moveLogin">
+                  @click="moveLogin"
+                  v-if="!isLogin">
                   로그인
                 </button>
-
-                <router-link :to="{name: 'signup'}">
-                  <button
-                    class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
-                    type="submit"
-                    id="logout">
-                    회원가입
-                  </button>
-                </router-link>
-              </div>
-
-              <div>
                 <button
                   class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
                   id="logout"
-                  @click="onClickLogout">
+                  @click="onClickLogout"
+                  v-else>
                   로그아웃
                 </button>
               </div>
+              <router-link :to="{name: 'signup'}">
+                <button
+                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
+                  type="submit"
+                  id="logout">
+                  회원가입
+                </button>
+              </router-link>
             </ul>
           </div>
         </div>
@@ -104,6 +104,8 @@ export default {
     ...mapActions(["logout"]),
     moveLogin() {
       console.log(this.$route.path + " vs " + "/user/login");
+      console.log("로그인...");
+      console.log(login);
       if (this.$route.path != "/user/login")
         this.$router.push({name: "userlogin"});
     },

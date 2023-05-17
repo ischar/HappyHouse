@@ -15,6 +15,7 @@ import BoardDetail from '../components/board/BoardDetail';
 import BoardModify from '../components/board/BoardModify';
 import BoardDelete from '../components/board/BoardDelete';
 import UserLogin from '../components/user/UserLogin';
+import UserInfo from '../components/user/UserInfo';
 
 Vue.use(Vuebar);
 Vue.use(VueRouter)
@@ -108,6 +109,12 @@ const routes = [
         name: 'userlogin',
         component: UserLogin,
       },
+      {
+        path: 'info',
+        name: 'userinfo',
+        beforeEnter: onlyAuthUser,
+        component: UserInfo,
+      }
     ],
   },
 
