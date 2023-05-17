@@ -15,6 +15,7 @@
           backdrop-filter: blur(5px);
           -webkit-backdrop-filter: blur(5px);
           border: 1px solid rgba(255, 255, 255, 0.3);
+          padding: 25px;
         "
       >
         <div class="row col-md-12 justify-content-center mb-2">
@@ -52,33 +53,49 @@
           </div>
           <div class="form-group col-md-2">
             <button @click="searchMap()" type="submit" id="list-btn" class="btn btn-dark">
-              아파트매매정보
+              검색
             </button>
           </div>
-        </div>
-      </div>
-      <div class="input-group mb-3">
-        <select>
-          <option id="dong" value="dong">동</option>
-          <option id="apt" value="apt">아파트</option>
-        </select>
-        <input
-          v-model="searchBar"
-          type="text"
-          class="form-control"
-          placeholder="찾고자 하는 아파트나 동을 입력하세요."
-          aria-label="Recipient's username"
-          aria-describedby="basic-addon2"
-        />
-        <div class="input-group-append">
-          <button
-            @click="searchByBar()"
-            class="btn btn-outline-secondary"
-            style="background-color: darkgrey"
-            type="button"
-          >
-            Button
-          </button>
+          <div style="margin: 15px">
+            <div class="input-group mb-3">
+              <select v-model="choiseOption">
+                <option>동</option>
+                <option>아파트</option>
+              </select>
+              <input
+                v-model="inputBar"
+                type="text"
+                @input="setSearchTerm"
+                @blur="() => setListOpen(false)"
+                @focus="() => setListOpen(true)"
+                class="form-control"
+                placeholder="찾고자하는 동, 아파트를 입력하세요."
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+              />
+              <ul v-if="this.isFocus">
+                <li v-if="filteredList.length === 0">검색결과과없음.</li>
+                <li
+                  v-else
+                  v-for="num in filteredList"
+                  @mousedown="setSelectedNumber(num)"
+                  :key="num"
+                >
+                  {{ num.name }}
+                </li>
+              </ul>
+              <div class="input-group-append">
+                <button
+                  @click="searchByBar"
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  style="background-color: gray"
+                >
+                  Button
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -89,6 +106,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   name: "HomeView",
   props: {
@@ -103,9 +121,44 @@ export default {
       sidoValue: "",
       gugunValue: "",
       dongValue: "",
+      searchTerm: "",
+      isFocus: false,
+      selectedObj: null,
+      dataList: [
+        {
+          name: "One",
+          value: "one",
+        },
+        {
+          name: "Two",
+          value: "two",
+        },
+        {
+          name: "Three",
+          value: "three",
+        },
+        {
+          name: "Four",
+          value: "four",
+        },
+      ],
     };
   },
   methods: {
+    setSearchTerm(e) {
+      this.searchTerm = e.target.value;
+    },
+    setListOpen(isOpen) {
+      this.isFocus = isOpen;
+    },
+    setSelectedNumber(numObj) {
+      this.selectedObj = numObj;
+      this.searchTerm = numObj.name;
+    },
+    removeSelectedNumber() {
+      this.selectedObj = null;
+      this.searchTerm = "";
+    },
     getData() {
       axios
         .get("http://localhost:80/address/sido") // 서블릿의 URL
@@ -168,6 +221,21 @@ export default {
         name: "search",
         params: { sido: this.sidoValue, gugun: this.gugunValue, dong: this.dongValue },
       });
+    },
+  },
+  computed: {
+    filteredList() {
+      if (this.searchTerm === "") {
+        return this.dataList;
+      }
+      return (
+        this,
+        dataList.filter((num) => {
+          if (num.value.includes(this.searchTerm)) {
+            return num;
+          }
+        })
+      );
     },
   },
 };

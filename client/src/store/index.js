@@ -14,6 +14,7 @@ export default new Vuex.Store({
     loginAddr: "",
     loginPhone : "",
   },
+  
   getters: {},
   mutations: { // 동기처리만
     GET_ID(state,playload){
