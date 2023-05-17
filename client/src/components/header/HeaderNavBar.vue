@@ -9,8 +9,7 @@
           backdrop-filter: blur(5px);
           -webkit-backdrop-filter: blur(5px);
           border: 1px solid rgba(255, 255, 255, 0.3);
-        "
-      >
+        ">
         <div class="container-fluid">
           <a class="navbar-brand text-black" href="/">Home</a>
           <button
@@ -21,19 +20,23 @@
             data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active text-black" aria-current="page" href="${root}"
+                <a
+                  class="nav-link active text-black"
+                  aria-current="page"
+                  href="${root}"
                   >오늘의 뉴스</a
                 >
               </li>
 
-              <li class="nav-item"><router-link to="/board">공지사항</router-link></li>
+              <li class="nav-item">
+                <router-link to="/board">공지사항</router-link>
+              </li>
 
               <div>
                 <li class="nav-item">
@@ -46,22 +49,21 @@
                 </li>
               </div>
             </ul>
+            {{ loginName }} 님 환영합니다.
             <ul class="navbar-nav mb-lg-0">
               <div>
                 <button
                   class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
                   id="login"
-                  @click="moveLogin"
-                >
+                  @click="moveLogin">
                   로그인
                 </button>
 
-                <router-link :to="{ name: 'signup' }">
+                <router-link :to="{name: 'signup'}">
                   <button
                     class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
                     type="submit"
-                    id="logout"
-                  >
+                    id="logout">
                     회원가입
                   </button>
                 </router-link>
@@ -70,9 +72,8 @@
               <div>
                 <button
                   class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
-                  type="submit"
                   id="logout"
-                >
+                  @click="onClickLogout">
                   로그아웃
                 </button>
               </div>
@@ -85,6 +86,8 @@
 </template>
 
 <script>
+import {mapState, mapActions} from "vuex";
+
 export default {
   name: "HeaderNavBar",
   data() {
@@ -94,10 +97,21 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState(["isLogin", "loginName"]),
+  },
   methods: {
+    ...mapActions(["logout"]),
     moveLogin() {
       console.log(this.$route.path + " vs " + "/user/login");
-      if (this.$route.path != "/user/login") this.$router.push({ name: "userlogin" });
+      if (this.$route.path != "/user/login")
+        this.$router.push({name: "userlogin"});
+    },
+    onClickLogout() {
+      console.log("로그아웃");
+      this.logout();
+      console.log(this.isLogin);
+      this.$store.dispatch("logout");
     },
   },
 };
