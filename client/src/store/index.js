@@ -16,7 +16,11 @@ export default new Vuex.Store({
     loginPhone : "",
   },
   
-  getters: {},
+  getters: {
+    checkUser: function (state) {
+      return state.isLogin;
+    },
+  },
   mutations: { // 동기처리만
     SET_ID(state, playload) {
       state.loginId = playload;
