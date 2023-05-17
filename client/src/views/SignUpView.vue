@@ -18,12 +18,15 @@
                 ></span>
                 <input
                   v-model="userid"
+                  @change="ChangeIdValue"
                   id="id"
                   type="text"
                   class="form-control"
                   placeholder="아이디"
                   name="id"
                 />
+                <label v-if="idOK">아이디를 사용할 수 있습니다.</label>
+                <label v-else>5자 이상 10자 이하로 입력하세요.</label>
               </div>
 
               <!-- password-->
@@ -35,12 +38,15 @@
                 ></span>
                 <input
                   v-model="userpwd"
+                  @change="ChangePwdValue"
                   id="pwd"
                   type="password"
                   class="form-control"
                   placeholder="비밀번호"
                   name="pwd"
                 />
+                <label v-if="pwd"> 비밀번호를 사용할 수 있습니다. </label>
+                <label> 5자 이상 10자 이하로 입력하세요. </label>
               </div>
               <!-- 이름 -->
               <div class="input-group mb-3">
@@ -51,6 +57,7 @@
                 ></span>
                 <input
                   v-model="username"
+                  @change="ChangeNameValue"
                   id="name"
                   type="text"
                   class="form-control"
@@ -68,6 +75,7 @@
                 ></span>
                 <input
                   v-model="useraddress"
+                  @change="ChangeAddressValue"
                   id="address"
                   type="text"
                   class="form-control"
@@ -84,6 +92,7 @@
                 ></span>
                 <input
                   v-model="userphone"
+                  @change="ChangePhoneValue"
                   id="phone"
                   type="tel"
                   class="form-control"
@@ -112,6 +121,12 @@
   </section>
 </template>
 <script>
+var idOk = false;
+var pwdOk = false;
+var nameOk = false;
+var phoneOk = false;
+var addressOk = false;
+
 import axios from "axios";
 export default {
   name: "SignUpView",
@@ -129,21 +144,64 @@ export default {
   },
   methods: {
     signup() {
-      axios({
-        method: "post",
-        url: "/signup",
-        responseType: "json",
+      if (idOk == true && pwdOk == true && nameOk == true && phoneOk == true && addressOk == true) {
+        axios({
+          method: "post",
+          url: "http://localhost:80/signup",
+          responseType: "json",
 
-        data: {
-          id: this.userid,
-          pwd: this.userpwd,
-          name: this.username,
-          address: this.useraddress,
-          phone: this.userphone,
-        },
-      }).then((response) => {
-        this.$router.push({ name: "home" });
-      });
+          data: {
+            id: this.userid,
+            pwd: this.userpwd,
+            name: this.username,
+            address: this.useraddress,
+            phone: this.userphone,
+          },
+        }).then((response) => {
+          this.$router.push({ name: "home" });
+        });
+      } else {
+        console.log(idOk + " " + pwdOk + " " + nameOk + " " + addressOk + " " + phoneOk);
+        alert("제대로 입력하세요!");
+      }
+    },
+    ChangeIdValue() {
+      alert(idOk);
+      if (this.userid.length >= 5 && this.userid.length <= 10) {
+        idOk = true;
+        alert("sdf");
+      } else {
+        idOk = false;
+      }
+    },
+
+    ChangePwdValue() {
+      if (this.userpwd.length >= 5 && this.userid.length <= 10) {
+        pwdOk = true;
+      } else {
+        pwdOk = false;
+      }
+    },
+
+    ChangeNameValue() {
+      if (this.username.length != 0) {
+        nameOk = true;
+      } else {
+        nameOk = false;
+      }
+    },
+
+    ChangePhoneValue() {
+      if (this.userphone.length != 0) {
+        phoneOk = true;
+      }
+    },
+    ChangeAddressValue() {
+      if (this.useraddress.length != 0) {
+        addressOk = true;
+      } else {
+        addressOk = false;
+      }
     },
   },
 };
