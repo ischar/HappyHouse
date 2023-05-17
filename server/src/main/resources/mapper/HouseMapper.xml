@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.house.home.mapper.HouseMapper">
+
+	<resultMap type="HouseDto" id="house">
+		<result column="roadName" property="roadName" />
+		<result column="buildYear" property="buildYear" />
+		<result column="dong" property="dong" />
+		<result column="apartmentName" property="apartmentName" />
+		<result column="lng" property="lng" />
+		<result column="lat" property="lat" />
+		<result column="dealYear" property="dealYear" />
+		<result column="dealMonth" property="dealMonth" />
+		<result column="dealDay" property="dealDay" />
+		<result column="area" property="area" />
+		<result column="dealAmount" property="dealAmount" />
+	</resultMap>
+
+	<select id="gethouses" resultMap="house" parameterType="string">
+		SELECT
+		info.*, deal.dealAmount,deal.area, deal.dealYear, deal.dealMonth,
+		deal.dealDay
+		FROM (SELECT dealAmount, area, dealYear, dealMonth, dealDay, aptCode FROM
+		housedeal) AS deal
+		JOIN (SELECT apartmentName, buildYear, roadName, dong, lat, lng, dongCode,
+		aptCode FROM houseinfo) AS info
+		ON deal.aptCode = info.AptCode
+		WHERE info.dong=#{dong};
+	</select>
+
+
+</mapper>
