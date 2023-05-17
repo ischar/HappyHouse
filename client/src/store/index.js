@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from '@/api/http';
 import router from '@/router/index';
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
@@ -17,18 +18,25 @@ export default new Vuex.Store({
   
   getters: {},
   mutations: { // 동기처리만
-    GET_ID(state,playload){
+    SET_ID(state, playload) {
       state.loginId = playload;
     },
-    GET_PWD(state,playload){
+    SET_PWD(state, playload) {
       state.loginPwd = playload;
     },
-    IS_LOGIN(state){
-      state.isLogin = true;
+    SET_NAME(state, playload) {
+      state.loginName = playload;
+    },
+    SET_ADDR(state, playload) {
+      state.loginAddr = playload;
+    },
+    SET_PHONE(state, playload) {
+      state.loginPhone = playload;
+    },
+    SET_IS_LOGIN(state, playload) {
+      state.isLogin = playload;
     },
   },
-
-
 
   actions: {
     login({commit},context){
@@ -42,13 +50,13 @@ export default new Vuex.Store({
           .then(res => {
             if (res.status === 200) {
               // 로그인 성공시 처리해줘야할 부분
-              console.log("성공이용");
-              console.log(res);
-              console.log(res.data.id);
-              commit("GET_ID", res.data.id);
-              commit("GET_PWD", res.data.pwd);
-              commit("IS_LOGIN");
-              router.push({name:'home'});
+              commit('SET_ID', res.data.id);
+              commit('SET_PWD', res.data.pwd);
+              commit('SET_NAME', res.data.name);
+              commit('SET_ADDR', res.data.address);
+              commit('SET_PHONE', res.data.phone);
+              commit('SET_IS_LOGIN', true);
+              router.push({ name: 'home' });
             }
           })
           .catch(error => {
@@ -60,7 +68,20 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error);
       }
-    }
+    },
+    logout({ commit }) {
+      commit('SET_IS_LOGIN', false);
+      commit('SET_ID', null);
+      commit('SET_PWD', null);
+      commit('SET_NAME', null);
+      commit('SET_ADDR', null);
+      commit('SET_PHONE', null);
+    },
   },
   modules: {},
+  plugins: [
+    createPersistedState({
+      storage: sessionStorage,
+    }),
+  ],
 });

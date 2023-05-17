@@ -16,7 +16,8 @@
     "vue-router": "^3.5.1",
     "vue-session": "^1.0.0",
     "vuebar": "^0.0.20",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -30,5 +31,4 @@
     "eslint-plugin-vue": "^8.0.3",
     "vue-template-compiler": "^2.6.14"
   }
-
 }
