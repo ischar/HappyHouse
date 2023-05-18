@@ -15,9 +15,28 @@ import BoardDetail from '../components/board/BoardDetail';
 import BoardModify from '../components/board/BoardModify';
 import BoardDelete from '../components/board/BoardDelete';
 import UserLogin from '../components/user/UserLogin';
+import UserInfo from '../components/user/UserInfo';
 
 Vue.use(Vuebar);
 Vue.use(VueRouter)
+
+import store from "@/store";
+
+const onlyAuthUser = async (to, from, next) => {
+  const checkUserInfo = store.getters["checkUser"];
+  console.log(checkUserInfo);
+  console.log("로그인 확인");
+
+  if (!checkUserInfo) {
+    alert("로그인이 필요한 페이지입니다..");
+    // next({ name: "login" });
+    router.push({ name: "userlogin" });
+  } else {
+    next();
+  }
+};
+
+
 
 const routes = [  
   {
@@ -57,21 +76,25 @@ const routes = [
       {
         path: 'write',
         name: 'boardwrite',
+        beforeEnter: onlyAuthUser,
         component: BoardWrite,
       },
       {
         path: 'view/:articleno',
         name: 'boarddetail',
+        beforeEnter: onlyAuthUser,
         component: BoardDetail,
       },
       {
         path: 'modify/:articleno',
         name: 'boardmodify',
+        beforeEnter: onlyAuthUser,
         component: BoardModify,
       },
       {
         path: 'delete/:articleno',
         name: 'boarddelete',
+        beforeEnter: onlyAuthUser,
         component: BoardDelete,
       },
     ],
@@ -86,6 +109,12 @@ const routes = [
         name: 'userlogin',
         component: UserLogin,
       },
+      {
+        path: 'info',
+        name: 'userinfo',
+        beforeEnter: onlyAuthUser,
+        component: UserInfo,
+      }
     ],
   },
 
