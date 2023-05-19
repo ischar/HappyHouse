@@ -19,4 +19,11 @@ public class HouseServiceImpl implements HouseService{
 		return houseMapper.gethouses(dong);
 	}
 
+	@Override
+	public List<HouseDto> getHouse(String title) {
+		return houseMapper.gethouse(title);
+	}
+
+
+
 }

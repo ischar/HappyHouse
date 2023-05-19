@@ -13,7 +13,7 @@ public interface HouseMapper {
 
 	List<HouseDto> gethouses(String dong);
 
-
+	List<HouseDto> gethouse(String title);
 
 
 

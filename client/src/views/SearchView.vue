@@ -1,5 +1,5 @@
 <template>
-  <section class="py-5 text-center container">
+  <section>
     <div class="py-lg-5">
       <div class="row col-md-12 justify-content-center mb-2">
         <div class="form-group col-md-2">
@@ -101,6 +101,10 @@ export default {
   mounted() {},
 
   methods: {
+    showside(title) {
+      console.log(title);
+      this.title = title;
+    },
     // addKakaoMapScript() {
     //   const script = document.createElement("script");
     //   /* global kakao */

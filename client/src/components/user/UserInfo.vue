@@ -79,7 +79,7 @@
                       style="width: 20px; height: 20px" />
                     <i class="bi bi-person-plus-fill text-white"></i
                   ></span>
-                 폰 번호 : {{ loginPhone }} 
+                  폰 번호 : {{ loginPhone }} 
                 </div>
 
                 <form
