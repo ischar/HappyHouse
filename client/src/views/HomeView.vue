@@ -2,19 +2,20 @@
   <div class="test">
     <section class="py-5 text-center container vh-100">
       <div style="margin-top: 150px">
-        <h1 style="font-size: 80px">
-          <b>Where is My Home</b>
+        <h1 style="font-size: 60px">
+          <b>원하는 집을 찾으세요.</b>
         </h1>
       </div>
       <div
         class="py-lg-5"
         style="
+          margin: 20px;
           background: rgba(255, 255, 255, 0.2);
           border-radius: 16px;
           box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
           backdrop-filter: blur(5px);
           -webkit-backdrop-filter: blur(5px);
-          border: 1px solid rgba(255, 255, 255, 0.3);
+          border: 3px solid rgba(216, 96, 87, 0.3);
           padding: 25px;
         "
       >
@@ -23,7 +24,7 @@
             <select
               v-model="sidoValue"
               @change="changeGugun()"
-              class="form-select bg-secondary text-light"
+              class="form-select"
               id="sido"
               name="sido"
             >
@@ -34,7 +35,7 @@
             <select
               v-model="gugunValue"
               @change="changeDong()"
-              class="form-select bg-secondary text-light"
+              class="form-select"
               id="gugun"
               name="gugun"
             >
@@ -44,7 +45,7 @@
           <div class="form-group col-md-2">
             <select
               v-model="dongValue"
-              class="form-select bg-secondary text-light"
+              class="form-select"
               id="dong"
               name="dong"
             >
@@ -52,46 +53,30 @@
             </select>
           </div>
           <div class="form-group col-md-2">
-            <button @click="searchMap()" type="submit" id="list-btn" class="btn btn-dark">
+            <button
+              @click="searchMap()"
+              type="submit"
+              id="list-btn"
+              class="btn"
+              style="background-color: #d86057; color: white"
+            >
               검색
             </button>
-          </div>
-          <div style="margin: 15px">
+
             <div class="input-group mb-3">
-              <select v-model="choiseOption">
-                <option>동</option>
-                <option>아파트</option>
-              </select>
-              <input
-                v-model="inputBar"
-                type="text"
-                @input="setSearchTerm"
-                @blur="() => setListOpen(false)"
-                @focus="() => setListOpen(true)"
-                class="form-control"
-                placeholder="찾고자하는 동, 아파트를 입력하세요."
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-              />
-              <ul v-if="this.isFocus">
-                <li v-if="filteredList.length === 0">검색결과과없음.</li>
-                <li
-                  v-else
-                  v-for="num in filteredList"
-                  @mousedown="setSelectedNumber(num)"
-                  :key="num"
-                >
-                  {{ num.name }}
-                </li>
-              </ul>
+              <div style="margin:10%; 25%;">
+              <ejs-autocomplete>
+              </ejs-autocomplete>
+             </div>
+              
               <div class="input-group-append">
                 <button
                   @click="searchByBar"
                   class="btn btn-outline-secondary"
                   type="button"
-                  style="background-color: gray"
+                  style="background-color: #d86057; color: white"
                 >
-                  Button
+                  검색
                 </button>
               </div>
             </div>
@@ -106,6 +91,7 @@
 
 <script>
 import axios from "axios";
+
 
 export default {
   name: "HomeView",
@@ -144,6 +130,7 @@ export default {
       ],
     };
   },
+
   methods: {
     setSearchTerm(e) {
       this.searchTerm = e.target.value;
@@ -166,7 +153,8 @@ export default {
           var data = response.data;
           var options = '<option value="">시도 선택</option>';
           for (var i = 0; i < data.length; i++) {
-            options += '<option value="' + data[i] + '">' + data[i] + "</option>";
+            options +=
+              '<option value="' + data[i] + '">' + data[i] + "</option>";
           }
           sido.innerHTML = options; // city select 요소의 option 값을 업데이트
         })
@@ -219,7 +207,11 @@ export default {
     searchMap() {
       this.$router.push({
         name: "search",
-        params: { sido: this.sidoValue, gugun: this.gugunValue, dong: this.dongValue },
+        params: {
+          sido: this.sidoValue,
+          gugun: this.gugunValue,
+          dong: this.dongValue,
+        },
       });
     },
   },
@@ -240,3 +232,15 @@ export default {
   },
 };
 </script>
+<style scoped>
+.form-control,
+.form-select {
+  border-width: 3px;
+}
+
+.form-control:focus,
+.form-select:valid:focus {
+  box-shadow: none;
+  border: 3px solid #d86057;
+}
+</style>

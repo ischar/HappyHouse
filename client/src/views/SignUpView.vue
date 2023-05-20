@@ -142,6 +142,9 @@ export default {
       userphone: "",
     };
   },
+
+
+
   methods: {
     signup() {
       if (idOk == true && pwdOk == true && nameOk == true && phoneOk == true && addressOk == true) {

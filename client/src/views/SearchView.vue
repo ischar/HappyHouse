@@ -3,7 +3,7 @@
     <div class="py-lg-5">
       <div class="row col-md-12 justify-content-center mb-2">
         <div class="form-group col-md-2">
-          <select class="form-select bg-secondary text-light" id="sido" name="sido">
+          <select class="form-select bg-secondary text-light"   id="sido" name="sido">
             <option value="">시도 선택</option>
           </select>
         </div>

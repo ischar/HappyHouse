@@ -1,17 +1,15 @@
 <template>
   <header>
-    <nav class="header-nav">
+    <nav class="header-nav"> 
       <nav
         class="navbar navbar-light navbar-expand-lg"
         style="
-          background: rgba(255, 255, 255, 0.2);
-          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(5px);
-          -webkit-backdrop-filter: blur(5px);
-          border: 1px solid rgba(255, 255, 255, 0.3);
+        background-color: white; margin: 0;
         ">
-        <div class="container-fluid">
-          <a class="navbar-brand text-black" href="/">Home</a>
+        <div class="container-fluid" style="margin: 0;">
+          <a class="navbar-brand text-black" href="/">
+          <img src="../../assets/logo.png" style="height: 80px; weight: 80px; margin:0;">
+          </a>
           <button
             class="navbar-toggler"
             style="border-color: black"
@@ -26,15 +24,15 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a
+                <b><a
                   class="nav-link active text-black"
                   aria-current="page"
-                  href="${root}"
+                  href="${root}" style="font-size: 18px;"
                   >오늘의 뉴스</a
-                >
+                ></b>
               </li>
 
-              <li class="nav-item">
+              <li class="nav-item" style="font-size: 18px; font-weight: 700;">
                 <router-link to="/board">공지사항</router-link>
               </li>
 
@@ -42,7 +40,7 @@
                 <router-link :to="{name: 'userinfo'}">
                   <li class="nav-item">
                     <a
-                      class="nav-link active text-black"
+                      class="nav-link active text-black" style="font-size: 18px; font-weight: 700;"
                       href="${root }/member/memberInsert.jsp"
                       id="mypage"
                       >마이페이지</a
@@ -55,14 +53,14 @@
             <ul class="navbar-nav mb-lg-0">
               <div>
                 <button
-                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
+                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2" style="font-size: 18px; font-weight: 700;"
                   id="login"
                   @click="moveLogin"
                   v-if="!isLogin">
                   로그인
                 </button>
                 <button
-                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
+                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2" style="font-size: 18px; font-weight: 700;"
                   id="logout"
                   @click="onClickLogout"
                   v-else>
@@ -71,7 +69,7 @@
               </div>
               <router-link :to="{name: 'signup'}">
                 <button
-                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
+                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2" style="font-size: 18px; font-weight: 700;"
                   type="submit"
                   id="logout">
                   회원가입
@@ -118,3 +116,5 @@ export default {
   },
 };
 </script>
+
+

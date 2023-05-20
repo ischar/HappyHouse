@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <header-nav-bar />
+    <hr style="color: #d86057;">
     <router-view />
   </div>
 </template>
 
 <style>
 #app {
-  background-image: url("assets/background.jpg");
+  /* background-image: url("assets/background.jpg");
   background-size: cover;
-  @import url("https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500&display=swap"); */
   font-family: "Sunflower", sans-serif;
+  font-size: 16px;
 }
 </style>
 
@@ -24,3 +26,4 @@ export default {
   },
 };
 </script>
+

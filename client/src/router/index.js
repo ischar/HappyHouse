@@ -8,6 +8,7 @@ import BoardView from '../views/BoardView';
 import UserView from '../views/UserView';
 
 import Vuebar from 'vuebar';
+import Dropdown from 'vue-simple-search-dropdown';
 
 import BoardList from '../components/board/BoardList';
 import BoardWrite from '../components/board/BoardWrite';
@@ -17,8 +18,12 @@ import BoardDelete from '../components/board/BoardDelete';
 import UserLogin from '../components/user/UserLogin';
 import UserInfo from '../components/user/UserInfo';
 
+
+
 Vue.use(Vuebar);
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+
+
 
 import store from "@/store";
 
