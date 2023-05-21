@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<body style = "background-size: cover" background = "../background/background.jpg" >
+<body style = "background-size: cover" background = "/img/background.jpg" >
 <%@ include file="../include/nav.jsp"%>
 
 <!-- start -->
@@ -31,28 +31,29 @@
 						</div>
 
 						<div class="p-4">
-							<form action="${root }/login" method="post">
-								<input type="hidden" name="action" value="login" id="user">
+								<input type="hidden" name="action">
 								<div class="input-group mb-3">
 									<span class="input-group-text"
-										style="background-color: #929292;"><i
+										style="background-color: #929292;">
+										<img
+										src="/img/user.png" style="width: 20px; height: 20px;"><i
 										class="bi bi-person-plus-fill text-white"></i></span> <input
 										id="userid" type="text" class="form-control" placeholder="ID"
 										name="id">
 								</div>
 								<div class="input-group mb-3">
 									<span class="input-group-text"
-										style="background-color: #929292;"><i
+										style="background-color: #929292;"><img
+                                    src="/img/lock.png" style="width: 20px; height: 20px;"><i
 										class="bi bi-key-fill text-white"></i></span> <input id="userpwd"
 										type="password" class="form-control" placeholder="password"
 										name="pwd">
 								</div>
-								<button type="submit" class="btn btn-primary text-center mt-2">Login</button>
-							</form>
+								<button type="submit" id="submitBtn" class="btn btn-primary text-center mt-2">Login</button>
 							<p class="text-center mt-5">
-								Don't have an account? <a href="${root }/user/signup.jsp">Sign Up</a>
+								Don't have an account? <a href="${root }/user/signup">Sign Up</a>
 							</p>
-							Forgot your password? <a href="${root }/user/userPwdSearch.jsp">Find Password</a>
+							Forgot your password? <a href="${root }/user/userPwdSearch">Find Password</a>
 						</div>
 					</div>
 				</div>
@@ -61,5 +62,7 @@
 	</section>
 
 	</main>
+	<script src="./js/login.js"></script>
+	
 </body>
 </html>

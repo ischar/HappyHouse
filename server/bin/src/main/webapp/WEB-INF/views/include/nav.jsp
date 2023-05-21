@@ -24,12 +24,13 @@
 	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
 </head>
+<body>
 <header>
 	<nav class="header-nav fixed-top">
 		<nav class="navbar navbar-dark navbar-expand-lg"
 			style="background-color: #434343;">
 			<div class="container-fluid">
-				<a class="navbar-brand text-white" href="${root}">Home</a>
+				<a class="navbar-brand text-white" href="${root}/index">Home</a>
 				<button class="navbar-toggler" style="border-color: white;"
 					type="button" data-bs-toggle="collapse"
 					data-bs-target="#navbarSupportedContent"
@@ -44,14 +45,14 @@
 						<li class="nav-item"><a class="nav-link active text-white"
 							href="${root}">공지사항</a></li>
 
-						<c:if test="${!empty logOK }">
+						<c:if test="${!empty userinfo }">
 							<li class="nav-item"><a class="nav-link active text-white"
-								href="${root }/user?action=userinfo" id="mypage">마이페이지</a></li>
+								href="${root }/user/userinfo" id="mypage">마이페이지</a></li>
 						</c:if>
 					</ul>
 
 					<ul class="navbar-nav mb-lg-0">
-						<c:if test="${empty logOK }">
+						<c:if test="${empty userinfo }">
 							<button
 								class="btn btn-default btn-sm btn-outline-light btn-lg col-auto m-2"
 								type="submit" id="login"
@@ -59,14 +60,14 @@
 							<button
 								class="btn btn-default btn-sm btn-outline-light btn-lg col-auto m-2"
 								type="submit" id="signup"
-								onclick="location.href='${root }/user/signup.jsp';">회원가입</button>
+								onclick="location.href='${root }/signup';">회원가입</button>
 						</c:if>
 
-						<c:if test="${!empty logOK }">
+						<c:if test="${!empty userinfo }">
 							<button
 								class="btn btn-default btn-sm btn-outline-light btn-lg col-auto m-2"
 								type="submit" id="logout"
-								onclick="location.href = '${root }/login?action=logout';">로그아웃</button>
+								onclick="location.href = '${root }/logout';">로그아웃</button>
 						</c:if>
 
 					</ul>

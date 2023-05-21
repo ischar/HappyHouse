@@ -9,19 +9,20 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLogin: false,
-    loginId : "",
-    loginPwd: "",
-    loginName: "",
-    loginAddr: "",
-    loginPhone : "",
+    loginId: '',
+    loginPwd: '',
+    loginName: '',
+    loginAddr: '',
+    loginPhone: '',
   },
-  
+
   getters: {
     checkUser: function (state) {
       return state.isLogin;
     },
   },
-  mutations: { // 동기처리만
+  mutations: {
+    // 동기처리만
     SET_ID(state, playload) {
       state.loginId = playload;
     },
@@ -43,15 +44,15 @@ export default new Vuex.Store({
   },
 
   actions: {
-    login({commit},context){
+    login({ commit }, context) {
       try {
         axios
-          .post("/login", JSON.stringify(context), {
+          .post('/login', JSON.stringify(context), {
             headers: {
-              "Content-Type": `application/json`,
+              'Content-Type': `application/json`,
             },
           })
-          .then(res => {
+          .then((res) => {
             if (res.status === 200) {
               // 로그인 성공시 처리해줘야할 부분
               commit('SET_ID', res.data.id);
@@ -63,17 +64,17 @@ export default new Vuex.Store({
               router.push({ name: 'home' });
             }
           })
-          .catch(error => {
+          .catch((error) => {
             if (error.response.status === 401) {
               // 401 오류인 경우 알림 창 띄우기
-              alert("아이디 혹은 비밀번호가 틀렸습니다.");
+              alert('아이디 혹은 비밀번호가 틀렸습니다.');
             }
           });
       } catch (error) {
         console.error(error);
       }
     },
-    logout({ commit }) {
+    reset({ commit }) {
       commit('SET_IS_LOGIN', false);
       commit('SET_ID', null);
       commit('SET_PWD', null);

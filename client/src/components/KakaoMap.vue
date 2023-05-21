@@ -1,24 +1,29 @@
 <template>
-  <div style="width: 100%">
-    <div style="position: relative">
+<!--  <div style="width: 100%"> -->
+    <div style="position: relative; width: 100%;  overflow: hidden;">
       <div
         style="
-          width: 300px;
+          width: 400px;
           height: 100%;
           background-color: white;
           position: absolute;
           text-align: center;
           z-index: 2;
+          border: 0.5px solid #d86057;
+
         "
       >
         <div id="showdetail"></div>
-        <div id="roadview" style="width: 270px; height: 180px; left: 5%"></div>
+        <div id="roadview" style="width: 400px; height: 250px;"></div>
+        <div style="text-align:right">
+          <img src="../assets/favoriteon.png" style="width: 30px; height: 30px;">
+        </div>
         <h3>거래내역</h3>
-        <div id="content" style="height: 200px; overflow: auto"></div>
+        <div id="content" style=" height: 100%; overflow: auto"></div>
       </div>
-      <div id="map" style="width: 100%"></div>
+      <div id="map" style="width: 100%; height: 100%; border: 0.5px solid #d86057;"></div>
     </div>
-  </div>
+<!--  </div> -->
 </template>
 
 <script>
@@ -68,7 +73,8 @@ export default {
     loadMap() {
       const container = document.getElementById("map");
       const options = {
-        center: new window.kakao.maps.LatLng(this.houses[0].lat, this.houses[0].lng),
+       // center: new window.kakao.maps.LatLng(this.houses[0].lat, this.houses[0].lng),
+       center: new window.kakao.maps.LatLng(12, 12),
         level: 3,
       };
       this.map = new window.kakao.maps.Map(container, options);
@@ -139,15 +145,14 @@ export default {
           var options = "";
 
           for (var i = 0; i < data.length; i++) {
-            console.log("sdf");
             options +=
-              "<hr><li>거래연도 : " +
+              "<hr style='border: 0.5px solid #d86057;'><div style='float:left;''><img src='../assets/house.png' style='width: 50px; height: 50px;'><li>거래연도 : " +
               data[i].dealYear +
               "년</li> <li> 거래금액 : " +
               data[i].dealAmount +
               "만원 </li> <li> 면적 : " +
               data[i].area +
-              "</li><hr>";
+              "</li><hr style='border: 0.5px solid #d86057;'>";
             // options +=
             //   "<li>" +
             //   data[i].buildYear +
@@ -179,5 +184,9 @@ export default {
   margin: 10px;
   font-size: 20px;
   font-weight: 900;
+}
+
+hr {
+  border:0.5px solid #d86057;
 }
 </style>

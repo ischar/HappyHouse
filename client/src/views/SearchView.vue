@@ -1,36 +1,64 @@
 <template>
   <section>
-    <div class="py-lg-5">
-      <div class="row col-md-12 justify-content-center mb-2">
-        <div class="form-group col-md-2">
-          <select class="form-select bg-secondary text-light"   id="sido" name="sido">
-            <option value="">시도 선택</option>
-          </select>
+        <div class="row col-md-12 justify-content-center mb-2">
+          <div class="form-group col-md-2">
+            <select
+              v-model="sidoValue"
+              @change="changeGugun()"
+              class="form-select"
+              id="sido"
+              name="sido"
+            >
+              <option value="">시도 선택</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <select
+              v-model="gugunValue"
+              @change="changeDong()"
+              class="form-select"
+              id="gugun"
+              name="gugun"
+            >
+              <option value="">구군 선택</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <select
+              v-model="dongValue"
+              class="form-select"
+              id="dong"
+              name="dong"
+            >
+              <option value="">동 선택</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <button
+              @click="searchMap()"
+              type="submit"
+              id="list-btn"
+              class="btn"
+              style="background-color: #d86057; color: white"
+            >
+              검색
+            </button>
+
+          </div>
         </div>
-        <div class="form-group col-md-2">
-          <select class="form-select bg-secondary text-light" id="gugun" name="gugun">
-            <option value="">구군 선택</option>
-          </select>
-        </div>
-        <div class="form-group col-md-2">
-          <select class="form-select bg-secondary text-light" id="dong" name="dong">
-            <option value="">동 선택</option>
-          </select>
-        </div>
-        <div class="form-group col-md-2">
-          <button type="submit" id="list-btn" class="btn btn-dark">아파트매매정보</button>
-        </div>
-      </div>
-    </div>
 
     <section>
+    <!--
       <div style="text-align: center">
         <h1>
-          {{ $route.params.sido }} {{ $route.params.gugun }} {{ $route.params.dong }} 거래내역
+          {{ $route.params.sido }} {{ $route.params.gugun }} {{ $route.params.dong }} 거래내역 
         </h1>
       </div>
+      -->
       <div class="row justify-content-center vh-100">
         <KakaoMap refs="kakao" v-bind:houses="datas" />
+        
+        <!--
         <div
           id="scroll-box"
           class="col-md-6"
@@ -53,8 +81,8 @@
               <li>건축년도<br />{{ data.dealYear }}.{{ data.dealMonth }}.{{ data.dealDay }}</li>
               <hr />
             </div>
-          </ul>
-        </div>
+          </ul> 
+        </div> -->
       </div>
     </section>
   </section>
@@ -75,6 +103,9 @@ export default {
 
   data() {
     return {
+      sidoValue: "",
+      gugunValue: "",
+      dongValue: "",
       title: "",
       map: null,
       positions: [],
@@ -95,35 +126,73 @@ export default {
   created() {
     // window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapScript();
     this.getAptList();
-    this.$refs.KakaoMap.loadMaker();
   },
 
-  mounted() {},
+  mounted() {
+     // this.$refs.KakaoMap.loadMaker();
+
+  this.getData()
+  },
 
   methods: {
     showside(title) {
       console.log(title);
       this.title = title;
     },
-    // addKakaoMapScript() {
-    //   const script = document.createElement("script");
-    //   /* global kakao */
-    //   script.onload = () => kakao.maps.load(this.initMap);
-    //   script.src =
-    //     "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=4b239f7d8ede01160eac66cfc322badf";
-    //   document.head.appendChild(script);
-    // },
-    // initMap() {
-    //   var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-    //   var options = {
-    //     //지도를 생성할 때 필요한 기본 옵션
-    //     center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-    //     level: 3, //지도의 레벨(확대, 축소 정도)
-    //   };
 
-    //   map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-    // },
+    searchMap() {
+      this.$refs.kakao.loadMap();
 
+    },
+
+    getData() {
+      axios
+        .get("http://localhost:80/address/sido") // 서블릿의 URL
+        .then((response) => {
+          var data = response.data;
+          var options = '<option value="">시도 선택</option>';
+          for (var i = 0; i < data.length; i++) {
+            options +=
+              '<option value="' + data[i] + '">' + data[i] + "</option>";
+          }
+          sido.innerHTML = options; // city select 요소의 option 값을 업데이트
+        })
+        .catch((error) => {
+          alert("An error occurred while processing your request: " + error);
+        });
+    },
+
+    changeGugun() {
+      axios({
+        method: "get",
+        params: { sido: this.sidoValue },
+        url: "http://localhost:80/address/gugun",
+        responseType: "json",
+      }).then((response) => {
+        var data = response.data;
+        var options = '<option value="">구군 선택</option>';
+        for (var i = 0; i < data.length; i++) {
+          options += '<option value="' + data[i] + '">' + data[i] + "</option>";
+        }
+        gugun.innerHTML = options; // city select 요소의 option 값을 업데이트
+      });
+    },
+
+    changeDong() {
+      axios({
+        method: "get",
+        params: { gugun: this.gugunValue },
+        url: "http://localhost:80/address/dong",
+        responseType: "json",
+      }).then((response) => {
+        var data = response.data;
+        var options = '<option value="">동 선택</option>';
+        for (var i = 0; i < data.length; i++) {
+          options += '<option value="' + data[i] + '">' + data[i] + "</option>";
+        }
+        dong.innerHTML = options;
+      });
+    },
     getAptList() {
       axios({
         method: "post",

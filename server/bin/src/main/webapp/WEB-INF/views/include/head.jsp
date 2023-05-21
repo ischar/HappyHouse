@@ -40,7 +40,7 @@
 							<li class="nav-item"><a class="nav-link active text-white"
 								href="${root}">공지사항</a></li>
 
-							<c:if test="${!empty logOK }">
+							<c:if test="${!empty userinfo }">
 								<li class="nav-item"><a class="nav-link active text-white"
 									href="${root }/member/memberInsert.jsp" id="mypage">마이페이지</a></li>
 							</c:if>
@@ -48,7 +48,7 @@
 
 						</ul>
 						<ul class="navbar-nav mb-lg-0">
-							<c:if test="${empty logOK }">
+							<c:if test="${empty userinfo }">
 								<button
 									class="btn btn-default btn-sm btn-outline-light btn-lg col-auto m-2"
 									type="submit" id="login1"
@@ -59,7 +59,7 @@
 									onclick="location.href='${root }/member/memberInsert.jsp';">회원가입</button>
 							</c:if>
 
-							<c:if test="${!empty logOK }">
+							<c:if test="${!empty userinfo }">
 
 								<button
 									class="btn btn-default btn-sm btn-outline-light btn-lg col-auto m-2"

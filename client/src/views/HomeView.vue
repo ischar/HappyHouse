@@ -64,21 +64,7 @@
             </button>
 
             <div class="input-group mb-3">
-              <div style="margin:10%; 25%;">
-              <ejs-autocomplete>
-              </ejs-autocomplete>
-             </div>
-              
-              <div class="input-group-append">
-                <button
-                  @click="searchByBar"
-                  class="btn btn-outline-secondary"
-                  type="button"
-                  style="background-color: #d86057; color: white"
-                >
-                  검색
-                </button>
-              </div>
+      
             </div>
           </div>
         </div>

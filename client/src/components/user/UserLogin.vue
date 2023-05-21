@@ -30,7 +30,7 @@
                 <span class="input-group-text" style="background-color: #929292"
                   ><img
                     src="/img/lock.png"
-                    style="width: 20px; height: 20px" /><i
+                    style="width: 20px; height: 20px;" /><i
                     class="bi bi-key-fill text-white"></i
                 ></span>
                 <input
@@ -44,7 +44,7 @@
               <button
                 id="submitBtn"
                 class="btn btn-primary text-center mt-2"
-                @click="loginSubmit">
+                @click="loginSubmit" style="background-color: #d86057;">
                 Login
               </button>
               <p class="text-center mt-5">

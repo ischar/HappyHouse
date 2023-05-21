@@ -79,26 +79,10 @@
                       style="width: 20px; height: 20px" />
                     <i class="bi bi-person-plus-fill text-white"></i
                   ></span>
-                  폰 번호 : {{ loginPhone }} 
+                 폰 번호 : {{ loginPhone }} 
                 </div>
 
-                <form
-                  action="${root}/user/userUpdate"
-                  method="post"
-                  style="display: inline">
-                  <input type="hidden" name="id" value="${userinfo.id}" />
-                  <input type="hidden" name="pwd" value="${userinfo.pwd}" />
-                  <input type="hidden" name="name" value="${userinfo.name}" />
-                  <input
-                    type="hidden"
-                    name="address"
-                    value="${userinfo.address}" />
-                  <input type="hidden" name="phone" value="${userinfo.phone}" />
-                  <input
-                    type="submit"
-                    value="수정"
-                    class="btn btn-primary text-center mt-2" />
-                </form>
+                <router-link :to="{name: 'userupdate'}"><div>회원수정</div></router-link>
 
                 <form action="" method="post">
                   <input type="hidden" name="_method" value="delete" />
@@ -108,11 +92,7 @@
                     id="id"
                     value="${userinfo.id}" />
 
-                  <input
-                    type="submit"
-                    value="회원탈퇴"
-                    id="submitBtn"
-                    class="btn btn-danger text-center mt-2" />
+                  <div @click="deleteAccount(loginId)">회원탈퇴 </div>
                 </form>
               </div>
             </div>
@@ -121,10 +101,13 @@
       </div>
     </section>
   </div>
+  </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapState, mapActions} from "vuex";
+import http from "@/api/http";
+import router from '@/router/index';
 
 export default {
   name: "UserInfo",
@@ -138,7 +121,17 @@ export default {
     };
   },
   created() {},
-  methods: {},
+  methods: {
+     ...mapActions(["reset"]),
+    deleteAccount: function(loginId){
+      console.log(loginId);
+      http.delete('/delete/'+loginId).then(()=>{
+        alert("탈퇴 성공하였습니다.");
+        this.reset();
+        router.push({name:'home'});
+      });
+    }
+  },
 };
 </script>
 

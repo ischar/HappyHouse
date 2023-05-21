@@ -8,7 +8,6 @@ import BoardView from '../views/BoardView';
 import UserView from '../views/UserView';
 
 import Vuebar from 'vuebar';
-import Dropdown from 'vue-simple-search-dropdown';
 
 import BoardList from '../components/board/BoardList';
 import BoardWrite from '../components/board/BoardWrite';
@@ -17,7 +16,7 @@ import BoardModify from '../components/board/BoardModify';
 import BoardDelete from '../components/board/BoardDelete';
 import UserLogin from '../components/user/UserLogin';
 import UserInfo from '../components/user/UserInfo';
-
+import UserUpdate from '../components/user/UserUpdate';
 
 
 Vue.use(Vuebar);
@@ -119,7 +118,12 @@ const routes = [
         name: 'userinfo',
         beforeEnter: onlyAuthUser,
         component: UserInfo,
-      }
+      },
+      {
+        path: 'update',
+        name: 'userupdate',
+        component: UserUpdate,
+      },
     ],
   },
 

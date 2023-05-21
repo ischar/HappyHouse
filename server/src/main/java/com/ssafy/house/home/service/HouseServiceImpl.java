@@ -11,6 +11,7 @@ import com.ssafy.house.home.model.HouseDto;
 @Service
 public class HouseServiceImpl implements HouseService{
 	
+	
 	@Autowired
 	private HouseMapper houseMapper; 
 	

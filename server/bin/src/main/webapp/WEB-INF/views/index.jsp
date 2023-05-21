@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <body style="background-size: cover; z-index: -1"
-	background="background/background.jpg">
+	background="/img/background.jpg">
 	<%@ include file="include/nav.jsp"%>
 
 	<section class="py-5 text-center container vh-100">
@@ -13,7 +13,7 @@
 			</h1>
 		</div>
 		<%-- start: 시, 구, 동을 선택하고 버튼을 누르면 검색결과를 보여준다 --%>
-		<form style="margin-bottom: 50px" action="${root}/house" method="GET">
+		<!-- <form style="margin-bottom: 50px" action="${root}/house" method="GET">-->
 			<div class="py-lg-5">
 				<div class="row col-md-12 justify-content-center mb-2">
 					<div class="form-group col-md-2">
@@ -40,13 +40,14 @@
 					</div>
 				</div>
 			</div>
-		</form>
+	<!--  </form>-->	
 		<%-- end: 시, 구, 동을 선택하고 버튼을 누르면 검색결과를 보여준다 --%>
 	</section>
 
 	<c:import url="include/footer.jsp"></c:import>
 
 
-	<script type="text/javascript" src="js/get_City_Value.js"></script>
+	<script type="text/javascript" src="${root}/js/get_City_Value.js"></script>
+	<script type="text/javascript" src="${root}/js/findapt_btn.js"></script>
 </body>
 </html>
