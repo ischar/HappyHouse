@@ -8,16 +8,17 @@
               class="col-md-4 col-sm-12 shadow-lg p-5 bg-light"
               style="width: 600px">
               <div class="text-center">
-                <h3 class="text-dark">마이페이지</h3>
+                <h3 class="text-dark">MyPage</h3>
+                <img src="../../assets/user.png" style="width: 100px; height: 100px; margin-top: 20px; margin-bottom: 0px;">
               </div>
               <div class="p-7">
                 <!-- id -->
                 <div class="input-group mb-3">
                   <span
                     class="input-group-text"
-                    style="background-color: #929292">
+                    style="background-color: #d86057">
                     <img
-                      src="/img/user.png"
+                      src="../../assets/user.png"
                       style="width: 20px; height: 20px" />
                     <i class="bi bi-person-plus-fill text-white"></i
                   ></span>
@@ -35,7 +36,7 @@
                 <div class="input-group mb-3">
                   <span
                     class="input-group-text"
-                    style="background-color: #929292">
+                    style="background-color: #d86057">
                     <img
                       src="/img/lock.png"
                       style="width: 20px; height: 20px" />
@@ -48,7 +49,7 @@
                 <div class="input-group mb-3">
                   <span
                     class="input-group-text"
-                    style="background-color: #929292">
+                    style="background-color: #d86057">
                     <img
                       src="/img/name.png"
                       style="width: 20px; height: 20px" />
@@ -61,7 +62,7 @@
                 <div class="input-group mb-3">
                   <span
                     class="input-group-text"
-                    style="background-color: #929292">
+                    style="background-color: #d86057">
                     <img
                       src="/img/address.png"
                       style="width: 20px; height: 20px" />
@@ -73,7 +74,7 @@
                 <div class="input-group mb-3">
                   <span
                     class="input-group-text"
-                    style="background-color: #929292">
+                    style="background-color: #d86057">
                     <img
                       src="/img/phone.png"
                       style="width: 20px; height: 20px" />
@@ -101,7 +102,7 @@
       </div>
     </section>
   </div>
-  </div>
+ </div>
 </template>
 
 <script>

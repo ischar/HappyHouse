@@ -6,7 +6,7 @@ import SearchView from '../views/SearchView'
 import SignUpView from '../views/SignUpView'
 import BoardView from '../views/BoardView';
 import UserView from '../views/UserView';
-
+import NewsView from '../views/NewsView';
 import Vuebar from 'vuebar';
 
 import BoardList from '../components/board/BoardList';
@@ -64,7 +64,11 @@ const routes = [
     name: 'signup',
     component : SignUpView
   },
-
+  {
+    path: '/news',
+    name: 'news',
+    component: NewsView
+  },
 
   {
     path: '/board',

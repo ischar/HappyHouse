@@ -31,16 +31,16 @@
                   >오늘의 뉴스</a
                 ></b>
               </li>
-
-              <li class="nav-item" style="font-size: 18px; font-weight: 700;">
-                <router-link to="/board">공지사항</router-link>
-              </li>
-
               <div>
-                <router-link :to="{name: 'userinfo'}">
+              <li class="nav-item" style="font-size: 18px; font-weight: 700;">
+                <router-link style="text-decoration: none; color:black;" to="/board">공지사항</router-link>
+              </li>
+              </div>
+              <div>
+                <router-link style="text-decoration: none;" :to="{name: 'userinfo'}">
                   <li class="nav-item">
-                    <a
-                      class="nav-link active text-black" style="font-size: 18px; font-weight: 700;"
+                    <a 
+                      class="nav-link active text-black text-decoration-none" style="text-decoration:none; font-size: 18px; font-weight: 700;"
                       href="${root }/member/memberInsert.jsp"
                       id="mypage"
                       >마이페이지</a

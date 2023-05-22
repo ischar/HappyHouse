@@ -35,7 +35,7 @@
           </div>
           <div class="form-group col-md-2">
             <button
-              @click="searchMap()"
+              @click="getAptList2()"
               type="submit"
               id="list-btn"
               class="btn"
@@ -213,6 +213,24 @@ export default {
         });
     },
 
+    getAptList2() {
+      axios({
+        method: "post",
+        url : "http://localhost:80/houses/search",
+        responseType: "json",
+        data: {
+        sidoName : this.sidoValue,
+        gugunName : this.gugunValue,
+        dongName: this.dongValue,
+        },
+      }).then ((response) => {
+        this.datas = response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    },
     // setCenter(lat, lng) {
     //   var moveLatLon = new kakao.maps.LatLng(lat, lng);
     //   map = this.map;
