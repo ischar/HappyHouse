@@ -52,7 +52,3 @@ public class UserServiceImpl implements UserService {
 		return userDao.deleteUser(userId);
 	}
 }
-
-
-
-

@@ -42,7 +42,7 @@
                       style="width: 20px; height: 20px" />
                     <i class="bi bi-person-plus-fill text-white"></i
                   ></span>
-                  비밀번호 : 비번은 알려줄 수 없습니다...
+                 비밀번호 : {{ loginPwd }}
                 </div>
 
                 <!-- 이름 -->
@@ -93,6 +93,7 @@
                     id="id"
                     value="${userinfo.id}" />
 
+
                   <div @click="deleteAccount(loginId)">회원탈퇴 </div>
                 </form>
               </div>
@@ -102,7 +103,7 @@
       </div>
     </section>
   </div>
- </div>
+  </div>
 </template>
 
 <script>
