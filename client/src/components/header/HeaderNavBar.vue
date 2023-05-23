@@ -1,14 +1,14 @@
 <template>
   <header>
-    <nav class="header-nav"> 
+    <nav class="header-nav">
       <nav
         class="navbar navbar-light navbar-expand-lg"
-        style="
-        background-color: white; margin: 0;
-        ">
-        <div class="container-fluid" style="margin: 0;">
+        style="background-color: white; margin: 0">
+        <div class="container-fluid" style="margin: 0">
           <a class="navbar-brand text-black" href="/">
-          <img src="../../assets/logo.png" style="height: 80px; weight: 80px; margin:0;">
+            <img
+              src="../../assets/logo.png"
+              style="height: 80px; weight: 80px; margin: 0" />
           </a>
           <button
             class="navbar-toggler"
@@ -24,24 +24,37 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <b><a
-                  class="nav-link active text-black"
-                  aria-current="page"
-                  href="${root}" style="font-size: 18px;"
-                  >오늘의 뉴스</a
-                ></b>
+                <b
+                  ><a
+                    class="nav-link active text-black"
+                    aria-current="page"
+                    href="${root}"
+                    style="font-size: 18px"
+                    >오늘의 뉴스</a
+                  ></b
+                >
               </li>
               <div>
-              <li class="nav-item" style="font-size: 18px; font-weight: 700;">
-                <router-link style="text-decoration: none; color:black;" to="/board">공지사항</router-link>
-              </li>
+                <li class="nav-item" style="font-size: 18px; font-weight: 700">
+                  <router-link
+                    style="text-decoration: none; color: black"
+                    to="/board"
+                    >공지사항</router-link
+                  >
+                </li>
               </div>
               <div>
-                <router-link style="text-decoration: none;" :to="{name: 'userinfo'}">
+                <router-link
+                  style="text-decoration: none"
+                  :to="{name: 'userinfo'}">
                   <li class="nav-item">
-                    <a 
-                      class="nav-link active text-black text-decoration-none" style="text-decoration:none; font-size: 18px; font-weight: 700;"
-                      href="${root }/member/memberInsert.jsp"
+                    <a
+                      class="nav-link active text-black text-decoration-none"
+                      style="
+                        text-decoration: none;
+                        font-size: 18px;
+                        font-weight: 700;
+                      "
                       id="mypage"
                       >마이페이지</a
                     >
@@ -53,14 +66,16 @@
             <ul class="navbar-nav mb-lg-0">
               <div>
                 <button
-                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2" style="font-size: 18px; font-weight: 700;"
+                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
+                  style="font-size: 18px; font-weight: 700"
                   id="login"
                   @click="moveLogin"
                   v-if="!isLogin">
                   로그인
                 </button>
                 <button
-                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2" style="font-size: 18px; font-weight: 700;"
+                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
+                  style="font-size: 18px; font-weight: 700"
                   id="logout"
                   @click="onClickLogout"
                   v-else>
@@ -69,7 +84,8 @@
               </div>
               <router-link :to="{name: 'signup'}">
                 <button
-                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2" style="font-size: 18px; font-weight: 700;"
+                  class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
+                  style="font-size: 18px; font-weight: 700"
                   type="submit"
                   id="logout">
                   회원가입
@@ -99,22 +115,19 @@ export default {
     ...mapState(["isLogin", "loginName"]),
   },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions(["reset"]),
     moveLogin() {
       console.log(this.$route.path + " vs " + "/user/login");
       console.log("로그인...");
-      console.log(login);
       if (this.$route.path != "/user/login")
         this.$router.push({name: "userlogin"});
     },
     onClickLogout() {
       console.log("로그아웃");
-      this.logout();
-      console.log(this.isLogin);
-      this.$store.dispatch("logout");
+      this.reset();
+
+      //this.$store.dispatch("logout");
     },
   },
 };
 </script>
-
-

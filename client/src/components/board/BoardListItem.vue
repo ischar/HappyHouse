@@ -2,7 +2,7 @@
   <tr>
     <td>{{ article.articleno }}</td>
     <td>
-      <router-link :to="`/board/view/${article.articleno}`">
+      <router-link :to="`/board/post/${article.articleno}`">
         {{ article.subject }}
       </router-link>
     </td>

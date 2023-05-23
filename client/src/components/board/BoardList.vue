@@ -5,59 +5,52 @@
       <button @click="movePage">글작성</button>
     </div>
 
-
-
-   <!-- board seach area -->
+    <!-- board seach area -->
     <div id="board-search">
-        <div class="container">
-            <div class="search-window">
-                <form action="">
-                    <div class="search-wrap">
-                        <label for="search" class="blind">공지사항 내용 검색</label>
-                        <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">
-                        <button type="submit" class="btn btn-dark">검색</button>
-                    </div>
-                </form>
+      <div class="container">
+        <div class="search-window">
+          <form action="">
+            <div class="search-wrap">
+              <label for="search" class="blind">공지사항 내용 검색</label>
+              <input
+                id="search"
+                type="search"
+                name=""
+                placeholder="검색어를 입력해주세요."
+                value="" />
+              <button type="submit" class="btn btn-dark">검색</button>
             </div>
+          </form>
         </div>
-    </div>
-   
-  <!-- board list area -->
-    <div id="board-list">
-        <div class="container" v-if="articles.length">
-            <table class="board-table">
-                <thead>
-                <tr>
-                    <th scope="col" class="th-date">번호</th>
-                    <th scope="col" class="th-date">제목</th>
-                    <th scope="col" class="th-date">작성자</th>
-                    <th scope="col" class="th-date">조회수</th>
-                    <th scope="col" class="th-date">작성일</th>                    
-                </tr>
-                </thead>
-                <tbody>
-                          <board-list-item
-            v-for="article in articles"
-            :key="article.articleno"
-            :article="article"></board-list-item>
-                </tbody>
-            </table>
-                  <div>
-        <div v-on:click="rightpage--"> 이이전페이지 </div>
-        <div v-on:click="changePage(nowpage - 1)"> 이전페이지 </div>
-        <div v-on:click="changePage(1 + 5*rightpage)">{{ 1 + 5*rightpage }}</div>
-        <div v-on:click="changePage(2 + 5*rightpage)">{{ 2 + 5*rightpage }}</div>
-        <div v-on:click="changePage(3 + 5*rightpage)">{{ 3 + 5*rightpage }}</div>
-        <div v-on:click="changePage(4 + 5*rightpage)">{{ 4 + 5*rightpage }}</div>
-        <div v-on:click="changePage(5 + 5*rightpage)">{{ 5 + 5*rightpage }}</div>
-        <div v-on:click="changePage(nowpage + 1)">다음페이지</div>
-        <div v-on:click="rightpage++"> 다다음페이지 </div>
       </div>
-        </div>
-          <div class="text-center" v-else>게시글이 없습니다.</div>
     </div>
-</div>
-</section>
+
+    <!-- board list area -->
+    <b-container fluid class="my-table-container">
+      <b-table
+        class="my-table"
+        hover
+        :items="articles"
+        :per-page="perPage"
+        :current-page="currentPage"
+        :fields="fields"
+        sort-icon-left
+        label-sort-asc=""
+        label-sort-desc=""
+        label-sort-clear="">
+        <template #cell(subject)="data">
+          <!-- `data.value` is the value after formatted by the Formatter -->
+          <a :href="`/board/post/${data.item.articleno}`">{{ data.value }}</a>
+        </template></b-table
+      >
+    </b-container>
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      aria-controls="my-table"
+      align="center"></b-pagination>
+  </div>
 </template>
 
 <script>
@@ -67,213 +60,91 @@ import http from "@/api/http";
 export default {
   name: "BoardList",
   components: {
-    BoardListItem,
+    //BoardListItem,
   },
   data() {
     return {
       articles: [],
       nowpage: 0,
       rightpage: 0,
-      reset : 0,
+      reset: 0,
+      postCount: 0,
+      totalCount: 0,
+      currentPage: 1,
+      perPage: 10,
+      fields: [
+        {
+          key: "articleno",
+          label: "글번호",
+          sortable: false,
+        },
+        {
+          key: "subject",
+          label: "제목",
+          sortable: false,
+        },
+        {
+          key: "userid",
+          label: "작성자",
+          sortable: false,
+        },
+        {
+          key: "regtime",
+          label: "작성일",
+          sortable: false,
+        },
+        {
+          key: "hit",
+          label: "조회수",
+          sortable: true,
+        },
+      ],
     };
   },
   created() {
     console.log("test");
     http.get(`/board`, {}).then(response => {
       this.articles = response.data;
+      console.log(this.articles);
+    });
+    http.get("/board/count").then(response => {
+      this.totalCount = response.data.pagenavigation.totalCount;
+      this.pagenavigation = response.data.pagenavigation;
+      console.log(this.pagenavigation);
     });
   },
   methods: {
     movePage() {
       this.$router.push({name: "boardwrite"});
     },
-    changePage(num){
-      this.nowpage = num;
-      http.get(`/board?pg=${num}`, {}).then(response => {
-      this.articles = response.data;
-    });
-    }
+  },
+  computed: {
+    rows() {
+      return this.articles.length;
+    },
   },
 };
 </script>
 
-<style>
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-section.notice {
-  padding: 80px 0;
-}
-
-.page-title {
-  margin-bottom: 60px;
-}
-.page-title h3 {
-  font-size: 28px;
-  color: #333333;
-  font-weight: 400;
-  text-align: center;
+<style scoped>
+.my-table-container {
+  /* 컨테이너에 대한 좌우 여백 설정 */
+  /* 예시: 좌우 여백 20px 설정 */
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
-#board-search .search-window {
-  padding: 15px 0;
-  background-color: #f9f7f9;
-}
-#board-search .search-window .search-wrap {
-  position: relative;
-/*   padding-right: 124px; */
-  margin: 0 auto;
-  width: 80%;
-  max-width: 564px;
-}
-#board-search .search-window .search-wrap input {
-  height: 40px;
-  width: 100%;
-  font-size: 14px;
-  padding: 7px 14px;
-  border: 1px solid #ccc;
-}
-#board-search .search-window .search-wrap input:focus {
-  border-color: #333;
-  outline: 0;
-  border-width: 1px;
-}
-#board-search .search-window .search-wrap .btn {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 108px;
-  padding: 0;
-  font-size: 16px;
+.my-table-container .b-table {
+  /* 테이블 요소에 대한 스타일 */
+  /* 예시: 여백 제거 */
+
+  /* 예시: 테이블 요소 내부에 좌우 패딩 추가 */
+  /*padding-left: 10px;*/
+  /*padding-right: 10px;*/
 }
 
-.board-table {
-  font-size: 13px;
-  width: 100%;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+.my-table {
+  /* 테이블에 대한 스타일 */
+  width: 100%; /* 테이블의 너비를 100%로 설정 */
 }
-
-.board-table a {
-  color: #333;
-  display: inline-block;
-  line-height: 1.4;
-  word-break: break-all;
-  vertical-align: middle;
-}
-.board-table a:hover {
-  text-decoration: underline;
-}
-.board-table th {
-  text-align: center;
-}
-
-.board-table .th-num {
-  width: 100px;
-  text-align: center;
-}
-
-.board-table .th-date {
-  width: 200px;
-}
-
-.board-table th, .board-table td {
-  padding: 14px 0;
-}
-
-.board-table tbody td {
-  border-top: 1px solid #e7e7e7;
-  text-align: center;
-}
-
-.board-table tbody th {
-  padding-left: 28px;
-  padding-right: 14px;
-  border-top: 1px solid #e7e7e7;
-  text-align: left;
-}
-
-.board-table tbody th p{
-  display: none;
-}
-
-.btn {
-  display: inline-block;
-  padding: 0 30px;
-  font-size: 15px;
-  font-weight: 400;
-  background: transparent;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 1px solid transparent;
-  text-transform: uppercase;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -ms-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
-.btn-dark {
-  background: #555;
-  color: #fff;
-}
-
-.btn-dark:hover, .btn-dark:focus {
-  background: #373737;
-  border-color: #373737;
-  color: #fff;
-}
-
-.btn-dark {
-  background: #555;
-  color: #fff;
-}
-
-.btn-dark:hover, .btn-dark:focus {
-  background: #373737;
-  border-color: #373737;
-  color: #fff;
-}
-
-/* reset */
-
-* {
-  list-style: none;
-  text-decoration: none;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-.clearfix:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-.container {
-  width: 1100px;
-  margin: 0 auto;
-}
-.blind {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  margin: -1px;
-  width: 1px;
-  height: 1px;
-}
-
 </style>
