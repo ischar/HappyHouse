@@ -10,5 +10,7 @@ public interface DongService {
 	List<DongDto> findGugun(String sido);
 
 	List<DongDto> findDong(String gugun);
+
+	List<DongDto> getSiGunGu();
 }
 

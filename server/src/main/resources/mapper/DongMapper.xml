@@ -21,5 +21,9 @@
 		<select id="findDong"  resultMap="region">
 		select distinct dongName from dongcode where gugunName = #{dongName} and dongName is not null
 	</select>
+	
+	<select id="getSiGunGu" resultMap="region">
+		select * from dongcode where sidoName is not null and gugunName is not null and dongName is not null
+	</select>
 
 </mapper>

@@ -38,6 +38,13 @@ public class DongServiceImpl implements DongService {
 	}
 
 
+	@Override
+	public List<DongDto> getSiGunGu() {
+		// TODO Auto-generated method stub
+		return dongMapper.getSiGunGu();
+	}
+
+
 
 
 }

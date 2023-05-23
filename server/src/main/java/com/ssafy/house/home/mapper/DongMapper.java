@@ -16,6 +16,8 @@ public interface DongMapper {
 
 	public List<DongDto> findDong(String gugun);
 
+	public List<DongDto> getSiGunGu();
+
 
 
 }
