@@ -4,26 +4,28 @@
     <div style="text-align: right">
       <button @click="movePage">글작성</button>
     </div>
+    <!-- 추가 -->
+    <b-form-group
+      label="Filter"
+      label-for="filter-input"
+      label-cols-sm="3"
+      label-align-sm="right"
+      label-size="sm"
+      class="mb-0">
+      <b-input-group size="sm">
+        <b-form-input
+          id="filter-input"
+          v-model="filter"
+          type="search"
+          placeholder="Type to Search"></b-form-input>
 
-    <!-- board seach area -->
-    <div id="board-search">
-      <div class="container">
-        <div class="search-window">
-          <form action="">
-            <div class="search-wrap">
-              <label for="search" class="blind">공지사항 내용 검색</label>
-              <input
-                id="search"
-                type="search"
-                name=""
-                placeholder="검색어를 입력해주세요."
-                value="" />
-              <button type="submit" class="btn btn-dark">검색</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+        <b-input-group-append>
+          <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+        </b-input-group-append>
+      </b-input-group>
+    </b-form-group>
+
+    <!-- 추가 끝 -->
 
     <!-- board list area -->
     <b-container fluid class="my-table-container">
@@ -37,7 +39,9 @@
         sort-icon-left
         label-sort-asc=""
         label-sort-desc=""
-        label-sort-clear="">
+        label-sort-clear=""
+        :filter="filter"
+        @filtered="onFiltered">
         <template #cell(subject)="data">
           <!-- `data.value` is the value after formatted by the Formatter -->
           <a :href="`/board/post/${data.item.articleno}`">{{ data.value }}</a>
@@ -99,6 +103,7 @@ export default {
           sortable: true,
         },
       ],
+      filter: null,
     };
   },
   created() {
@@ -122,6 +127,11 @@ export default {
     rows() {
       return this.articles.length;
     },
+  },
+  onFiltered(filteredItems) {
+    // Trigger pagination to update the number of buttons/pages due to filtering
+    this.totalRows = filteredItems.length;
+    this.currentPage = 1;
   },
 };
 </script>

@@ -21,46 +21,100 @@
       <div class="view">{{ article.content }}</div>
 
       <div style="padding-top: 15px">
-        <router-link
-          :to="{name: 'boardmodify', params: {articleno: article.articleno}}"
-          class="btn">
-          수정
-        </router-link>
-        <router-link
-          :to="{name: 'boarddelete', params: {articleno: article.articleno}}"
-          class="btn">
-          삭제
-        </router-link>
+        <div v-if="loginId == article.userid">
+          <router-link
+            :to="{name: 'boardmodify', params: {articleno: article.articleno}}"
+            class="btn">
+            수정
+          </router-link>
+        </div>
+        <div v-if="loginId == article.userid">
+          <router-link
+            :to="{name: 'boarddelete', params: {articleno: article.articleno}}"
+            class="btn">
+            삭제
+          </router-link>
+        </div>
         <router-link :to="{name: 'boardlist'}" class="btn"> 목록 </router-link>
       </div>
     </div>
+    <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+      <img
+        class="img-fluid img-responsive rounded-circle mr-2"
+        src="https://i.imgur.com/qdiP4DB.jpg"
+        width="38" />
+      <input
+        type="text"
+        class="form-control mr-3"
+        placeholder="Add comment"
+        v-model="newComment" />
+      <button class="btn btn-primary" type="button" @click="commentAdd">
+        Comment
+      </button>
+    </div>
+    <board-comment-item
+      v-for="comment in comments"
+      :key="comment.commentno"
+      :comment="comment"
+      :articleno="article.articleno"
+      @refresh="refreshComments"></board-comment-item>
   </div>
 </template>
 
 <script>
 import http from "@/api/http";
+import {mapState} from "vuex";
+import BoardCommentItem from "@/components/board/BoardCommentItem";
 
 export default {
+  computed: {
+    ...mapState(["loginId"]),
+  },
+  components: {
+    BoardCommentItem,
+  },
   name: "BoardDetail",
   data() {
     return {
       article: Object,
+      comments: [],
+      newComment: "",
     };
   },
   created() {
     // 비동기
-    // TODO : 글번호에 해당하는 글정보 얻기.
+    // 글번호에 해당하는 글정보 얻기.
     http.get(`/board/${this.$route.params.articleno}`).then(({data}) => {
+      console.log(this.$route.params.articleno);
       this.article = data;
     });
-    // this.article = {
-    //   articleno: 10,
-    //   userid: "안효인",
-    //   subject: "안녕하세요",
-    //   content: "안녕하세요!!!!",
-    //   hit: 10,
-    //   regtime: "2022-11-08 17:03:15",
-    // };
+    http.get(`/comment/${this.$route.params.articleno}`).then(response => {
+      this.comments = response.data;
+    });
+  },
+  methods: {
+    commentAdd() {
+      let newcomment = {
+        articleno: this.article.articleno,
+        userid: this.loginId,
+        content: this.newComment,
+      };
+      http.post("/comment", newcomment).then(({data}) => {
+        console.log(this.article.articleno);
+        console.log(this.article.userid);
+        //console.log(data);
+        http.get(`/comment/${this.$route.params.articleno}`).then(response => {
+          this.comments = response.data;
+        });
+        this.newComment = ""; // 입력 필드를 초기화
+      });
+    },
+    refreshComments() {
+      //alert("refresh 실행!");
+      http.get(`/comment/${this.$route.params.articleno}`).then(response => {
+        this.comments = response.data;
+      });
+    },
   },
 };
 </script>
