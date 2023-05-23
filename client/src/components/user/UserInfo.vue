@@ -115,7 +115,7 @@ export default {
   name: "UserInfo",
   components: {},
   computed: {
-    ...mapState(["loginId","loginName","loginAddr","loginPhone"]),
+    ...mapState(["loginId","loginName","loginAddr","loginPhone","loginPwd"]),
   },
   data() {
     return {
@@ -127,7 +127,7 @@ export default {
      ...mapActions(["reset"]),
     deleteAccount: function(loginId){
       console.log(loginId);
-      http.delete('/delete/'+loginId).then(()=>{
+      http.delete('/delete/'+this.loginId).then(()=>{
         alert("탈퇴 성공하였습니다.");
         this.reset();
         router.push({name:'home'});
