@@ -8,8 +8,36 @@
 		<result column="userid" property="userId" />
 		<result column="aptCode" property="aptCode" />
 	</resultMap>
+	<resultMap type="HouseDto" id="house">
+		<result column="roadName" property="roadName" />
+		<result column="buildYear" property="buildYear" />
+		<result column="dong" property="dong" />
+		<result column="apartmentName" property="apartmentName" />
+		<result column="lng" property="lng" />
+		<result column="lat" property="lat" />
+		<result column="dealYear" property="dealYear" />
+		<result column="dealMonth" property="dealMonth" />
+		<result column="dealDay" property="dealDay" />
+		<result column="area" property="area" />
+		<result column="dealAmount" property="dealAmount" />
+		<result column="aptCode" property="aptCode" />
+	</resultMap>
 
 	<select id="addFavorite" resultMap="favorite">
-	INSERT INTO favorites values (#{userId}, #{aptCode})
+	INSERT INTO favorites (userid, aptCode) values (#{userId}, #{aptCode})
+	</select>
+	
+	<select id="checkFavorite" resultType="int">
+		select count(aptCode) from favorites where userid=#{userId} and aptCode = #{aptCode}
+	</select>
+	
+	<select id="deleteFavorite" resultType="int">
+		delete from favorites where userid=#{userId} and aptCode = #{aptCode}
+	</select>
+	
+	<select id="listFavorite" resultMap="house">
+	select * from houseinfo where aptCode in (
+	select aptCode from favorites where userid=#{userId}
+	)
 	</select>
 </mapper>

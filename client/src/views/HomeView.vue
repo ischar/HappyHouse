@@ -2,7 +2,7 @@
   <div class="test">
     <section class="py-5 text-center container">
       <div style="margin-top: 100px">
-        <h1 style="font-size: 60px">
+        <h1 style="font-size: 48px">
           <b>원하는 집을 찾으세요.</b>
         </h1>
       </div>
@@ -42,23 +42,39 @@
       </div>
     </section>
     <div style="text-align: center;">
-      <div style="margin-left: 100px; width: 450px; float:left; display:inline-block">
+      <div style="margin-left: 80px; width: 370px; float:left; display:inline-block">
+        <li style="font-size:18px; margin-bottom: 0px;"><b>즐겨찾기</b></li>
+        <hr style="color: #d86057;">
+        <div style="text-align:left; margin-left: 10px;" v-for="favorite in favorites" :key="favorite.userid" :favorite="favorite">
+          <!-- <router-link style="text-decoration: none; color:black;" :to="`/board/view/${favorite."> -->
+            <ul style="list-style-image:url(https://i.postimg.cc/66zrhk3F/star.png)">
+              <router-link style="text-decoration: none; color: black;" :to="`/board/view/favorite/${favorite.aptCode}`">
+              <li>{{ favorite.apartmentName }} </li>
+            </router-link>
+          </ul>
+ 
+          <!-- </router-link> -->
+        </div>
+      </div>
+
+      <div style="margin-left: 80px; width: 370px; float:left; display:inline-block">
         <li style="font-size:18px; margin-bottom: 0px;"><b>공지사항</b></li>
         <hr style="color: #d86057;">
-        <div v-for="article in articles" :key="article.articleno" :article="article">
+        <div style="text-align:left; margin-left: 10px;" v-for="article in articles" :key="article.articleno" :article="article">
           <router-link style="text-decoration: none; color:black;" :to="`/board/view/${article.articleno}`">
             {{ article.subject }}
           </router-link>
         </div>
       </div>
-      <div style="margin-left: 100px; float:left; width: 450px; display:inline-block">
+      <div style="margin-left: 80px; float:left; width: 370px; display:inline-block">
         <li style="font-size:18px; margin-bottom: 0px;"><b>오늘의뉴스</b></li>
         <hr style="color: #d86057;">
-          <div v-for="newss in news" :key="newss.link" :newss="newss">
+          <div style="text-align:left; margin-left: 10px;" v-for="newss in news" :key="newss.link" :newss="newss">
             <li v-html="newss.title" @click="readNews(newss)"></li>
             <!-- <router-link style="text-decoration: none; color:black;" :to="/local"> {{ newss.title }}</router-link> -->
           </div>
       </div>
+
     </div>
   </div>
 
@@ -70,6 +86,7 @@
 import axios from "axios";
 import BoardListItem from "@/components/board/BoardListItem";
 import http from "@/api/http";
+import {mapState} from "vuex";
 
 export default {
   name: "HomeView",
@@ -77,10 +94,13 @@ export default {
     msg: String,
   },
   created() {
-    console.log("list");
     http.get(`/board`, {}).then(response => {
       this.articles = response.data;
     });
+    this.listFavorites();
+  },
+  computed:{
+    ...mapState(["loginId"]),
   },
   mounted() {
     this.getData();
@@ -89,6 +109,8 @@ export default {
 
   data() {
     return {
+      id: this.loginId,
+      favorites: [],
       news: [],
       articles: [],
       nowpage: 0,
@@ -227,22 +249,36 @@ export default {
         },
       });
     },
+
+    listFavorites() {
+      axios({
+        method:'get',
+        url:'http://localhost:80/favorite/list',
+        params: {
+          userId: this.loginId,
+        },
+      }).then ((response => {
+        console.log(this.loginId);
+        this.favorites = response.data;
+
+      }))
+    }
   },
-  computed: {
-    filteredList() {
-      if (this.searchTerm === "") {
-        return this.dataList;
-      }
-      return (
-        this,
-        dataList.filter((num) => {
-          if (num.value.includes(this.searchTerm)) {
-            return num;
-          }
-        })
-      );
-    },
-  },
+  // computed: {
+  //   filteredList() {
+  //     if (this.searchTerm === "") {
+  //       return this.dataList;
+  //     }
+  //     return (
+  //       this,
+  //       dataList.filter((num) => {
+  //         if (num.value.includes(this.searchTerm)) {
+  //           return num;
+  //         }
+  //       })
+  //     );
+  //   },
+  // },
 };
 </script>
 <style scoped>

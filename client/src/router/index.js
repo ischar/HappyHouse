@@ -9,6 +9,7 @@ import UserView from '../views/UserView';
 import NewsView from '../views/NewsView';
 import Vuebar from 'vuebar';
 
+import FavoriteDetail from '../components/FavoriteDetail';
 import BoardList from '../components/board/BoardList';
 import BoardWrite from '../components/board/BoardWrite';
 import BoardDetail from '../components/board/BoardDetail';
@@ -86,6 +87,12 @@ const routes = [
         name: 'boardwrite',
         beforeEnter: onlyAuthUser,
         component: BoardWrite,
+      },
+      {
+        path: 'view/:aptCode',
+        name: 'favoritedetail',
+        beforeEnter: onlyAuthUser,
+        component: FavoriteDetail,
       },
       {
         path: 'view/:articleno',

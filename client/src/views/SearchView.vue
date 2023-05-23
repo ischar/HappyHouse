@@ -119,6 +119,7 @@ export default {
         dealYear: "",
         dealMonth: "",
         dealDay: "",
+        aptCode: "",
       },
     };
   },

@@ -16,6 +16,7 @@
 		<result column="dealDay" property="dealDay" />
 		<result column="area" property="area" />
 		<result column="dealAmount" property="dealAmount" />
+		<result column="aptCode" property="aptCode" />
 	</resultMap>
 	
 	<select id="gethouses" resultMap="house" parameterType="string">

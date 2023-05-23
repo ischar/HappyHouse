@@ -14,12 +14,14 @@ public class HouseDto {
 	private String dealDay;
 	private double area;
 	private String dealAmount;
+	private String aptCode;
+	
 	
 	public HouseDto() {
 	}
 
 	public HouseDto(String roadName, String buildYear, String dong, String apartmentName, double lng, double lat,
-			String dealYear, String dealMonth, String dealDay, double area, String dealAmount) {
+			String dealYear, String dealMonth, String dealDay, double area, String dealAmount, String aptCode) {
 		super();
 		this.roadName = roadName;
 		this.buildYear = buildYear;
@@ -32,6 +34,15 @@ public class HouseDto {
 		this.dealDay = dealDay;
 		this.area = area;
 		this.dealAmount = dealAmount;
+		this.aptCode = aptCode;
+	}
+
+	public String getAptCode() {
+		return aptCode;
+	}
+
+	public void setAptCode(String aptCode) {
+		this.aptCode = aptCode;
 	}
 
 	public String getRoadName() {
