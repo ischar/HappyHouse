@@ -41,5 +41,16 @@
 		WHERE id = #{userId}
 	</select>
 	
+	<select id="checkId" parameterType="java.lang.String" resultType="integer">
+		select count(*)
+		from users
+		WHERE id = #{userId}
+	</select>
+	
+	
+
+
+	
+	
 	
 </mapper>

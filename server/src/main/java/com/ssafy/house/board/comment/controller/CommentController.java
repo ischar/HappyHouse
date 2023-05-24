@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.house.board.comment.model.CommentDto;
 import com.ssafy.house.board.comment.service.CommentService;
-import com.ssafy.house.board.model.BoardDto;
-import com.ssafy.house.board.model.BoardParameterDto;
-import com.ssafy.house.board.service.BoardService;
+
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
