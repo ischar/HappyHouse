@@ -22,52 +22,51 @@
 </script>-->
 
 <template>
-    <div>sfsd</div>
+  <div>sfsd</div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-    name: 'FavoriteDetail',
-    data() {
-        return {
-            data: {},
-            list: [],
-        };
-    },
-    created() {
-        this.listFavorites();
-    },
-    methods: {
-        listFavorites() {
-            axios({
-                method: 'get',
-                url: 'http://localhost:80/favorite/lists',
-            }).then((response) => {
-                this.data = response.data;
-                if (this.data.length != 0) {
-                    for (var i=0; i< this.data.length; i++) {
-                        this.getAptList(this.data[i].aptCode);
-                    }
-                }
-            });
-        },
-
-        getAptList(aptCode) {
-            axios({
-                method:'post',
-                url:"http://localhost:80/houses/search/house",
-                params: {
-                    aptCode: aptCode,
-                },
-                responseType: "json",
-            }).then((response) => {
-                this.list.push(response.data);
-                
-            });
+  name: "FavoriteDetail",
+  data() {
+    return {
+      data: {},
+      list: [],
+    };
+  },
+  created() {
+    this.listFavorites();
+  },
+  methods: {
+    listFavorites() {
+      axios({
+        method: "get",
+        url: "http://localhost:80/favorite/lists",
+      }).then(response => {
+        this.data = response.data;
+        if (this.data.length != 0) {
+          for (var i = 0; i < this.data.length; i++) {
+            this.getAptList(this.data[i].aptCode);
+          }
         }
+      });
     },
+
+    getAptList(aptCode) {
+      axios({
+        method: "post",
+        url: "http://localhost:80/houses/search/favorite/house",
+        params: {
+          aptCode: aptCode,
+        },
+        responseType: "json",
+      }).then(response => {
+        this.list.push(response.data);
+      });
+    },
+  },
 };
 </script>
 
