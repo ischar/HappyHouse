@@ -1,15 +1,15 @@
 <template>
   <div style="position: relative; width: 100%;  overflow: hidden;">
     <div style=" 
-              width: 400px;
-              height: 100%;
-              background-color: white;
-              position: absolute;
-              text-align: center;
-              z-index: 2;
-              border: 0.5px solid #d86057;
+                    width: 400px;
+                    height: 100%;
+                    background-color: white;
+                    position: absolute;
+                    text-align: center;
+                    z-index: 2;
+                    border: 0.5px solid #d86057;
 
-            ">
+                  ">
       <div id="showdetail"></div>
       <div id="roadview" style="width: 400px; height: 300px;"></div>
       <div v-if="favoriteFlag" style="text-align:right">
@@ -48,7 +48,6 @@
           <p><b>0</b>개</p>
         </div>
       </div>
-
       <h3 v-if="favoriteFlag">정보</h3>
       <h3 v-if="favoriteFlag">거래내역</h3>
       <div id="content" style=" height: 100%; overflow: auto"></div>
@@ -81,7 +80,7 @@ export default {
   name: "KakaoMap",
   data() {
     return {
-      url : "",
+      url: "",
       aptCode: "",
       map: null,
       positions: [],
@@ -245,8 +244,8 @@ export default {
 
     displayMarker(place) {
       var imageSrc = this.url;
-      var imageSize = new kakao.maps.Size(32, 32), // 마커이미지의 크기입니다
-      imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      var imageSize = new kakao.maps.Size(24, 24), // 마커이미지의 크기입니다
+        imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
       var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
       var marker = new kakao.maps.Marker({

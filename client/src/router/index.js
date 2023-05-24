@@ -90,7 +90,7 @@ const routes = [
         component: BoardWrite,
       },
       {
-        path: 'view/:aptCode',
+        path: 'view/favorite/:aptCode',
         name: 'favoritedetail',
         beforeEnter: onlyAuthUser,
         component: FavoriteDetail,

@@ -8,7 +8,7 @@
               class="col-md-4 col-sm-12 shadow-lg p-5 bg-light"
               style="width: 600px">
               <div class="text-center">
-                <h3 class="text-dark">MyPage</h3>
+                <h3 style="margin-bottom:0px;" class="text-dark">MyPage</h3>
                 <img src="../../assets/user.png" style="width: 100px; height: 100px; margin-top: 20px; margin-bottom: 0px;">
               </div>
               <div class="p-7">

@@ -1,6 +1,23 @@
 <template>
   <section>
-   
+    <div class="input-group col-6 d-flex justify-content-center">
+      <div class="w-50 justify-content-center">
+        <input type="text" id="word" class="form-control" onfocus="this.value = this.value;" autocomplete="off"
+          v-model="state" @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
+          aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2" />
+      </div>
+
+    </div>
+    <div v-if="filteredStates && modal" class="w-100" style="absolute;">
+      <div class="col-6 d-flex w-100 justify-content-center" style="width:90%;">
+        <ul class="list-group justify-content-center w-50"
+          style="list-style-image:url('https://i.postimg.cc/Zqq5xL0k/pin.png'); border-radius: 0px; margin-left: 0.75%; position: fixed; z-index: 3;">
+          <li class="list-group-item"
+            style="border-width:0.5px; border-color: #d86057; font-weight: 700; color: #828282; width: 95%; text-align: left; margin-left: 10px;"
+            v-for="filteredState in filteredStates" @click="setState(filteredState)"> {{ filteredState }}</li>
+        </ul>
+      </div>
+    </div>
     <div class="row col-md-12 justify-content-center mb-2">
       <div class="form-group col-md-2">
         <select v-model="sidoValue" @change="changeGugun()" class="form-select" id="sido" name="sido">
@@ -109,6 +126,7 @@ export default {
   created() {
     // window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapScript();
     this.getAptList();
+    this.getSiGunGu();
   },
 
   mounted() {
@@ -135,13 +153,13 @@ export default {
       });
 
     },
-    filterStates() {
+    filterStates(e) {
       var count = 0;
       this.filteredStates = this.states.filter(state => {
 
         if (state != "" && state != null && state != " ")
 
-          return state.toLowerCase().includes(this.state.toLowerCase()) && count++ < 5;
+          return state.toLowerCase().includes(e.target.value.toLowerCase()) && count++ < 5;
       });
     },
 
@@ -153,7 +171,7 @@ export default {
       this.sidoValue = text[0];
       this.gugunValue = text[1];
       this.dongValue = text[2];
-      this.searchMap();
+      this.getAptList2();
     },
     showside(title) {
       console.log(title);

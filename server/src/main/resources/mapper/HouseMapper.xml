@@ -28,7 +28,9 @@
 		JOIN (SELECT apartmentName, buildYear, roadName, dong, lat, lng, dongCode,
 		aptCode FROM houseinfo) AS info
 		ON deal.aptCode = info.AptCode
-		WHERE info.dong=#{dong};
+		WHERE info.dongcode = (
+        SELECT dongcode FROM dongcode
+        where sidoName = #{sido} and gugunName = #{gugun} and dongName = #{dong})
 	</select>
 	
 	<select id="gethouse" resultMap="house" parameterType="string">

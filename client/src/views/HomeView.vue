@@ -42,7 +42,7 @@
         <div>
           <div class="input-group col-6 d-flex justify-content-center">
             <div class="w-50 justify-content-center">
-              <input type="text" id="word" class="form-control" onfocus="this.value = this.value;" autocomplete="off"
+              <input type="text" id="word" class="form-control" autocomplete="off"
                 v-model="state" @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
                 aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2" />
               <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
@@ -70,9 +70,9 @@
           :favorite="favorite">
           <!-- <router-link style="text-decoration: none; color:black;" :to="`/board/view/${favorite."> -->
           <ul style="list-style-image:url(https://i.postimg.cc/66zrhk3F/star.png)">
-            <router-link style="text-decoration: none; color: black;" :to="`/board/view/favorite/${favorite.aptCode}`">
-              <li>{{ favorite.apartmentName }} </li>
-            </router-link>
+            <!-- <router-link style="text-decoration: none; color: black;" :to="`/board/view/favorite/${favorite.aptCode}`"> -->
+              <li @click="aptDetail(favorite)"><b>{{ favorite.apartmentName }}</b> </li>
+            <!-- </router-link> -->
           </ul>
 
           <!-- </router-link> -->
@@ -158,6 +158,7 @@ export default {
   },
 
   methods: {
+  
     getSiGunGu() {
       axios({
         method: 'get',
@@ -175,14 +176,15 @@ export default {
       });
 
     },
-    filterStates() {
+    filterStates(e) {
       var count = 0;
+      console.log(e.target.value);
+      
       this.filteredStates = this.states.filter(state => {
+           if (state != "" && state != null && state != " ")
 
-        if (state != "" && state != null && state != " ")
-
-          return state.toLowerCase().includes(this.state.toLowerCase()) && count++ < 5;
-      });
+           return state.toLowerCase().includes(e.target.value.toLowerCase()) && count++ < 5;
+       });
     },
 
     setState(state) {
@@ -228,7 +230,7 @@ export default {
           alert("An error occurred while processing your request: " + error);
         });
     },
-
+ 
     changeGugun() {
       axios({
         method: "get",
@@ -279,6 +281,16 @@ export default {
         }
       })
     },
+
+    aptDetail(apt) {
+      this.$router.push({
+        name: "apt",
+        params: {
+          apt: apt,
+        }
+      })
+    },
+
     showNews() {
       axios({
         method: "get",

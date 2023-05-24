@@ -1,21 +1,10 @@
 <template>
-    <div> 
-        <p>{{ this.$route.params.favorite.aptCode }}</p>
-        <p>{{  }}</p>
-        <p>{{  }}</p>
-        <p>{{  }}</p>
+<div style="margin-top: 100px;">
+    <h2 style="text-align:center;">$route.params.apt.aptCode</h2>
+
+    <div>
+
     </div>
+</div>  
+
 </template>
-
-<script>
-    export default {
-        name: 'FavoriteDetail',
-    
-
-    data() {
-        return {
-            favorite: {},
-        }
-    }
-};
-</script>
