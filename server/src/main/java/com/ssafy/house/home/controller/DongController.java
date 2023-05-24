@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +44,17 @@ public class DongController {
 	@Autowired
 	private DongService dongService; 
 	
+	
+	@GetMapping("/sigungu") 
+	public ResponseEntity<?> getSiGungu() throws Exception {
+		try {
+			return new ResponseEntity<List<DongDto>>(dongService.getSiGunGu(), HttpStatus.OK); 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("서버 오류", HttpStatus.OK);
+		}
+		
+	}
 	@GetMapping("/sido")
     public ResponseEntity<List<String>> getSido() throws Exception {
         List<DongDto> list = dongService.findSido();

@@ -6,16 +6,16 @@
           <b>원하는 집을 찾으세요.</b>
         </h1>
       </div>
-      <div class="py-lg-5" style=" 
-            margin: 20px; 
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 3px solid rgba(216, 96, 87, 0.3);
-            padding: 25px;
-          ">
+      <div class="py-lg-5" style="  
+                      margin: 20px; 
+                      background: rgba(255, 255, 255, 0.2);
+                      border-radius: 16px;
+                      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                      backdrop-filter: blur(5px);
+                      -webkit-backdrop-filter: blur(5px);
+                      border: 3px solid rgba(216, 96, 87, 0.3);
+                      padding: 25px;
+                    ">
         <div class="row col-md-12 justify-content-center mb-2">
           <div class="form-group col-md-2">
             <select v-model="sidoValue" @change="changeGugun()" class="form-select" id="sido" name="sido">
@@ -39,20 +39,34 @@
             </button>
           </div>
         </div>
+        <div class="mt-0 pt-0 justify-content-center">
+          <div class="input-group mb-3 w-50 mb-0 pb-0">
+            <input type="text" id="word" class="form-control" onfocus="this.value = this.value;" autocomplete="off"
+              v-model="state" @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
+              aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2">
+            <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
+          </div>
+          <div v-if="filteredStates && modal" style="text-align:center;" class="mt-0 mb-0 ">
+            <ul class="list-group w-50 mt-0">
+              <li class="list-group-item" v-for="filteredState in filteredStates" @click="setState(filteredState)"> {{ filteredState }}</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
     <div style="text-align: center;">
       <div style="margin-left: 80px; width: 370px; float:left; display:inline-block">
         <li style="font-size:18px; margin-bottom: 0px;"><b>즐겨찾기</b></li>
         <hr style="color: #d86057;">
-        <div style="text-align:left; margin-left: 10px;" v-for="favorite in favorites" :key="favorite.userid" :favorite="favorite">
+        <div style="text-align:left; margin-left: 10px;" v-for="favorite in favorites" :key="favorite.userid"
+          :favorite="favorite">
           <!-- <router-link style="text-decoration: none; color:black;" :to="`/board/view/${favorite."> -->
-            <ul style="list-style-image:url(https://i.postimg.cc/66zrhk3F/star.png)">
-              <router-link style="text-decoration: none; color: black;" :to="`/board/view/favorite/${favorite.aptCode}`">
+          <ul style="list-style-image:url(https://i.postimg.cc/66zrhk3F/star.png)">
+            <router-link style="text-decoration: none; color: black;" :to="`/board/view/favorite/${favorite.aptCode}`">
               <li>{{ favorite.apartmentName }} </li>
             </router-link>
           </ul>
- 
+
           <!-- </router-link> -->
         </div>
       </div>
@@ -60,8 +74,12 @@
       <div style="margin-left: 80px; width: 370px; float:left; display:inline-block">
         <li style="font-size:18px; margin-bottom: 0px;"><b>공지사항</b></li>
         <hr style="color: #d86057;">
-        <div style="text-align:left; margin-left: 10px;" v-for="article in articles" :key="article.articleno" :article="article">
-          <router-link style="text-decoration: none; color:black;" :to="`/board/post/${article.articleno}`">
+
+
+        <div style="text-align:left; margin-left: 10px;" v-for="article in articles" :key="article.articleno"
+          :article="article">
+          <router-link style="text-decoration: none; color:black;" :to="`/board/view/${article.articleno}`">
+
             {{ article.subject }}
           </router-link>
         </div>
@@ -69,37 +87,40 @@
       <div style="margin-left: 80px; float:left; width: 370px; display:inline-block">
         <li style="font-size:18px; margin-bottom: 0px;"><b>오늘의뉴스</b></li>
         <hr style="color: #d86057;">
-          <div style="text-align:left; margin-left: 10px;" v-for="newss in news" :key="newss.link" :newss="newss">
-            <li v-html="newss.title" @click="readNews(newss)"></li>
-            <!-- <router-link style="text-decoration: none; color:black;" :to="/local"> {{ newss.title }}</router-link> -->
-          </div>
+        <div style="text-align:left; margin-left: 10px;" v-for="newss in news" :key="newss.link" :newss="newss">
+          <li v-html="newss.title" @click="readNews(newss)"></li>
+          <!-- <router-link style="text-decoration: none; color:black;" :to="/local"> {{ newss.title }}</router-link> -->
+        </div>
       </div>
 
     </div>
   </div>
-
 </div></template>
 
 <style scoped></style>
 
 <script>
+
 import axios from "axios";
 import BoardListItem from "@/components/board/BoardListItem";
 import http from "@/api/http";
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 
 export default {
+
   name: "HomeView",
   props: {
     msg: String,
   },
   created() {
+    this.getSiGunGu();
+
     http.get(`/board`, {}).then(response => {
       this.articles = response.data;
     });
     this.listFavorites();
   },
-  computed:{
+  computed: {
     ...mapState(["loginId"]),
   },
   mounted() {
@@ -109,6 +130,9 @@ export default {
 
   data() {
     return {
+      state: '',
+      states: [],
+      filteredStates: [],
       id: this.loginId,
       favorites: [],
       news: [],
@@ -122,28 +146,41 @@ export default {
       searchTerm: "",
       isFocus: false,
       selectedObj: null,
-      dataList: [
-        {
-          name: "One",
-          value: "one",
-        },
-        {
-          name: "Two",
-          value: "two",
-        },
-        {
-          name: "Three",
-          value: "three",
-        },
-        {
-          name: "Four",
-          value: "four",
-        },
-      ],
     };
   },
 
   methods: {
+    getSiGunGu() {
+      axios({
+        method: 'get',
+        url: 'http://localhost:80/address/sigungu',
+        responseType: 'json',
+      }).then((response) => {
+        var data = response.data;
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+          console.log(data[i]);
+          var text = data[i].sidoName + " " + data[i].gugunName + " " + data[i].dongName;
+          // console.log(text);
+          this.states.push(text);
+        }
+      });
+
+    },
+    filterStates() {
+      var count = 0;
+      this.filteredStates = this.states.filter(state => {
+
+        if (state != "" && state != null && state != " ")
+
+          return state.toLowerCase().includes(this.state.toLowerCase()) && count++ < 5;
+      });
+    },
+
+    setState(state) {
+      this.state = state;
+      this.modal = false;
+    },
     movePage() {
       this.$router.push({ name: "boardwrite" });
     },
@@ -252,39 +289,35 @@ export default {
 
     listFavorites() {
       axios({
-        method:'get',
-        url:'http://localhost:80/favorite/list',
+        method: 'get',
+        url: 'http://localhost:80/favorite/list',
         params: {
           userId: this.loginId,
         },
-      }).then ((response => {
+      }).then((response => {
         console.log(this.loginId);
         this.favorites = response.data;
 
       }))
     }
   },
-  // computed: {
-  //   filteredList() {
-  //     if (this.searchTerm === "") {
-  //       return this.dataList;
-  //     }
-  //     return (
-  //       this,
-  //       dataList.filter((num) => {
-  //         if (num.value.includes(this.searchTerm)) {
-  //           return num;
-  //         }
-  //       })
-  //     );
-  //   },
-  // },
 };
 </script>
 <style scoped>
 .form-control,
 .form-select {
   border-width: 3px;
+}
+
+.vueautocomplete,
+.vueautocomplete,
+.suggestionlist {
+  width: 300px;
+}
+
+.vueautocomplete input[type=text] {
+  width: 100%;
+  padding: 5px;
 }
 
 .form-control:focus,
