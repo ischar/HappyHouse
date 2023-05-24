@@ -19,4 +19,6 @@ public interface FavoriteMapper {
 
 	List<HouseDto> listFavorite(String userId);
 
+	List<HouseDto> listsFavorite();
+
 }

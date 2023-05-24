@@ -10,7 +10,7 @@ public interface HouseService {
 
 	List<HouseDto> gethouses(String dong);
 
-	List<HouseDto> getHouse(String title);
+	List<HouseDto> getApts(String aptCode);
 
 
 }

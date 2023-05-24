@@ -25,13 +25,15 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <b
-                  ><a
+                  >
+                  <router-link :to="{name : 'newslist'}">
+                  <a
                     class="nav-link active text-black"
                     aria-current="page"
                     href="${root}"
                     style="font-size: 18px"
                     >오늘의 뉴스</a
-                  ></b
+                  ></router-link></b
                 >
               </li>
               <div>

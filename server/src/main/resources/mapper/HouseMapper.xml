@@ -31,7 +31,7 @@
 		WHERE info.dong=#{dong};
 	</select>
 	
-	<select id="gethouse" resultMap="house" parameterType="string">
+	<select id="getApts" resultMap="house" parameterType="string">
 		SELECT
 		info.*, deal.dealAmount,deal.area, deal.dealYear, deal.dealMonth,
 		deal.dealDay
@@ -40,7 +40,7 @@
 		JOIN (SELECT apartmentName, buildYear, roadName, dong, lat, lng, dongCode,
 		aptCode FROM houseinfo) AS info
 		ON deal.aptCode = info.AptCode
-		WHERE info.apartmentName=#{title};
+		WHERE info.AptCode=#{aptCode};
 		
 	
 	</select>

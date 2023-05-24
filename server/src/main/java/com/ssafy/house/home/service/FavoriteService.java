@@ -15,4 +15,6 @@ public interface FavoriteService {
 	Integer checkFavorite(String userId, String aptCode);
 	List<HouseDto> listFavorite(String userId);
 
+	List<HouseDto> listsFavorite();
+
 }

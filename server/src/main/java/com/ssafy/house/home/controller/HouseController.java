@@ -39,9 +39,9 @@ public class HouseController {
 	    }
 	
 	@PostMapping("/search/house")
-	public ResponseEntity<?> getHouse(@RequestParam("title") String title) {
+	public ResponseEntity<?> getHouse(@RequestParam("aptCode") String aptCode) {
 		try {
-			return new ResponseEntity<List<HouseDto>>(houseService.getHouse(title), HttpStatus.OK);
+			return new ResponseEntity<List<HouseDto>>(houseService.getApts(aptCode), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);

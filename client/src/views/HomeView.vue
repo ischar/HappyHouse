@@ -86,7 +86,7 @@
 
         <div style="text-align:left; margin-left: 10px;" v-for="article in articles" :key="article.articleno"
           :article="article">
-          <router-link style="text-decoration: none; color:black;" :to="`/board/view/${article.articleno}`">
+          <router-link style="text-decoration: none; color:black;" :to="`/board/post/${article.articleno}`">
 
             {{ article.subject }}
           </router-link>
@@ -283,6 +283,9 @@ export default {
       axios({
         method: "get",
         url: "http://localhost:80/news",
+        params: {
+          num: 5,
+        },
         responseType: "json",
 
       }).then((response) => {
