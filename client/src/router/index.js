@@ -20,6 +20,7 @@ import UserInfo from '../components/user/UserInfo';
 import UserUpdate from '../components/user/UserUpdate';
 
 import NewsList from '../components/news/NewsList';
+import PasswordFind from '../components/user/PasswordFind'
 
 Vue.use(Vuebar);
 Vue.use(VueRouter);
@@ -137,6 +138,11 @@ const routes = [
         name: 'userupdate',
         component: UserUpdate,
       },
+      {
+        path: 'findpassword',
+        name:'passwordfind',
+        component: PasswordFind,
+      }
     ],
   },
 ];

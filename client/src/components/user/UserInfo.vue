@@ -33,17 +33,7 @@
                 </div>
 
                 <!-- 비밀번호 -->
-                <div class="input-group mb-3">
-                  <span
-                    class="input-group-text"
-                    style="background-color: #d86057">
-                    <img
-                      src="/img/lock.png"
-                      style="width: 20px; height: 20px" />
-                    <i class="bi bi-person-plus-fill text-white"></i
-                  ></span>
-                 비밀번호 : {{ loginPwd }}
-                </div>
+
 
                 <!-- 이름 -->
                 <div class="input-group mb-3">

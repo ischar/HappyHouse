@@ -12,9 +12,10 @@
               <!-- id -->
               <div class="input-group mb-3">
                 <span class="input-group-text" style="background-color: #929292"
-                  ><img src="/img/user.png" style="width: 20px; height: 20px" /><i
-                    class="bi bi-person-plus-fill text-white"
-                  ></i
+                  ><img
+                    src="/img/user.png"
+                    style="width: 20px; height: 20px" /><i
+                    class="bi bi-person-plus-fill text-white"></i
                 ></span>
                 <input
                   v-model="userid"
@@ -22,11 +23,10 @@
                   type="text"
                   class="form-control"
                   placeholder="아이디"
-                  name="id"
-                />
+                  name="id" />
                 <div>
-                <p v-if="idOk">아이디를 사용할 수 있습니다.</p>
-                <p v-else>5자 이상 10자 이하로 입력하세요.</p>
+                  <p v-if="idOk">아이디를 사용할 수 있습니다.</p>
+                  <p v-else>5자 이상 10자 이하로 입력하세요.</p>
                 </div>
                 <button @click="checkId">중복확인</button>
               </div>
@@ -34,9 +34,10 @@
               <!-- password-->
               <div class="input-group mb-3">
                 <span class="input-group-text" style="background-color: #929292"
-                  ><img src="/img/lock.png" style="width: 20px; height: 20px" /><i
-                    class="bi bi-key-fill text-white"
-                  ></i
+                  ><img
+                    src="/img/lock.png"
+                    style="width: 20px; height: 20px" /><i
+                    class="bi bi-key-fill text-white"></i
                 ></span>
                 <input
                   v-model="userpwd"
@@ -44,17 +45,17 @@
                   type="password"
                   class="form-control"
                   placeholder="비밀번호"
-                  name="pwd"
-                />
+                  name="pwd" />
                 <label v-if="pwdOk"> 비밀번호를 사용할 수 있습니다. </label>
                 <label v-else> 5자 이상 10자 이하로 입력하세요. </label>
               </div>
               <!-- 이름 -->
               <div class="input-group mb-3">
                 <span class="input-group-text" style="background-color: #929292"
-                  ><img src="/img/name.png" style="width: 20px; height: 20px" /><i
-                    class="bi bi-person-plus-fill text-white"
-                  ></i
+                  ><img
+                    src="/img/name.png"
+                    style="width: 20px; height: 20px" /><i
+                    class="bi bi-person-plus-fill text-white"></i
                 ></span>
                 <input
                   v-model="username"
@@ -63,16 +64,18 @@
                   type="text"
                   class="form-control"
                   placeholder="이름"
-                  name="name"
-                />
+                  name="name" />
               </div>
 
               <!-- 주소 -->
               <div class="input-group mb-3">
-                <span class="input-group-text" style="background-color: #929292">
-                  <img src="/img/address.png" style="width: 20px; height: 20px" /><i
-                    class="bi bi-person-plus-fill text-white"
-                  ></i
+                <span
+                  class="input-group-text"
+                  style="background-color: #929292">
+                  <img
+                    src="/img/address.png"
+                    style="width: 20px; height: 20px" /><i
+                    class="bi bi-person-plus-fill text-white"></i
                 ></span>
                 <input
                   v-model="useraddress"
@@ -81,15 +84,15 @@
                   type="text"
                   class="form-control"
                   placeholder="주소"
-                  name="address"
-                />
+                  name="address" />
               </div>
 
               <div class="input-group mb-3">
                 <span class="input-group-text" style="background-color: #929292"
-                  ><img src="/img/phone.png" style="width: 20px; height: 20px" /><i
-                    class="bi bi-person-plus-fill text-white"
-                  ></i
+                  ><img
+                    src="/img/phone.png"
+                    style="width: 20px; height: 20px" /><i
+                    class="bi bi-person-plus-fill text-white"></i
                 ></span>
                 <input
                   v-model="userphone"
@@ -101,8 +104,7 @@
                   placeholder="전화번호"
                   pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}"
                   maxlength="13"
-                  name="phone"
-                />
+                  name="phone" />
                 <!-- <input id="phoneNum" type="text" class="form-control" placeholder="전화번호"> -->
               </div>
 
@@ -110,8 +112,7 @@
                 @click="signup"
                 type="submit"
                 id="submitBtn"
-                class="btn btn-primary text-center mt-2"
-              >
+                class="btn btn-primary text-center mt-2">
                 Sign Up
               </button>
             </div>
@@ -122,8 +123,6 @@
   </section>
 </template>
 <script>
-
-
 import axios from "axios";
 import http from "@/api/http";
 export default {
@@ -138,36 +137,40 @@ export default {
       username: "",
       useraddress: "",
       userphone: "",
-      idOk:false,
-      pwdOk :false,
-      nameOk : false,
-      phoneOk : false,
-      addressOk : false,
+      idOk: false,
+      pwdOk: false,
+      nameOk: false,
+      phoneOk: false,
+      addressOk: false,
     };
   },
 
-watch:{
-  userid: function(){
-    if (this.userid.length >= 5 && this.userid.length <= 10) {
+  watch: {
+    userid: function () {
+      if (this.userid.length >= 5 && this.userid.length <= 10) {
         this.idOk = true;
       } else {
         this.idOk = false;
       }
-      
-  },
-  userpwd: function(){
-    if (this.userpwd.length >= 5 && this.userpwd.length <= 10) {
+    },
+    userpwd: function () {
+      if (this.userpwd.length >= 5 && this.userpwd.length <= 10) {
         this.pwdOk = true;
       } else {
         this.pwdOk = false;
       }
+    },
   },
-},
-
 
   methods: {
     signup() {
-      if (this.idOk == true && this.pwdOk == true && this.nameOk == true && this.phoneOk == true && this.addressOk == true) {
+      if (
+        this.idOk == true &&
+        this.pwdOk == true &&
+        this.nameOk == true &&
+        this.phoneOk == true &&
+        this.addressOk == true
+      ) {
         axios({
           method: "post",
           url: "http://localhost:80/signup",
@@ -181,14 +184,23 @@ watch:{
             phone: this.userphone,
           },
         }).then(() => {
-          this.$router.push({ name: "home" });
+          this.$router.push({name: "home"});
         });
       } else {
-        console.log(this.idOk + " " + this.pwdOk + " " + this.nameOk + " " + this.addressOk + " " + this.phoneOk);
+        console.log(
+          this.idOk +
+            " " +
+            this.pwdOk +
+            " " +
+            this.nameOk +
+            " " +
+            this.addressOk +
+            " " +
+            this.phoneOk
+        );
         alert("제대로 입력하세요!");
       }
     },
-
 
     ChangeNameValue() {
       if (this.username.length != 0) {
@@ -210,17 +222,17 @@ watch:{
         this.addressOk = false;
       }
     },
-    checkId(){
-       http.get(`/checkid/${this.userid}`).then((response) => {
+    checkId() {
+      http.get(`http://localhost:80/checkid/${this.userid}`).then(response => {
         console.log("응답");
         console.log(response);
-        if(response){
+        if (response) {
           alert("아이디를 사용할 수 있습니다.");
-        }else{
+        } else {
           alert("아이디를 사용할 수 없습니다.");
         }
       });
-    }
+    },
   },
 };
 </script>
