@@ -1,6 +1,6 @@
 <template>
   <div>
-     <section class="py-5 text-center container">
+    <section class="py-5 text-center container">
       <div class="container-fluid vh-100" style="margin-top: 100px">
         <div class="" style="margin-top: 200px">
           <div class="rounded d-flex justify-content-center">
@@ -28,7 +28,7 @@
                     value="${ loginName }"
                     placeholder="${userinfo.id}"
                     disabled >{{ loginName }}</input>-->
-                   아이디 :  {{ loginId }}
+                  아이디 : {{ loginId }}
                 </div>
 
                 <!-- 비밀번호 -->
@@ -41,7 +41,8 @@
                       style="width: 20px; height: 20px" />
                     <i class="bi bi-person-plus-fill text-white"></i
                   ></span>
-                  비밀번호 : 비번은 알려줄 수 없습니다...
+                  비밀번호 :
+                  <input v-model="updatedPwd" :placeholder="loginPwd" />
                 </div>
 
                 <!-- 이름 -->
@@ -51,10 +52,11 @@
                     style="background-color: #929292">
                     <img
                       src="/img/name.png"
-                      style="width: 20px; height: 20px" />  
+                      style="width: 20px; height: 20px" />
                     <i class="bi bi-person-plus-fill text-white"></i
                   ></span>
-                 이름 : <input v-model="updatedName" :placeholder="loginName">
+                  이름 :
+                  <input v-model="updatedName" :placeholder="loginName" />
                 </div>
 
                 <!-- 주소 -->
@@ -67,8 +69,8 @@
                       style="width: 20px; height: 20px" />
                     <i class="bi bi-person-plus-fill text-white"></i
                   ></span>
-                  주소 : <input  v-model="updatedAddr" :placeholder="loginAddr">
-                  
+                  주소 :
+                  <input v-model="updatedAddr" :placeholder="loginAddr" />
                 </div>
 
                 <div class="input-group mb-3">
@@ -80,10 +82,11 @@
                       style="width: 20px; height: 20px" />
                     <i class="bi bi-person-plus-fill text-white"></i
                   ></span>
-                휴대폰 번호 : <input v-model="updatedPhone"  :placeholder="loginPhone">
+                  휴대폰 번호 :
+                  <input v-model="updatedPhone" :placeholder="loginPhone" />
                 </div>
 
-                   <div @click="updateAccount()">수정 </div>
+                <div @click="updateAccount()">수정</div>
               </div>
             </div>
           </div>
@@ -91,56 +94,64 @@
       </div>
     </section>
   </div>
- <!-- </div> -->
+  <!-- </div> -->
 </template>
 
 <script>
 import {mapState} from "vuex";
 import http from "@/api/http";
-import router from '@/router/index';
+import router from "@/router/index";
 
 export default {
-  name: 'UserUpdate',
+  name: "UserUpdate",
   components: {},
-  computed:{
-    ...mapState(["loginId","loginPwd","loginName","loginAddr","loginPhone"]),
+  computed: {
+    ...mapState([
+      "loginId",
+      "loginPwd",
+      "loginName",
+      "loginAddr",
+      "loginPhone",
+    ]),
   },
   data() {
     return {
-      message: '',
-      updatedName: '',
-      updatedAddr: '',
-      updatedPhone: ''
+      message: "",
+      updatedName: "",
+      updatedAddr: "",
+      updatedPhone: "",
+      updatedPwd: "",
     };
   },
   created() {
     console.log("ㅠ");
-    this.updatedName = this.loginName,
-    this.updatedAddr = this.loginAddr,
-    this.updatedPhone = this.loginPhone
+    (this.updatedName = this.loginName),
+      (this.updatedAddr = this.loginAddr),
+      (this.updatedPhone = this.loginPhone),
+      (this.updatedPwd = this.loginPwd);
   },
   methods: {
-      updateAccount: function(){
+    updateAccount: function () {
       const member = {
-        id : this.loginId,
-        pwd : this.loginPwd,
-        name : this.updatedName,
-        address : this.updatedAddr,
-        phone : this.updatedPhone,
-      }
+        id: this.loginId,
+        pwd: this.updatedPwd,
+        name: this.updatedName,
+        address: this.updatedAddr,
+        phone: this.updatedPhone,
+      };
       console.log("들어와");
-      
-      http.put("/update",member).then(()=>{
+
+      http.put("/update", member).then(() => {
         alert("수정 성공하였습니다.");
         //this.reset();
 
-        this.$store.commit('SET_NAME', member.name);
-        this.$store.commit('SET_ADDR', member.address);
-        this.$store.commit('SET_PHONE', member.phone);
-        router.push({name:'userinfo'});
+        this.$store.commit("SET_NAME", member.name);
+        this.$store.commit("SET_ADDR", member.address);
+        this.$store.commit("SET_PHONE", member.phone);
+        this.$store.commit("SET_PWD", member.pwd);
+        router.push({name: "userinfo"});
       });
-
-    }
+    },
   },
 };
 </script>

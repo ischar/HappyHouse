@@ -2,12 +2,6 @@
   <div class="regist">
     <h1 class="underline">SSAFY 게시글 수정</h1>
     <div class="regist_form">
-      <label for="userid">작성자</label>
-      <input
-        type="text"
-        id="userid"
-        v-model="article.userid"
-        ref="userid" /><br />
       <label for="subject">제목</label>
       <input
         type="text"
@@ -31,9 +25,13 @@
 
 <script>
 import http from "@/api/http";
+import {mapState} from "vuex";
 
 export default {
   name: "BoardModify",
+  computed: {
+    ...mapState(["loginId"]),
+  },
   data() {
     return {
       article: Object,
@@ -42,18 +40,10 @@ export default {
   created() {
     console.log(this.$route.params.articleno);
     // 비동기
-    // TODO : 글번호에 해당하는 글정보 얻기.
+    // 글번호에 해당하는 글정보 얻기.
     http.get(`/board/${this.$route.params.articleno}`).then(({data}) => {
       this.article = data;
     });
-    // this.article = {
-    //   articleno: 10,
-    //   userid: "ssafy",
-    //   subject: "안녕하세요",
-    //   content: "안녕하세요!!!!",
-    //   hit: 10,
-    //   regtime: "2022-11-08 17:03:15",
-    // };
   },
   methods: {
     // 입력값 체크하기 - 체크가 성공하면 registArticle 호출
@@ -62,10 +52,7 @@ export default {
       // 작성자아이디, 제목, 내용이 없을 경우 각 항목에 맞는 메세지를 출력
       let err = true;
       let msg = "";
-      !this.article.userid &&
-        ((msg = "작성자 입력해주세요"),
-        (err = false),
-        this.$refs.userid.focus());
+
       err &&
         !this.article.subject &&
         ((msg = "제목 입력해주세요"),

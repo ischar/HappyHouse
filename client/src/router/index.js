@@ -33,9 +33,10 @@ const onlyAuthUser = async (to, from, next) => {
   console.log("로그인 확인");
 
   if (!checkUserInfo) {
-    alert("로그인이 필요한 페이지입니다..");
+    alert("로그인이 필요한 페이지입니다.");
     // next({ name: "login" });
-    router.push({ name: "userlogin" });
+    router.push({ name: "userlogin" }).catch(() => {});
+    
   } else {
     next();
   }
@@ -95,7 +96,7 @@ const routes = [
         component: FavoriteDetail,
       },
       {
-        path: 'view/:articleno',
+        path: 'post/:articleno',
         name: 'boarddetail',
         beforeEnter: onlyAuthUser,
         component: BoardDetail,

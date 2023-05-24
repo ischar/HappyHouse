@@ -21,3 +21,4 @@ public interface UserService {
 	
 	public Integer deleteUser(String userId) throws SQLException;
 }
+

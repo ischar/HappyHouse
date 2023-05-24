@@ -74,9 +74,12 @@
       <div style="margin-left: 80px; width: 370px; float:left; display:inline-block">
         <li style="font-size:18px; margin-bottom: 0px;"><b>공지사항</b></li>
         <hr style="color: #d86057;">
+
+
         <div style="text-align:left; margin-left: 10px;" v-for="article in articles" :key="article.articleno"
           :article="article">
           <router-link style="text-decoration: none; color:black;" :to="`/board/view/${article.articleno}`">
+
             {{ article.subject }}
           </router-link>
         </div>
