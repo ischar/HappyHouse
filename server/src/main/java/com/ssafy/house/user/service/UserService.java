@@ -23,5 +23,7 @@ public interface UserService {
 
 	public Integer checkId(String tmpid);
 
+	public String find(UserDto userDto);
+
 
 }

@@ -88,5 +88,15 @@ public class UserRestController {
 		else
 			return true;
 	}
+	
+	@PostMapping("/search")
+	public String find(@RequestBody UserDto userDto) throws Exception {
+		if(!userService.find(userDto).isEmpty()) {
+			return userService.find(userDto);
+		}else
+			return "존재하지 않는 회원입니다.";
+	}
+	
+	
 
 }
