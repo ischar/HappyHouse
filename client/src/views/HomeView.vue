@@ -39,16 +39,16 @@
             </button>
           </div>
         </div>
-        <div>
-          <div class="input-group mb-3">
+        <div class="mt-0 pt-0 justify-content-center">
+          <div class="input-group mb-3 w-50 mb-0 pb-0">
             <input type="text" id="word" class="form-control" onfocus="this.value = this.value;" autocomplete="off"
-              v-model="state" @input="filterStates" @focus="modal = true" placeholder="Recipient's username"
-              aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+              v-model="state" @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
+              aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2">
+            <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
           </div>
-          <div v-if="filteredStates && modal">
-            <ul>
-              <li v-for="filteredState in filteredStates" @click="setState(filteredState)"> {{ filteredState }}</li>
+          <div v-if="filteredStates && modal" style="text-align:center;" class="mt-0 mb-0 ">
+            <ul class="list-group w-50 mt-0">
+              <li class="list-group-item" v-for="filteredState in filteredStates" @click="setState(filteredState)"> {{ filteredState }}</li>
             </ul>
           </div>
         </div>
