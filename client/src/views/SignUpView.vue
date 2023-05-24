@@ -18,15 +18,17 @@
                 ></span>
                 <input
                   v-model="userid"
-                  @change="ChangeIdValue"
                   id="id"
                   type="text"
                   class="form-control"
                   placeholder="아이디"
                   name="id"
                 />
-                <label v-if="idOK">아이디를 사용할 수 있습니다.</label>
-                <label v-else>5자 이상 10자 이하로 입력하세요.</label>
+                <div>
+                <p v-if="idOk">아이디를 사용할 수 있습니다.</p>
+                <p v-else>5자 이상 10자 이하로 입력하세요.</p>
+                </div>
+                <button @click="checkId">중복확인</button>
               </div>
 
               <!-- password-->
@@ -38,15 +40,14 @@
                 ></span>
                 <input
                   v-model="userpwd"
-                  @change="ChangePwdValue"
                   id="pwd"
                   type="password"
                   class="form-control"
                   placeholder="비밀번호"
                   name="pwd"
                 />
-                <label v-if="pwd"> 비밀번호를 사용할 수 있습니다. </label>
-                <label> 5자 이상 10자 이하로 입력하세요. </label>
+                <label v-if="pwdOk"> 비밀번호를 사용할 수 있습니다. </label>
+                <label v-else> 5자 이상 10자 이하로 입력하세요. </label>
               </div>
               <!-- 이름 -->
               <div class="input-group mb-3">
@@ -121,13 +122,10 @@
   </section>
 </template>
 <script>
-var idOk = false;
-var pwdOk = false;
-var nameOk = false;
-var phoneOk = false;
-var addressOk = false;
+
 
 import axios from "axios";
+import http from "@/api/http";
 export default {
   name: "SignUpView",
   props: {
@@ -140,14 +138,36 @@ export default {
       username: "",
       useraddress: "",
       userphone: "",
+      idOk:false,
+      pwdOk :false,
+      nameOk : false,
+      phoneOk : false,
+      addressOk : false,
     };
   },
 
+watch:{
+  userid: function(){
+    if (this.userid.length >= 5 && this.userid.length <= 10) {
+        this.idOk = true;
+      } else {
+        this.idOk = false;
+      }
+      
+  },
+  userpwd: function(){
+    if (this.userpwd.length >= 5 && this.userpwd.length <= 10) {
+        this.pwdOk = true;
+      } else {
+        this.pwdOk = false;
+      }
+  },
+},
 
 
   methods: {
     signup() {
-      if (idOk == true && pwdOk == true && nameOk == true && phoneOk == true && addressOk == true) {
+      if (this.idOk == true && this.pwdOk == true && this.nameOk == true && this.phoneOk == true && this.addressOk == true) {
         axios({
           method: "post",
           url: "http://localhost:80/signup",
@@ -160,52 +180,47 @@ export default {
             address: this.useraddress,
             phone: this.userphone,
           },
-        }).then((response) => {
+        }).then(() => {
           this.$router.push({ name: "home" });
         });
       } else {
-        console.log(idOk + " " + pwdOk + " " + nameOk + " " + addressOk + " " + phoneOk);
+        console.log(this.idOk + " " + this.pwdOk + " " + this.nameOk + " " + this.addressOk + " " + this.phoneOk);
         alert("제대로 입력하세요!");
       }
     },
-    ChangeIdValue() {
-      alert(idOk);
-      if (this.userid.length >= 5 && this.userid.length <= 10) {
-        idOk = true;
-        alert("sdf");
-      } else {
-        idOk = false;
-      }
-    },
 
-    ChangePwdValue() {
-      if (this.userpwd.length >= 5 && this.userid.length <= 10) {
-        pwdOk = true;
-      } else {
-        pwdOk = false;
-      }
-    },
 
     ChangeNameValue() {
       if (this.username.length != 0) {
-        nameOk = true;
+        this.nameOk = true;
       } else {
-        nameOk = false;
+        this.nameOk = false;
       }
     },
 
     ChangePhoneValue() {
       if (this.userphone.length != 0) {
-        phoneOk = true;
+        this.phoneOk = true;
       }
     },
     ChangeAddressValue() {
       if (this.useraddress.length != 0) {
-        addressOk = true;
+        this.addressOk = true;
       } else {
-        addressOk = false;
+        this.addressOk = false;
       }
     },
+    checkId(){
+       http.get(`/checkid/${this.userid}`).then((response) => {
+        console.log("응답");
+        console.log(response);
+        if(response){
+          alert("아이디를 사용할 수 있습니다.");
+        }else{
+          alert("아이디를 사용할 수 없습니다.");
+        }
+      });
+    }
   },
 };
 </script>
