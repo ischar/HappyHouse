@@ -6,16 +6,16 @@
           <b>원하는 집을 찾으세요.</b>
         </h1>
       </div>
-      <div class="py-lg-5" style="  
-                      margin: 20px; 
-                      background: rgba(255, 255, 255, 0.2);
-                      border-radius: 16px;
-                      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-                      backdrop-filter: blur(5px);
-                      -webkit-backdrop-filter: blur(5px);
-                      border: 3px solid rgba(216, 96, 87, 0.3);
-                      padding: 25px;
-                    ">
+      <div class="py-lg-5" style="fixed; position: relative; z-index:2 ;
+                        margin: 20px; 
+                        background: rgba(255, 255, 255, 0.2);
+                        border-radius: 16px;
+                        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                        backdrop-filter: blur(5px);
+                        -webkit-backdrop-filter: blur(5px);
+                        border: 3px solid rgba(216, 96, 87, 0.3);
+                        padding: 25px;
+                      ">
         <div class="row col-md-12 justify-content-center mb-2">
           <div class="form-group col-md-2">
             <select v-model="sidoValue" @change="changeGugun()" class="form-select" id="sido" name="sido">
@@ -39,24 +39,32 @@
             </button>
           </div>
         </div>
-        <div class="mt-0 pt-0 justify-content-center">
-          <div class="input-group mb-3 w-50 mb-0 pb-0">
-            <input type="text" id="word" class="form-control" onfocus="this.value = this.value;" autocomplete="off"
-              v-model="state" @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
-              aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2">
-            <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
+        <div>
+          <div class="input-group col-6 d-flex justify-content-center">
+            <div class="w-50 justify-content-center">
+              <input type="text" id="word" class="form-control" onfocus="this.value = this.value;" autocomplete="off"
+                v-model="state" @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
+                aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2" />
+              <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
+            </div>
+
           </div>
-          <div v-if="filteredStates && modal" style="text-align:center;" class="mt-0 mb-0 ">
-            <ul class="list-group w-50 mt-0">
-              <li class="list-group-item" v-for="filteredState in filteredStates" @click="setState(filteredState)"> {{ filteredState }}</li>
-            </ul>
+          <div v-if="filteredStates && modal" class="w-100" style="absolute;">
+            <div class="col-6 d-flex w-100 justify-content-center" style="width:90%;">
+              <ul class="list-group justify-content-center w-50"
+                style="list-style-image:url('https://i.postimg.cc/Zqq5xL0k/pin.png'); border-radius: 0px; margin-left: 0.75%; position: fixed; z-index: 2;">
+                <li class="list-group-item"
+                  style="border-width:0.5px; border-color: #d86057; font-weight: 700; color: #828282; width: 95%; text-align: left; margin-left: 10px;"
+                  v-for="filteredState in filteredStates" @click="setState(filteredState)"> {{ filteredState }}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </section>
     <div style="text-align: center;">
       <div style="margin-left: 80px; width: 370px; float:left; display:inline-block">
-        <li style="font-size:18px; margin-bottom: 0px;"><b>즐겨찾기</b></li>
+        <li style="list-style-type: none; font-size:18px; margin-bottom: 0px;"><b>즐겨찾기</b></li>
         <hr style="color: #d86057;">
         <div style="text-align:left; margin-left: 10px;" v-for="favorite in favorites" :key="favorite.userid"
           :favorite="favorite">
@@ -72,7 +80,7 @@
       </div>
 
       <div style="margin-left: 80px; width: 370px; float:left; display:inline-block">
-        <li style="font-size:18px; margin-bottom: 0px;"><b>공지사항</b></li>
+        <li style="list-style-type: none; font-size:18px; margin-bottom: 0px;"><b>공지사항</b></li>
         <hr style="color: #d86057;">
 
 
@@ -85,10 +93,10 @@
         </div>
       </div>
       <div style="margin-left: 80px; float:left; width: 370px; display:inline-block">
-        <li style="font-size:18px; margin-bottom: 0px;"><b>오늘의뉴스</b></li>
+        <li style="list-style-type: none; font-size:18px; margin-bottom: 0px;"><b>오늘의뉴스</b></li>
         <hr style="color: #d86057;">
         <div style="text-align:left; margin-left: 10px;" v-for="newss in news" :key="newss.link" :newss="newss">
-          <li v-html="newss.title" @click="readNews(newss)"></li>
+          <li style="list-style-type: none;" v-html="newss.title" @click="readNews(newss)"></li>
           <!-- <router-link style="text-decoration: none; color:black;" :to="/local"> {{ newss.title }}</router-link> -->
         </div>
       </div>
@@ -180,6 +188,12 @@ export default {
     setState(state) {
       this.state = state;
       this.modal = false;
+
+      var text = state.split(" ");
+      this.sidoValue = text[0];
+      this.gugunValue = text[1];
+      this.dongValue = text[2];
+      this.searchMap();
     },
     movePage() {
       this.$router.push({ name: "boardwrite" });
@@ -324,5 +338,4 @@ export default {
 .form-select:valid:focus {
   box-shadow: none;
   border: 3px solid #d86057;
-}
-</style>
+}</style>

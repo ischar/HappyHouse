@@ -1,54 +1,33 @@
 <template>
   <section>
-        <div class="row col-md-12 justify-content-center mb-2">
-          <div class="form-group col-md-2">
-            <select
-              v-model="sidoValue"
-              @change="changeGugun()"
-              class="form-select"
-              id="sido"
-              name="sido"
-            >
-              <option value="">시도 선택</option>
-            </select>
-          </div>
-          <div class="form-group col-md-2">
-            <select
-              v-model="gugunValue"
-              @change="changeDong()"
-              class="form-select"
-              id="gugun"
-              name="gugun"
-            >
-              <option value="">구군 선택</option>
-            </select>
-          </div>
-          <div class="form-group col-md-2">
-            <select
-              v-model="dongValue"
-              class="form-select"
-              id="dong"
-              name="dong"
-            >
-              <option value="">동 선택</option>
-            </select>
-          </div>
-          <div class="form-group col-md-2">
-            <button
-              @click="getAptList2()"
-              type="submit"
-              id="list-btn"
-              class="btn"
-              style="background-color: #d86057; color: white"
-            >
-              검색
-            </button>
+   
+    <div class="row col-md-12 justify-content-center mb-2">
+      <div class="form-group col-md-2">
+        <select v-model="sidoValue" @change="changeGugun()" class="form-select" id="sido" name="sido">
+          <option value="">시도 선택</option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <select v-model="gugunValue" @change="changeDong()" class="form-select" id="gugun" name="gugun">
+          <option value="">구군 선택</option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <select v-model="dongValue" class="form-select" id="dong" name="dong">
+          <option value="">동 선택</option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <button @click="getAptList2()" type="submit" id="list-btn" class="btn"
+          style="background-color: #d86057; color: white">
+          검색
+        </button>
 
-          </div>
-        </div>
+      </div>
+    </div>
 
     <section>
-    <!--
+      <!--
       <div style="text-align: center">
         <h1>
           {{ $route.params.sido }} {{ $route.params.gugun }} {{ $route.params.dong }} 거래내역 
@@ -57,7 +36,7 @@
       -->
       <div class="row justify-content-center vh-100">
         <KakaoMap refs="kakao" v-bind:houses="datas" />
-        
+
         <!--
         <div
           id="scroll-box"
@@ -103,6 +82,9 @@ export default {
 
   data() {
     return {
+      state: '',
+      states: [],
+      filteredStates: [],
       sidoValue: "",
       gugunValue: "",
       dongValue: "",
@@ -130,12 +112,49 @@ export default {
   },
 
   mounted() {
-     // this.$refs.KakaoMap.loadMaker();
+    // this.$refs.KakaoMap.loadMaker();
 
-  this.getData()
+    this.getData()
   },
 
   methods: {
+    getSiGunGu() {
+      axios({
+        method: 'get',
+        url: 'http://localhost:80/address/sigungu',
+        responseType: 'json',
+      }).then((response) => {
+        var data = response.data;
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+          console.log(data[i]);
+          var text = data[i].sidoName + " " + data[i].gugunName + " " + data[i].dongName;
+          // console.log(text);
+          this.states.push(text);
+        }
+      });
+
+    },
+    filterStates() {
+      var count = 0;
+      this.filteredStates = this.states.filter(state => {
+
+        if (state != "" && state != null && state != " ")
+
+          return state.toLowerCase().includes(this.state.toLowerCase()) && count++ < 5;
+      });
+    },
+
+    setState(state) {
+      this.state = state;
+      this.modal = false;
+
+      var text = state.split(" ");
+      this.sidoValue = text[0];
+      this.gugunValue = text[1];
+      this.dongValue = text[2];
+      this.searchMap();
+    },
     showside(title) {
       console.log(title);
       this.title = title;
@@ -217,19 +236,19 @@ export default {
     getAptList2() {
       axios({
         method: "post",
-        url : "http://localhost:80/houses/search",
+        url: "http://localhost:80/houses/search",
         responseType: "json",
         data: {
-        sidoName : this.sidoValue,
-        gugunName : this.gugunValue,
-        dongName: this.dongValue,
+          sidoName: this.sidoValue,
+          gugunName: this.gugunValue,
+          dongName: this.dongValue,
         },
-      }).then ((response) => {
+      }).then((response) => {
         this.datas = response.data;
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .catch(function (error) {
+          console.log(error);
+        });
 
     },
     // setCenter(lat, lng) {

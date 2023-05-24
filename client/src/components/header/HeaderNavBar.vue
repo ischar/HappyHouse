@@ -34,20 +34,18 @@
                   ></b
                 >
               </li>
-              <div>
                 <li class="nav-item" style="font-size: 18px; font-weight: 700">
-                  <router-link
+                  <router-link class="nav-link active text-black"
                     style="text-decoration: none; color: black"
                     to="/board"
                     >공지사항</router-link
                   >
                 </li>
-              </div>
               <div>
                 <router-link
                   style="text-decoration: none"
                   :to="{name: 'userinfo'}">
-                  <li class="nav-item">
+                  <li class="nav-item" style="padding: 0px; margin:0px;">
                     <a
                       class="nav-link active text-black text-decoration-none"
                       style="
