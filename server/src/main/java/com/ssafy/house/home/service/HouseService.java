@@ -11,6 +11,8 @@ public interface HouseService {
 	List<HouseDto> gethouses(String dong);
 
 	List<HouseDto> getApts(String aptCode);
+	
+	List<HouseDto> getHouse(String title);
 
 
 }

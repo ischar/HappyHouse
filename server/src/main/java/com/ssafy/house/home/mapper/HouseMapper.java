@@ -15,6 +15,6 @@ public interface HouseMapper {
 
 	List<HouseDto> getApts(String aptCode);
 
-
+	List<HouseDto> gethouse(String title);
 
 }

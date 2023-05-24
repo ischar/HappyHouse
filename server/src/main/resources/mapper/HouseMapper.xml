@@ -41,6 +41,19 @@
 		aptCode FROM houseinfo) AS info
 		ON deal.aptCode = info.AptCode
 		WHERE info.AptCode=#{aptCode};
+	</select>
+	
+	
+		<select id="gethouse" resultMap="house" parameterType="string">
+		SELECT
+		info.*, deal.dealAmount,deal.area, deal.dealYear, deal.dealMonth,
+		deal.dealDay
+		FROM (SELECT dealAmount, area, dealYear, dealMonth, dealDay, aptCode FROM
+		housedeal) AS deal
+		JOIN (SELECT apartmentName, buildYear, roadName, dong, lat, lng, dongCode,
+		aptCode FROM houseinfo) AS info
+		ON deal.aptCode = info.AptCode
+		WHERE info.apartmentName=#{title};
 		
 	
 	</select>
