@@ -16,6 +16,7 @@ public interface UserDao {
 	String userPwdSearch(UserDto user) throws SQLException;
 	Integer deleteUser(String userId) throws SQLException;
 	Integer checkId(String tmpid);
+	String find(UserDto userDto);
 
 	
 }
