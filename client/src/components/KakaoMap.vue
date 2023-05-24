@@ -61,6 +61,8 @@
 import { left } from "@popperjs/core";
 import axios from "axios";
 import { mapState, mapActions } from "vuex";
+import store from "@/store";
+import router from "@/router/index"
 // 마커이미지의 크기입니다
 export default {
   props: {
@@ -134,6 +136,18 @@ export default {
     },
 
     addFavorite() {
+            const checkUserInfo = store.getters["checkUser"];
+  console.log(checkUserInfo);
+  console.log("애드애드 로그인 확인");
+
+  if (!checkUserInfo) {
+    alert("로그인이 필요한 서비스입니다.");
+    // next({ name: "login" });
+    router.push({ name: "userlogin" }).catch(() => {});
+    
+  } else {
+    
+  
       axios({
         method: "post",
         params: {
@@ -146,6 +160,7 @@ export default {
         this.favoriteOnOff = true;
         console.log("add");
       });
+    }
     },
     deleteFavorite() {
       axios({
