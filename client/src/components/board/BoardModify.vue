@@ -1,24 +1,30 @@
 <template>
-  <div class="regist">
-    <h1 class="underline">SSAFY 게시글 수정</h1>
-    <div class="regist_form">
-      <label for="subject">제목</label>
-      <input
-        type="text"
-        id="subject"
-        v-model="article.subject"
-        ref="subject" /><br />
-      <label for="content">내용</label>
-      <br />
-      <textarea
-        id="content"
-        v-model="article.content"
-        ref="content"
-        cols="35"
-        rows="5"></textarea
-      ><br />
-      <button @click="checkValue">수정</button>
-      <button @click="moveList">목록</button>
+  <div class="container justify-content-center text-center">
+    <div class="regist justify-content-center">
+      <h1 class="underline" style="margin-top: 50px; font-size: 30px">
+        게시글 수정
+      </h1>
+      <div class="regist_form">
+        <label for="subject" style="margin-right: 10px">제목</label>
+        <input
+          class="w-75"
+          type="text"
+          id="subject"
+          v-model="article.subject"
+          ref="subject" /><br />
+        <label for="content" style="margin-top: 15px">내용</label>
+        <br />
+        <textarea
+          class="w-75"
+          id="content"
+          v-model="article.content"
+          ref="content"
+          cols="35"
+          rows="5"></textarea
+        ><br />
+        <button class="btn btn-primary" @click="checkValue">수정</button>&nbsp;
+        <button class="btn btn-primary" @click="moveList">목록</button>
+      </div>
     </div>
   </div>
 </template>
