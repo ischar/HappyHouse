@@ -1,27 +1,22 @@
 <template>
   <div style="position: relative; width: 100%; overflow: hidden">
-    <div
-      style="
-        width: 400px;
-        height: 100%;
-        background-color: white;
-        position: absolute;
-        text-align: center;
-        z-index: 2;
-        border: 0.5px solid #d86057;
-      ">
+
+    <div style="
+                width: 400px;
+                height: 100%;
+                background-color: white;
+                position: absolute;
+                text-align: center;
+                z-index: 2;
+                border: 0.5px solid #d86057;
+              ">
       <div id="showdetail"></div>
       <div id="roadview" style="width: 400px; height: 300px"></div>
       <div v-if="favoriteFlag" style="text-align: right">
-        <img
-          v-if="favoriteOnOff"
-          @click="deleteFavorite()"
-          src="../assets/favoriteon.png"
+        <img v-if="favoriteOnOff" @click="deleteFavorite()" src="../assets/favoriteon.png"
           style="margin: 8px; width: 30px; height: 30px" />
-        <img
-          v-else
-          @click="addFavorite()"
-          src="../assets/favoriteoff.png"
+        <img v-else @click="addFavorite()" src="../assets/favoriteoff.png"
+
           style="margin: 8px; width: 30px; height: 30px" />
       </div>
       <div v-if="favoriteFlag" style="text-align: center; margin: 10px">
@@ -47,23 +42,26 @@
           <p><b>0</b>개</p>
         </div>
         <div style="float: left">
-          <img
-            src="../assets/train-station.png"
-            style="width: 40px; height: 40px" />
+
+          <img src="../assets/train-station.png" style="width: 40px; height: 40px" />
+
           <p><b>역</b></p>
         </div>
         <div style="float: left; margin-top: 2.5%; margin-left: 5px">
           <p><b>0</b>개</p>
         </div>
       </div>
-
       <h3 v-if="favoriteFlag">정보</h3>
       <h3 v-if="favoriteFlag">거래내역</h3>
       <div id="content" style="height: 100%; overflow: auto"></div>
+
     </div>
-    <div
-      id="map"
-      style="width: 100%; height: 100%; border: 0.5px solid #d86057"></div>
+
+    <div v-show="housesFlag" id="map" style="width: 100%; height: 100%; border: 0.5px solid #f3cfcc"></div>
+    <div v-if="!housesFlag" style="width: 100%; height: 100%; border: 0.5px solid #f3cfcc; text-align: center">
+      <img src="../assets/search.png" style="width: 350px; height: 350px; margin-left: 300px" />
+    </div>
+
   </div>
 </template>
 
@@ -93,6 +91,10 @@ export default {
   name: "KakaoMap",
   data() {
     return {
+
+
+      housesFlag: true,
+
       url: "",
       aptCode: "",
       map: null,
@@ -133,6 +135,11 @@ export default {
       document.head.appendChild(script);
     },
     loadMap() {
+      if (this.houses.length != 0) {
+        this.housesFlag = true;
+      } else {
+        this.housesFlag = false;
+      }
       this.favoriteFlag = false;
       const container = document.getElementById("map");
       const options = {
@@ -199,6 +206,11 @@ export default {
     },
 
     loadMaker(houses) {
+      if (houses.length != 0) {
+        this.housesFlag = true;
+      } else {
+        this.housesFlag = false;
+      }
       var imageSrc = "https://i.postimg.cc/ZRcqsDZ9/location.png";
       this.favoriteOnOff = false;
       var imageSize = new kakao.maps.Size(36, 42); // 마커이미지의 크기입니다
@@ -249,26 +261,13 @@ export default {
               this.showContent(text2[0]);
               this.aptCode = text2[1];
 
-              this.showFacilities(
-                "HP8",
-                "https://i.postimg.cc/T13Ng1FP/hospital.png"
-              );
-              this.showFacilities(
-                "MT1",
-                "https://i.postimg.cc/zv4wvf16/store.png"
-              );
-              this.showFacilities(
-                "SC4",
-                "https://i.postimg.cc/s25LRt53/school.png"
-              );
-              this.showFacilities(
-                "SW8",
-                "https://i.postimg.cc/nz00FZrf/train-station.png"
-              );
-              this.showFacilities(
-                "CS2",
-                "https://i.postimg.cc/YCWn1JnQ/convenience-store.png"
-              );
+
+              this.showFacilities("HP8", "https://i.postimg.cc/T13Ng1FP/hospital.png");
+              this.showFacilities("MT1", "https://i.postimg.cc/zv4wvf16/store.png");
+              this.showFacilities("SC4", "https://i.postimg.cc/s25LRt53/school.png");
+              this.showFacilities("SW8", "https://i.postimg.cc/nz00FZrf/train-station.png");
+              this.showFacilities("CS2", "https://i.postimg.cc/YCWn1JnQ/convenience-store.png");
+
             }
             // roadview.setPanoId(panoId, marker.getPosition()); //panoId와 중심좌표를 통해 로드뷰 실행
           });
@@ -280,18 +279,18 @@ export default {
     showFacilities(category, url) {
       var ps = new kakao.maps.services.Places(this.map);
       this.url = url;
-      ps.categorySearch(category, this.placesSearchCB, {useMapBounds: true});
+
+      ps.categorySearch(category, this.placesSearchCB, { useMapBounds: true });
+
     },
 
     displayMarker(place) {
       var imageSrc = this.url;
-      var imageSize = new kakao.maps.Size(32, 32), // 마커이미지의 크기입니다
-        imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-      var markerImage = new kakao.maps.MarkerImage(
-        imageSrc,
-        imageSize,
-        imageOption
-      );
+
+      var imageSize = new kakao.maps.Size(24, 24), // 마커이미지의 크기입니다
+        imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
 
       var marker = new kakao.maps.Marker({
         map: this.map,
@@ -317,7 +316,9 @@ export default {
         url: "http://localhost:80/houses/search/house",
         responseType: "json",
       })
-        .then(response => {
+
+        .then((response) => {
+
           if (this.loginId != null) {
             this.checkFavorite(this.loginId, this.aptCode);
           }
@@ -368,6 +369,6 @@ export default {
 }
 
 hr {
-  border: 0.5px solid #d86057;
+  border: 0.5px solid #f3cfcc;
 }
 </style>

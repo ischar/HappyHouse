@@ -8,7 +8,7 @@ import com.ssafy.house.home.model.HouseDto;
 
 public interface HouseService {
 
-	List<HouseDto> gethouses(String dong);
+	List<HouseDto> gethouses(String sido, String gugun, String dong);
 
 	List<HouseDto> getApts(String aptCode);
 	

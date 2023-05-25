@@ -11,7 +11,7 @@ import com.ssafy.house.home.model.HouseDto;
 @Mapper
 public interface HouseMapper {
 
-	List<HouseDto> gethouses(String dong);
+	List<HouseDto> gethouses(String sido, String gugun, String dong);
 
 	List<HouseDto> getApts(String aptCode);
 

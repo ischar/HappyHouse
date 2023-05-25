@@ -16,8 +16,8 @@ public class HouseServiceImpl implements HouseService{
 	private HouseMapper houseMapper; 
 	
 	@Override
-	public List<HouseDto> gethouses(String dong) {
-		return houseMapper.gethouses(dong);
+	public List<HouseDto> gethouses(String sido, String gugun, String dong) {
+		return houseMapper.gethouses(sido, gugun, dong);
 	}
 
 	@Override

@@ -1,8 +1,38 @@
 <template>
   <section>
-   
-    <div class="row col-md-12 justify-content-center mb-2">
-      <div class="form-group col-md-2">
+    <div class="input-group col-6 d-flex justify-content-center">
+      <div class="w-50 justify-content-center text-center">
+        <input type="text" id="word" class="form-control" onfocus="this.value = this.value;" autocomplete="off"
+          v-model="state" @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
+          aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2" />
+      </div>
+    </div>
+    <div v-if="filteredStates && modal" class="w-100" style="absolute; margin-top: 10px;">
+      <div class="col-6 d-flex w-100 justify-content-center" style="width: 90%">
+        <ul class="list-group justify-content-center w-50" style="
+                                list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
+                                border-radius: 0px;
+                                margin-left: 0.75%;
+                                position: fixed;
+                                z-index: 3;
+                              ">
+          <li class="list-group-item" style="
+                                  border-width: 0.5px;
+                                  border-color: #d86057;
+                                  font-weight: 700;
+                                  color: #828282;
+                                  width: 95%;
+                                  text-align: left;
+                                  margin-left: 10px;
+                                " v-for="filteredState in filteredStates" @click="setState(filteredState)">
+            {{ filteredState }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row col-md-12 justify-content-center mt-3 mb-2"
+      style="margin: 0px; margin-top: 5px; margin-bottom: 10px;">
+      <div class="form-group col-md-2 justify-content-center">
         <select v-model="sidoValue" @change="changeGugun()" class="form-select" id="sido" name="sido">
           <option value="">시도 선택</option>
         </select>
@@ -17,13 +47,17 @@
           <option value="">동 선택</option>
         </select>
       </div>
-      <div class="form-group col-md-2">
-        <button @click="getAptList2()" type="submit" id="list-btn" class="btn"
-          style="background-color: #d86057; color: white">
+      <!-- <div class="form-group col-md-2">
+        <button
+          @click="getAptList2()"
+          type="submit"
+          id="list-btn"
+          class="btn"
+          style="background-color: #d86057; color: white"
+        >
           검색
         </button>
-
-      </div>
+      </div> -->
     </div>
 
     <section>
@@ -82,7 +116,7 @@ export default {
 
   data() {
     return {
-      state: '',
+      state: "",
       states: [],
       filteredStates: [],
       sidoValue: "",
@@ -109,20 +143,21 @@ export default {
   created() {
     // window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapScript();
     this.getAptList();
+    this.getSiGunGu();
   },
 
   mounted() {
     // this.$refs.KakaoMap.loadMaker();
 
-    this.getData()
+    this.getData();
   },
 
   methods: {
     getSiGunGu() {
       axios({
-        method: 'get',
-        url: 'http://localhost:80/address/sigungu',
-        responseType: 'json',
+        method: "get",
+        url: "http://localhost:80/address/sigungu",
+        responseType: "json",
       }).then((response) => {
         var data = response.data;
         console.log(data);
@@ -133,15 +168,12 @@ export default {
           this.states.push(text);
         }
       });
-
     },
-    filterStates() {
+    filterStates(e) {
       var count = 0;
-      this.filteredStates = this.states.filter(state => {
-
+      this.filteredStates = this.states.filter((state) => {
         if (state != "" && state != null && state != " ")
-
-          return state.toLowerCase().includes(this.state.toLowerCase()) && count++ < 5;
+          return state.toLowerCase().includes(e.target.value.toLowerCase()) && count++ < 5;
       });
     },
 
@@ -153,7 +185,7 @@ export default {
       this.sidoValue = text[0];
       this.gugunValue = text[1];
       this.dongValue = text[2];
-      this.searchMap();
+      this.getAptList2();
     },
     showside(title) {
       console.log(title);
@@ -162,7 +194,6 @@ export default {
 
     searchMap() {
       this.$refs.kakao.loadMap();
-
     },
 
     getData() {
@@ -172,8 +203,7 @@ export default {
           var data = response.data;
           var options = '<option value="">시도 선택</option>';
           for (var i = 0; i < data.length; i++) {
-            options +=
-              '<option value="' + data[i] + '">' + data[i] + "</option>";
+            options += '<option value="' + data[i] + '">' + data[i] + "</option>";
           }
           sido.innerHTML = options; // city select 요소의 option 값을 업데이트
         })
@@ -243,13 +273,13 @@ export default {
           gugunName: this.gugunValue,
           dongName: this.dongValue,
         },
-      }).then((response) => {
-        this.datas = response.data;
       })
+        .then((response) => {
+          this.datas = response.data;
+        })
         .catch(function (error) {
           console.log(error);
         });
-
     },
     // setCenter(lat, lng) {
     //   var moveLatLon = new kakao.maps.LatLng(lat, lng);
@@ -274,4 +304,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.form-control,
+.form-select {
+  border-width: 3px;
+}
+</style>

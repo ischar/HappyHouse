@@ -31,7 +31,7 @@ public class HouseController {
 	@PostMapping("/search")
 	public ResponseEntity<?> getHouses(@RequestBody DongDto dongDto) {
 		 try {
-	            return new ResponseEntity<List<HouseDto>>(houseService.gethouses(dongDto.getDongName()), HttpStatus.OK);
+	            return new ResponseEntity<List<HouseDto>>(houseService.gethouses(dongDto.getSidoName(), dongDto.getGugunName(), dongDto.getDongName()), HttpStatus.OK);
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	            return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);

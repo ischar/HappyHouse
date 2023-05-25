@@ -1,4 +1,5 @@
 <template>
+
   <div class="table-container">
     <b-table stacked :items="items" :fields="fields"></b-table>
   </div>
@@ -88,3 +89,5 @@ export default {
   margin: 0 auto; /* 가운데 정렬을 위해 필요한 경우 */
 }
 </style>
+
+
