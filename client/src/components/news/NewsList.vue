@@ -71,7 +71,9 @@ export default {
       console.log("response", response.data.items);
       this.articles = response.data.items;
       this.filteredArticles = response.data.items; // 초기에 전체 기사 목록으로 설정
+
     });
+
   },
   methods: {
     onFiltered(filteredItems) {
@@ -79,6 +81,7 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
+
   },
   mounted() {
     // Set the initial number of items

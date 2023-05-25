@@ -40,4 +40,8 @@
 	select aptCode from favorites where userid=#{userId}
 	)
 	</select>
+	
+	<select id="listsFavorite"  resultMap="house">
+	select * from favorites
+	</select>
 </mapper>

@@ -144,7 +144,6 @@ export default {
   },
   created() {
     this.getSiGunGu();
-
     http.get(`/board`, {}).then((response) => {
       this.articles = response.data;
     });
@@ -204,7 +203,16 @@ export default {
           return state.toLowerCase().includes(e.target.value.toLowerCase()) && count++ < 5;
       });
     },
-
+    setDate() {
+    for (var param in this.$route.params) {
+        var x = param.newss.pubDate;
+        var year = x.getFullYear();
+        var month = ('0' + (x.getMonth() + 1)).slice(-2);
+        var day = ('0' + today.getDate()).slice(-2);
+        var dateString = year + '년 ' + month + '월 ' + day + '일';
+        param.newss.pubDate = dateString;
+    }
+},
     setState(state) {
       this.state = state;
       this.modal = false;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+
+<mapper namespace="com.ssafy.house.board.comment.mapper.CommentMapper">
+
+	<insert id="writeComment" parameterType="commentDto">
+		insert into comment (articleno, userid, content, hit, regtime)
+		values (#{articleno}, #{userid}, #{content}, #{hit}, now())
+	</insert>
+	
+	<select id="listComment" parameterType="int" resultType="commentDto">
+		select commentno, articleno, userid, content, hit,
+				case when date_format(regtime, '%Y%m%d') = date_format(now(), '%Y%m%d')
+				then date_format(regtime, '%H:%i:%s')
+				else date_format(regtime, '%y.%m.%d')
+				end regtime
+		from comment
+		where articleno = #{articleno}
+		order by hit desc
+		
+	</select>
+	
+
+	
+	<update id="updateHit" parameterType="int">
+		update comment
+		set hit = hit + 1
+		where commentno = #{commentno}
+	</update>
+	
+	<update id="modifyComment" parameterType="commentDto">
+		update comment
+		set content = #{content}
+		where commentno = #{commentno}
+	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete from comment
+		where commentno = #{commentno}
+	</delete>
+	
+
+</mapper>
+

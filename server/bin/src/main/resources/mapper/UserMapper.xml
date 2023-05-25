@@ -41,5 +41,21 @@
 		WHERE id = #{userId}
 	</select>
 	
+	<select id="checkId" parameterType="java.lang.String" resultType="integer">
+		select count(*)
+		from users
+		WHERE id = #{userId}
+	</select>
+	
+	<select id="find" parameterType="com.ssafy.house.user.model.UserDto" resultType="java.lang.String">
+		SELECT pwd
+		FROM users
+		WHERE id=#{id} and name=#{name} and phone=#{phone}
+	</select>
+	
+
+
+	
+	
 	
 </mapper>

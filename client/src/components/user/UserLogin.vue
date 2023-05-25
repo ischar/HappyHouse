@@ -31,12 +31,9 @@
                   아이디가 없나요?
                   <router-link :to="{ name: 'signup' }">회원가입</router-link>
                 </p>
-                <div class="justify-content-center">
-                  <p style="color:#828282 font-size:12px; float:left;" class="text-center">
-                    비밀번호가 기억나지 않나요?
+                  <p style="color:#828282 font-size:12px; float:left; margin-left: 10px; margin-right: 10px;" class="text-center"> 비밀번호가 기억나지 않나요?
                   </p>
-                  <router-link style="float:left;" :to="{ name: 'passwordfind' }">비밀번호찾기</router-link>
-                </div>
+                  <router-link style="float:left; font-size:16px;" :to="{ name: 'passwordfind' }">비밀번호 찾기</router-link>
               </div>
             </div>
           </div>
