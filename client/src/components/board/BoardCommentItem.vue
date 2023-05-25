@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="media">
-      <a class="pull-left" href="#"
-        ><img
+    <div class="media comment-container">
+      <a class="pull-left" href="#">
+        <img
           class="media-object"
           src="https://bootdey.com/img/Content/avatar/avatar1.png"
-          alt=""
-      /></a>
+          alt="" />
+      </a>
       <div class="media-body">
         <h4 class="media-heading">{{ comment.userid }}</h4>
         <div>
@@ -24,17 +24,20 @@
           </div>
           <p v-else>{{ comment.content }}</p>
         </div>
-        <ul class="list-unstyled list-inline media-detail pull-left">
+        <ul class="list-unstyled list-inline media-detail">
           <li><i class="fa fa-calendar"></i> {{ comment.regtime }}</li>
-          <li><i class="fa fa-thumbs-up"></i>{{ comment.hit }}</li>
         </ul>
-        <ul class="list-unstyled list-inline media-detail pull-right">
-          <li class=""><a href="">Like</a></li>
-          <li class=""><a href="">Reply</a></li>
-          <li class="" v-if="loginId == comment.userid" @click="updateComment">
+        <ul class="list-unstyled list-inline media-detail">
+          <li
+            class="edit-button"
+            v-if="loginId == comment.userid"
+            @click="updateComment">
             수정
           </li>
-          <li class="" v-if="loginId == comment.userid" @click="deleteComment">
+          <li
+            class="delete-button"
+            v-if="loginId == comment.userid"
+            @click="deleteComment">
             삭제
           </li>
         </ul>
@@ -88,4 +91,61 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.comment-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.comment-container .media-object {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+
+.comment-container .media-body {
+  margin-left: 10px;
+}
+
+.comment-container .media-heading {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.comment-container p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.comment-container .list-unstyled.list-inline {
+  margin: 0;
+  padding: 0;
+}
+
+.comment-container .list-unstyled.list-inline.media-detail li {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.comment-container .list-unstyled.list-inline.media-detail li i {
+  margin-right: 5px;
+}
+
+.comment-container .list-unstyled.list-inline.media-detail li:last-child {
+  margin-right: 0;
+}
+
+.comment-container .edit-button,
+.comment-container .delete-button {
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.comment-container .delete-button {
+  margin-left: 10px;
+  color: red;
+}
+</style>

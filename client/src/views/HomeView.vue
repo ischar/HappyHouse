@@ -91,11 +91,11 @@
             :favorite="favorite">
             <!-- <router-link style="text-decoration: none; color:black;" :to="`/board/view/${favorite."> -->
             <ul style="list-style-image: url(https://i.postimg.cc/66zrhk3F/star.png)">
-              <!-- <router-link style="text-decoration: none; color: black;" :to="`/board/view/favorite/${favorite.aptCode}`"> -->
-              <li @click="aptDetail(favorite)">
-                <b>{{ favorite.apartmentName }}</b>
-              </li>
-              <!-- </router-link> -->
+              <router-link style="text-decoration: none; color: black;" :to="`/board/view/favorite/${favorite.aptCode}`">
+              <!-- <li @click="aptDetail(favorite)"> -->
+                <li><b>{{ favorite.apartmentName }}</b></li>
+              <!-- </li> -->
+              </router-link>
             </ul>
             <!-- <outer-link> -->
           </div>
