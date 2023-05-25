@@ -51,4 +51,16 @@ public class UserServiceImpl implements UserService {
 	public Integer deleteUser(String userId) throws SQLException {
 		return userDao.deleteUser(userId);
 	}
+
+	@Override
+	public Integer checkId(String tmpid) {
+		return userDao.checkId(tmpid);
+	}
+
+	@Override
+	public String find(UserDto userDto) {
+		return userDao.find(userDto);
+	}
+
+
 }

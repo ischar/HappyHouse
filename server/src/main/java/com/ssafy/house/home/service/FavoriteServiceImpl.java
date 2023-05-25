@@ -36,4 +36,9 @@ public class FavoriteServiceImpl implements FavoriteService{
 		return favoriteMapper.listFavorite(userId);
 	}
 
+	@Override
+	public List<HouseDto> listsFavorite() {
+		return favoriteMapper.listsFavorite();
+	}
+
 }

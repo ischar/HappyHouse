@@ -25,27 +25,31 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <b
-                  ><a
+                  >
+                  <router-link :to="{name : 'newslist'}">
+                  <a
                     class="nav-link active text-black"
                     aria-current="page"
                     href="${root}"
                     style="font-size: 18px"
                     >오늘의 뉴스</a
-                  ></b
+                  ></router-link></b
                 >
               </li>
+              <div>
                 <li class="nav-item" style="font-size: 18px; font-weight: 700">
-                  <router-link class="nav-link active text-black"
+                  <router-link
                     style="text-decoration: none; color: black"
                     to="/board"
                     >공지사항</router-link
                   >
                 </li>
+              </div>
               <div>
                 <router-link
                   style="text-decoration: none"
                   :to="{name: 'userinfo'}">
-                  <li class="nav-item" style="padding: 0px; margin:0px;">
+                  <li class="nav-item">
                     <a
                       class="nav-link active text-black text-decoration-none"
                       style="
@@ -80,6 +84,7 @@
                   로그아웃
                 </button>
               </div>
+              <div v-if="!isLogin">
               <router-link :to="{name: 'signup'}">
                 <button
                   class="btn btn-default btn-sm btn-outline-black btn-lg col-auto m-2"
@@ -89,6 +94,7 @@
                   회원가입
                 </button>
               </router-link>
+              </div>
             </ul>
           </div>
         </div>

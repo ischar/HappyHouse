@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView'
-import SearchView from '../views/SearchView'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import HomeView from '../views/HomeView';
+import SearchView from '../views/SearchView';
 
-import SignUpView from '../views/SignUpView'
+import SignUpView from '../views/SignUpView';
 import BoardView from '../views/BoardView';
 import UserView from '../views/UserView';
 import NewsView from '../views/NewsView';
@@ -19,57 +19,59 @@ import UserLogin from '../components/user/UserLogin';
 import UserInfo from '../components/user/UserInfo';
 import UserUpdate from '../components/user/UserUpdate';
 
+import NewsList from '../components/news/NewsList';
+import PasswordFind from '../components/user/PasswordFind'
 
 Vue.use(Vuebar);
 Vue.use(VueRouter);
 
-
-
-import store from "@/store";
+import store from '@/store';
 
 const onlyAuthUser = async (to, from, next) => {
-  const checkUserInfo = store.getters["checkUser"];
+  const checkUserInfo = store.getters['checkUser'];
   console.log(checkUserInfo);
-  console.log("로그인 확인");
+  console.log('로그인 확인');
 
   if (!checkUserInfo) {
-    alert("로그인이 필요한 페이지입니다.");
+    alert('로그인이 필요한 페이지입니다.');
     // next({ name: "login" });
-    router.push({ name: "userlogin" }).catch(() => {});
-    
+    router.push({ name: 'userlogin' }).catch(() => {});
   } else {
     next();
   }
 };
 
-
-
-const routes = [  
+const routes = [
   {
     path: '/',
     alias: ['/index', '/main'],
     name: 'home',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/search',
     name: 'search',
-    component: SearchView
+    component: SearchView,
   },
   {
     path: '/searchBar',
     name: 'searchBar',
-    component: SearchView
+    component: SearchView,
   },
   {
     path: '/signup',
     name: 'signup',
-    component : SignUpView
+    component: SignUpView,
   },
   {
     path: '/news',
     name: 'news',
-    component: NewsView
+    component: NewsView,
+  },
+  {
+    path: '/newslist',
+    name: 'newslist',
+    component: NewsList,
   },
 
   {
@@ -136,18 +138,19 @@ const routes = [
         name: 'userupdate',
         component: UserUpdate,
       },
+      {
+        path: 'findpassword',
+        name:'passwordfind',
+        component: PasswordFind,
+      }
     ],
   },
-
-
-
-
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

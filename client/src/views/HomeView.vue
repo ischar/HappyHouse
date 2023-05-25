@@ -95,25 +95,29 @@
             <!-- <outer-link> -->
           </div>
         </div>
-        <div style="margin-left: 80px; width: 370px; float: left; display: inline-block">
-          <li style="list-style-type: none; font-size: 18px; margin-bottom: 0px"><b>공지사항</b></li>
-          <hr style="color: #d86057" />
-          <div style="text-align: left; margin-left: 10px" v-for="article in articles" :key="article.articleno"
-            :article="article">
-            <router-link style="text-decoration: none; color: black" :to="`/board/view/${article.articleno}`">
-              {{ article.subject }}
-            </router-link>
-          </div>
+
+      </div>
+
+      <div style="margin-left: 80px; width: 370px; float:left; display:inline-block">
+        <li style="list-style-type: none; font-size:18px; margin-bottom: 0px;"><b>공지사항</b></li>
+        <hr style="color: #d86057;">
+
+
+        <div style="text-align:left; margin-left: 10px;" v-for="(article,index) in articles.slice(0,5)" :key="article.articleno"
+          :article="article">
+          <router-link style="text-decoration: none; color:black;" :to="`/board/post/${article.articleno}`">
+
+            {{ article.subject }}
+          </router-link>
         </div>
-        <div style="margin-left: 80px; float: left; width: 370px; display: inline-block">
-          <li style="list-style-type: none; font-size: 18px; margin-bottom: 0px">
-            <b>오늘의뉴스</b>
-          </li>
-          <hr style="color: #d86057" />
-          <div style="text-align: left; margin-left: 10px" v-for="newss in news" :key="newss.link" :newss="newss">
-            <li style="list-style-type: none" v-html="newss.title" @click="readNews(newss)"></li>
-            <!-- <router-link style="text-decoration: none; color:black;" :to="/local"> {{ newss.title }}</router-link> -->
-          </div>
+      </div>
+      <div style="margin-left: 80px; float:left; width: 370px; display:inline-block">
+        <li style="list-style-type: none; font-size:18px; margin-bottom: 0px;"><b>오늘의뉴스</b></li>
+        <hr style="color: #d86057;">
+        <div style="text-align:left; margin-left: 10px;" v-for="newss in news" :key="newss.link" :newss="newss">
+          <li style="list-style-type: none;" v-html="newss.title" @click="navigateToLink(newss.originallink)"></li>
+          <!-- <router-link style="text-decoration: none; color:black;" :to="/local"> {{ newss.title }}</router-link> -->
+
         </div>
       </div>
     </section>
@@ -278,14 +282,12 @@ export default {
       });
     },
 
-    readNews(newss) {
-      this.$router.push({
-        name: "news",
-        params: {
-          newss: newss,
-        },
-      });
-    },
+  navigateToLink(link) {
+    window.open(link, "_blank");
+  },
+
+
+
 
     aptDetail(apt) {
       this.$router.push({
@@ -296,10 +298,14 @@ export default {
       });
     },
 
+
     showNews() {
       axios({
         method: "get",
         url: "http://localhost:80/news",
+        params: {
+          num: 5,
+        },
         responseType: "json",
       }).then((response) => {
         console.log("response", response.data.items);

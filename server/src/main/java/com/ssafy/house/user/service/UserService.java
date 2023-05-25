@@ -3,7 +3,7 @@ package com.ssafy.house.user.service;
 import java.sql.SQLException;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
+
 
 import com.ssafy.house.user.model.UserDto;
 
@@ -20,5 +20,10 @@ public interface UserService {
 	public String userPwdSearch(UserDto user) throws SQLException;
 	
 	public Integer deleteUser(String userId) throws SQLException;
-}
 
+	public Integer checkId(String tmpid);
+
+	public String find(UserDto userDto);
+
+
+}

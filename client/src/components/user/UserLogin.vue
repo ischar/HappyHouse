@@ -30,7 +30,7 @@
                 <span class="input-group-text" style="background-color: #929292"
                   ><img
                     src="/img/lock.png"
-                    style="width: 20px; height: 20px;" /><i
+                    style="width: 20px; height: 20px" /><i
                     class="bi bi-key-fill text-white"></i
                 ></span>
                 <input
@@ -44,7 +44,8 @@
               <button
                 id="submitBtn"
                 class="btn btn-primary text-center mt-2"
-                @click="loginSubmit" style="background-color: #d86057;">
+                @click="loginSubmit"
+                style="background-color: #d86057">
                 Login
               </button>
               <p class="text-center mt-5">
@@ -52,7 +53,9 @@
                 <a href="${root }/user/signup">Sign Up</a>
               </p>
               Forgot your password?
-              <a href="${root }/user/userPwdSearch">Find Password</a>
+              <router-link :to="{name: 'passwordfind'}"
+                >Find Password</router-link
+              >
             </div>
           </div>
         </div>

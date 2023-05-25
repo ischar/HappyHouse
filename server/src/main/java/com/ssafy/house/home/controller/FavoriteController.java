@@ -60,5 +60,15 @@ public class FavoriteController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.OK);
 		}
 	}
+	
+	@GetMapping("/lists")
+	public ResponseEntity<?> listsFavorite() {
+		try {
+			return new ResponseEntity<List<HouseDto>>(favoriteService.listsFavorite(), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("서버 오류", HttpStatus.OK);
+		}
+	}
 
 }

@@ -1,5 +1,6 @@
 <template>
   <div style="position: relative; width: 100%; overflow: hidden">
+
     <div style="
                 width: 400px;
                 height: 100%;
@@ -15,6 +16,7 @@
         <img v-if="favoriteOnOff" @click="deleteFavorite()" src="../assets/favoriteon.png"
           style="margin: 8px; width: 30px; height: 30px" />
         <img v-else @click="addFavorite()" src="../assets/favoriteoff.png"
+
           style="margin: 8px; width: 30px; height: 30px" />
       </div>
       <div v-if="favoriteFlag" style="text-align: center; margin: 10px">
@@ -40,7 +42,9 @@
           <p><b>0</b>개</p>
         </div>
         <div style="float: left">
+
           <img src="../assets/train-station.png" style="width: 40px; height: 40px" />
+
           <p><b>역</b></p>
         </div>
         <div style="float: left; margin-top: 2.5%; margin-left: 5px">
@@ -50,19 +54,23 @@
       <h3 v-if="favoriteFlag">정보</h3>
       <h3 v-if="favoriteFlag">거래내역</h3>
       <div id="content" style="height: 100%; overflow: auto"></div>
+
     </div>
 
     <div v-show="housesFlag" id="map" style="width: 100%; height: 100%; border: 0.5px solid #f3cfcc"></div>
     <div v-if="!housesFlag" style="width: 100%; height: 100%; border: 0.5px solid #f3cfcc; text-align: center">
       <img src="../assets/search.png" style="width: 350px; height: 350px; margin-left: 300px" />
     </div>
+
   </div>
 </template>
 
 <script>
-import { left } from "@popperjs/core";
+import {left} from "@popperjs/core";
 import axios from "axios";
-import { mapState, mapActions } from "vuex";
+import {mapState, mapActions} from "vuex";
+import store from "@/store";
+import router from "@/router/index";
 // 마커이미지의 크기입니다
 export default {
   props: {
@@ -83,7 +91,10 @@ export default {
   name: "KakaoMap",
   data() {
     return {
+
+
       housesFlag: true,
+
       url: "",
       aptCode: "",
       map: null,
@@ -94,8 +105,8 @@ export default {
     };
   },
 
-  setup() { },
-  created() { },
+  setup() {},
+  created() {},
   computed: {
     ...mapState(["loginId"]),
   },
@@ -106,7 +117,7 @@ export default {
       this.loadScript();
     }
   },
-  unmounted() { },
+  unmounted() {},
 
   watch: {
     houses() {
@@ -142,18 +153,26 @@ export default {
     },
 
     addFavorite() {
-      axios({
-        method: "post",
-        params: {
-          userId: this.loginId,
-          aptCode: this.aptCode,
-        },
-        url: "http://localhost:80/favorite/add",
-        responseType: "json",
-      }).then((response) => {
-        this.favoriteOnOff = true;
-        console.log("add");
-      });
+      const checkUserInfo = store.getters["checkUser"];
+
+      if (!checkUserInfo) {
+        alert("로그인이 필요한 서비스입니다.");
+        // next({ name: "login" });
+        router.push({name: "userlogin"}).catch(() => {});
+      } else {
+        axios({
+          method: "post",
+          params: {
+            userId: this.loginId,
+            aptCode: this.aptCode,
+          },
+          url: "http://localhost:80/favorite/add",
+          responseType: "json",
+        }).then(response => {
+          this.favoriteOnOff = true;
+          console.log("add");
+        });
+      }
     },
     deleteFavorite() {
       axios({
@@ -164,7 +183,7 @@ export default {
         },
         url: "http://localhost:80/favorite/delete",
         responseType: "json",
-      }).then((response) => {
+      }).then(response => {
         this.favoriteOnOff = false;
         console.log("delete");
       });
@@ -179,7 +198,7 @@ export default {
         },
         url: "http://localhost:80/favorite/check",
         responseType: "json",
-      }).then((response) => {
+      }).then(response => {
         if (response.data == 1) {
           this.favoriteOnOff = true;
         }
@@ -195,8 +214,12 @@ export default {
       var imageSrc = "https://i.postimg.cc/ZRcqsDZ9/location.png";
       this.favoriteOnOff = false;
       var imageSize = new kakao.maps.Size(36, 42); // 마커이미지의 크기입니다
-      var imageOption = { offset: new kakao.maps.Point(14, 39) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+      var imageOption = {offset: new kakao.maps.Point(14, 39)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption
+      );
       let positions = [];
 
       for (var i = 0; i < houses.length; i++) {
@@ -211,7 +234,10 @@ export default {
         let marker = new kakao.maps.Marker({
           map: this.map,
           position: positions[i].latlng,
-          title: positions[i].content.apartmentName + " " + positions[i].content.aptCode,
+          title:
+            positions[i].content.apartmentName +
+            " " +
+            positions[i].content.aptCode,
           image: markerImage, // 마커이미지 설정
         });
         bounds.extend(positions[i].latlng);
@@ -227,7 +253,7 @@ export default {
           var roadviewContainer = document.getElementById("roadview"); //로드뷰를 표시할 div
           var roadview = new kakao.maps.Roadview(roadviewContainer); //로드뷰 객체
           var roadviewClient = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
-          roadviewClient.getNearestPanoId(marker.getPosition(), 50, (panoId) => {
+          roadviewClient.getNearestPanoId(marker.getPosition(), 50, panoId => {
             if (panoId == null) {
               alert("로드뷰 정보가 없는 지역입니다.");
             } else {
@@ -235,11 +261,13 @@ export default {
               this.showContent(text2[0]);
               this.aptCode = text2[1];
 
+
               this.showFacilities("HP8", "https://i.postimg.cc/T13Ng1FP/hospital.png");
               this.showFacilities("MT1", "https://i.postimg.cc/zv4wvf16/store.png");
               this.showFacilities("SC4", "https://i.postimg.cc/s25LRt53/school.png");
               this.showFacilities("SW8", "https://i.postimg.cc/nz00FZrf/train-station.png");
               this.showFacilities("CS2", "https://i.postimg.cc/YCWn1JnQ/convenience-store.png");
+
             }
             // roadview.setPanoId(panoId, marker.getPosition()); //panoId와 중심좌표를 통해 로드뷰 실행
           });
@@ -251,14 +279,18 @@ export default {
     showFacilities(category, url) {
       var ps = new kakao.maps.services.Places(this.map);
       this.url = url;
+
       ps.categorySearch(category, this.placesSearchCB, { useMapBounds: true });
+
     },
 
     displayMarker(place) {
       var imageSrc = this.url;
+
       var imageSize = new kakao.maps.Size(24, 24), // 마커이미지의 크기입니다
         imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
       var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
 
       var marker = new kakao.maps.Marker({
         map: this.map,
@@ -284,7 +316,9 @@ export default {
         url: "http://localhost:80/houses/search/house",
         responseType: "json",
       })
+
         .then((response) => {
+
           if (this.loginId != null) {
             this.checkFavorite(this.loginId, this.aptCode);
           }
@@ -315,7 +349,7 @@ export default {
 
           element.innerHTML = options;
         })
-        .catch((error) => {
+        .catch(error => {
           alert(error);
         });
     },

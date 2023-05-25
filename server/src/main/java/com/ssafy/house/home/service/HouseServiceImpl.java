@@ -21,6 +21,11 @@ public class HouseServiceImpl implements HouseService{
 	}
 
 	@Override
+	public List<HouseDto> getApts(String aptCode) {
+		return houseMapper.getApts(aptCode);
+	}
+
+	@Override
 	public List<HouseDto> getHouse(String title) {
 		return houseMapper.gethouse(title);
 	}

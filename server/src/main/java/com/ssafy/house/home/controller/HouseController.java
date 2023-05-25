@@ -38,6 +38,17 @@ public class HouseController {
 	        }
 	    }
 	
+	// Favorite detail에 사용
+	@PostMapping("/search/favorite/house")
+	public ResponseEntity<?> getfavoriteHouse(@RequestParam("aptCode") String aptCode) {
+		try {
+			return new ResponseEntity<List<HouseDto>>(houseService.getApts(aptCode), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@PostMapping("/search/house")
 	public ResponseEntity<?> getHouse(@RequestParam("title") String title) {
 		try {
