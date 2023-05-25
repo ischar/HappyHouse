@@ -7,31 +7,30 @@
           aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2" />
       </div>
     </div>
-    <div v-if="filteredStates && modal" class="w-100" style="absolute; margin-top: 10px;">
+    <div v-if="filteredStates && modal" class="w-100" style="absolute;">
       <div class="col-6 d-flex w-100 justify-content-center" style="width: 90%">
         <ul class="list-group justify-content-center w-50" style="
-                                list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
-                                border-radius: 0px;
-                                margin-left: 0.75%;
-                                position: fixed;
-                                z-index: 3;
-                              ">
+                                                      list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
+                                                      border-radius: 0px;
+                                                      position: fixed;
+                                                      z-index: 3;
+                                                    ">
           <li class="list-group-item" style="
-                                  border-width: 0.5px;
-                                  border-color: #d86057;
-                                  font-weight: 700;
-                                  color: #828282;
-                                  width: 95%;
-                                  text-align: left;
-                                  margin-left: 10px;
-                                " v-for="filteredState in filteredStates" @click="setState(filteredState)">
+                                                        border-width: 0.5px;
+                                                        border-color: #f3cfcc;
+                                                        font-weight: 700;
+                                                        color: #828282;
+                                                        width: 100%;
+                                                        text-align: left;
+                                                        font-size: 14px;
+                                                      " v-for="filteredState in filteredStates"
+            @click="setState(filteredState)">
             {{ filteredState }}
           </li>
         </ul>
       </div>
     </div>
-    <div class="row col-md-12 justify-content-center mt-3 mb-2"
-      style="margin: 0px; margin-top: 5px; margin-bottom: 10px;">
+    <div class="row col-md-12 justify-content-center mt-3 mb-2" style="margin: 0px; margin-bottom: 10px;">
       <div class="form-group col-md-2 justify-content-center">
         <select v-model="sidoValue" @change="changeGugun()" class="form-select" id="sido" name="sido">
           <option value="">시도 선택</option>
@@ -308,5 +307,11 @@ export default {
 .form-control,
 .form-select {
   border-width: 3px;
+}
+
+.form-control:focus,
+.form-select:valid:focus {
+  box-shadow: none;
+  border: 3px solid #d86057;
 }
 </style>

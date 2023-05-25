@@ -1,23 +1,14 @@
 <template>
-  <div>
+  <div class="py-5 text-center container">
     <h1 class="underline">목록</h1>
     <div style="text-align: right">
       <button @click="movePage">글작성</button>
     </div>
     <!-- 추가 -->
-    <b-form-group
-      label="Filter"
-      label-for="filter-input"
-      label-cols-sm="3"
-      label-align-sm="right"
-      label-size="sm"
+    <b-form-group label="Filter" label-for="filter-input" label-cols-sm="3" label-align-sm="right" label-size="sm"
       class="mb-0">
       <b-input-group size="sm">
-        <b-form-input
-          id="filter-input"
-          v-model="filter"
-          type="search"
-          placeholder="Type to Search"></b-form-input>
+        <b-form-input id="filter-input" v-model="filter" type="search" placeholder="Type to Search"></b-form-input>
 
         <b-input-group-append>
           <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
@@ -29,30 +20,14 @@
 
     <!-- board list area -->
     <b-container fluid class="my-table-container">
-      <b-table
-        class="my-table"
-        hover
-        :items="articles"
-        :per-page="perPage"
-        :current-page="currentPage"
-        :fields="fields"
-        sort-icon-left
-        label-sort-asc=""
-        label-sort-desc=""
-        label-sort-clear=""
-        :filter="filter"
-        @filtered="onFiltered">
+      <b-table class="my-table" hover :items="articles" :per-page="perPage" :current-page="currentPage" :fields="fields"
+        sort-icon-left label-sort-asc="" label-sort-desc="" label-sort-clear="" :filter="filter" @filtered="onFiltered">
         <template #cell(subject)="data">
           <!-- `data.value` is the value after formatted by the Formatter -->
           <a :href="`/board/post/${data.item.articleno}`">{{ data.value }}</a>
-        </template></b-table
-      >
+        </template></b-table>
     </b-container>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
+    <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="my-table"
       align="center"></b-pagination>
   </div>
 </template>
@@ -120,7 +95,7 @@ export default {
   },
   methods: {
     movePage() {
-      this.$router.push({name: "boardwrite"});
+      this.$router.push({ name: "boardwrite" });
     },
   },
   computed: {
@@ -155,6 +130,7 @@ export default {
 
 .my-table {
   /* 테이블에 대한 스타일 */
-  width: 100%; /* 테이블의 너비를 100%로 설정 */
+  width: 100%;
+  /* 테이블의 너비를 100%로 설정 */
 }
 </style>

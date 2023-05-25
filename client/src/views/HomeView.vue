@@ -6,19 +6,20 @@
           <b>원하는 집을 찾으세요.</b>
         </h1>
       </div>
-      <div class="py-lg-5" style="fixed; position: relative; z-index:2 ;
-                                                                                                                margin: 20px; 
-                                                                                                                background: rgba(255, 255, 255, 0.2);
-                                                                                                                border-radius: 16px;
-                                                                                                                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-                                                                                                                backdrop-filter: blur(5px);
-                                                                                                                -webkit-backdrop-filter: blur(5px);
-                                                                                                                border: 3px solid rgba(216, 96, 87, 0.3);
-                                                                                                                padding: 25px;
-                                                                                                              ">
+      <div class="py-lg-5"
+        style="fixed; position: relative; z-index:2 ;
+                                                                                                                              margin: 20px; 
+                                                                                                                              background: rgba(255, 255, 255, 0.2);
+                                                                                                                              border-radius: 16px;
+                                                                                                                              box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                                                                                                              backdrop-filter: blur(5px);
+                                                                                                                              -webkit-backdrop-filter: blur(5px);
+                                                                                                                              border: 3px solid rgba(216, 96, 87, 0.3);
+                                                                                                                              padding: 25px;
+                                                                                                                            ">
 
         <div>
-          <div class="input-group col-6 d-flex justify-content-center" style="margin-bottom: 10px;">
+          <div class="input-group col-6 d-flex justify-content-center">
             <div class="w-50 justify-content-center text-center">
               <input type="text" id="word" class="form-control" autocomplete="off" v-model="state" @input="filterStates"
                 @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요." aria-label="원하는 시,구,동을 입력하세요."
@@ -29,21 +30,22 @@
           <div v-if="filteredStates && modal" class="w-100" style="absolute;">
             <div class="col-6 d-flex w-100 justify-content-center" style="width: 90%">
               <ul class="list-group justify-content-center w-50" style="
-                                                                                                          list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
-                                                                                                          border-radius: 0px;
-                                                                                                          margin-left: 0.75%;
-                                                                                                          position: fixed;
-                                                                                                          z-index: 2;
-                                                                                                        ">
+                                                                                                                        list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
+                                                                                                                        border-radius: 0px;
+                                                                                                                        margin-left: 0.75%;
+                                                                                                                        position: fixed;
+                                                                                                                        z-index: 2;
+                                                                                                                      ">
                 <li class="list-group-item" style="
-                                                                                                            border-width: 0.5px;
-                                                                                                            border-color: #F3CFCC;
-                                                                                                            font-weight: 700;
-                                                                                                            color: #828282;
-                                                                                                            width: 95%; 
-                                                                                                            text-align: left;
-                                                                                                            margin-left: 10px;
-                                                                                                          "
+                                                                                                                          border-width: 0.5px;
+                                                                                                                          border-color: #F3CFCC;
+                                                                                                                          font-weight: 700;
+                                                                                                                          color: #828282;
+                                                                                                                          width: 95%; 
+                                                                                                                          text-align: left;
+                                                                                                                          margin-left: 10px;
+                                                                                                                          font-size:14px;
+                                                                                                                        "
                   v-for="filteredState in filteredStates" @click="setState(filteredState)">
                   {{ filteredState }}
                 </li>
@@ -51,7 +53,7 @@
             </div>
           </div>
         </div>
-        <div class="row col-md-12 justify-content-center mb-2" style="margin: 0px;">
+        <div class="row col-md-12 justify-content-center mb-2" style="margin: 0px; margin-top: 10px;">
           <div class="form-group col-md-2">
             <select v-model="sidoValue" @change="changeGugun()" class="form-select" id="sido" name="sido">
               <option value="">시도 선택</option>
@@ -103,8 +105,8 @@
         <hr style="color: #d86057;">
 
 
-        <div style="text-align:left; margin-left: 10px;" v-for="(article,index) in articles.slice(0,5)" :key="article.articleno"
-          :article="article">
+        <div style="text-align:left; margin-left: 10px;" v-for="(article, index) in articles.slice(0, 5)"
+          :key="article.articleno" :article="article">
           <router-link style="text-decoration: none; color:black;" :to="`/board/post/${article.articleno}`">
 
             {{ article.subject }}
@@ -282,9 +284,9 @@ export default {
       });
     },
 
-  navigateToLink(link) {
-    window.open(link, "_blank");
-  },
+    navigateToLink(link) {
+      window.open(link, "_blank");
+    },
 
 
 
