@@ -2,21 +2,56 @@
   <div class="test">
     <section class="py-5 text-center container">
       <div style="margin-top: 100px">
-        <h1 style="font-size: 48px">
+        <h1 style="font-size: 40px">
           <b>원하는 집을 찾으세요.</b>
         </h1>
       </div>
       <div class="py-lg-5" style="fixed; position: relative; z-index:2 ;
-                        margin: 20px; 
-                        background: rgba(255, 255, 255, 0.2);
-                        border-radius: 16px;
-                        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-                        backdrop-filter: blur(5px);
-                        -webkit-backdrop-filter: blur(5px);
-                        border: 3px solid rgba(216, 96, 87, 0.3);
-                        padding: 25px;
-                      ">
-        <div class="row col-md-12 justify-content-center mb-2">
+                                                                                                                margin: 20px; 
+                                                                                                                background: rgba(255, 255, 255, 0.2);
+                                                                                                                border-radius: 16px;
+                                                                                                                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                                                                                                backdrop-filter: blur(5px);
+                                                                                                                -webkit-backdrop-filter: blur(5px);
+                                                                                                                border: 3px solid rgba(216, 96, 87, 0.3);
+                                                                                                                padding: 25px;
+                                                                                                              ">
+
+        <div>
+          <div class="input-group col-6 d-flex justify-content-center" style="margin-bottom: 10px;">
+            <div class="w-50 justify-content-center text-center">
+              <input type="text" id="word" class="form-control" autocomplete="off" v-model="state" @input="filterStates"
+                @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요." aria-label="원하는 시,구,동을 입력하세요."
+                aria-describedby="button-addon2" />
+              <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
+            </div>
+          </div>
+          <div v-if="filteredStates && modal" class="w-100" style="absolute;">
+            <div class="col-6 d-flex w-100 justify-content-center" style="width: 90%">
+              <ul class="list-group justify-content-center w-50" style="
+                                                                                                          list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
+                                                                                                          border-radius: 0px;
+                                                                                                          margin-left: 0.75%;
+                                                                                                          position: fixed;
+                                                                                                          z-index: 2;
+                                                                                                        ">
+                <li class="list-group-item" style="
+                                                                                                            border-width: 0.5px;
+                                                                                                            border-color: #F3CFCC;
+                                                                                                            font-weight: 700;
+                                                                                                            color: #828282;
+                                                                                                            width: 95%; 
+                                                                                                            text-align: left;
+                                                                                                            margin-left: 10px;
+                                                                                                          "
+                  v-for="filteredState in filteredStates" @click="setState(filteredState)">
+                  {{ filteredState }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row col-md-12 justify-content-center mb-2" style="margin: 0px;">
           <div class="form-group col-md-2">
             <select v-model="sidoValue" @change="changeGugun()" class="form-select" id="sido" name="sido">
               <option value="">시도 선택</option>
@@ -28,94 +63,72 @@
             </select>
           </div>
           <div class="form-group col-md-2">
-            <select v-model="dongValue" class="form-select" id="dong" name="dong">
+            <select v-model="dongValue" @change="searchMap()" class="form-select" id="dong" name="dong">
               <option value="">동 선택</option>
             </select>
           </div>
-          <div class="form-group col-md-2">
+          <!-- <div class="form-group col-md-2">
             <button @click="searchMap()" type="submit" id="list-btn" class="btn"
               style="background-color: #d86057; color: white">
               검색
             </button>
+          </div> -->
+        </div>
+
+      </div>
+    </section>
+    <section class="text-center container">
+      <div style="text-align: center;">
+        <div style=" width: 370px; float: left; display: inline-block">
+          <li style="list-style-type: none; font-size: 18px; margin-bottom: 0px"><b>즐겨찾기</b></li>
+          <hr style="color: #d86057" />
+          <div style="text-align: left; margin-left: 10px" v-for="favorite in favorites" :key="favorite.userid"
+            :favorite="favorite">
+            <!-- <router-link style="text-decoration: none; color:black;" :to="`/board/view/${favorite."> -->
+            <ul style="list-style-image: url(https://i.postimg.cc/66zrhk3F/star.png)">
+              <!-- <router-link style="text-decoration: none; color: black;" :to="`/board/view/favorite/${favorite.aptCode}`"> -->
+              <li @click="aptDetail(favorite)">
+                <b>{{ favorite.apartmentName }}</b>
+              </li>
+              <!-- </router-link> -->
+            </ul>
+            <!-- <outer-link> -->
           </div>
         </div>
-        <div>
-          <div class="input-group col-6 d-flex justify-content-center">
-            <div class="w-50 justify-content-center">
-              <input type="text" id="word" class="form-control" autocomplete="off"
-                v-model="state" @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
-                aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2" />
-              <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
-            </div>
-
+        <div style="margin-left: 80px; width: 370px; float: left; display: inline-block">
+          <li style="list-style-type: none; font-size: 18px; margin-bottom: 0px"><b>공지사항</b></li>
+          <hr style="color: #d86057" />
+          <div style="text-align: left; margin-left: 10px" v-for="article in articles" :key="article.articleno"
+            :article="article">
+            <router-link style="text-decoration: none; color: black" :to="`/board/view/${article.articleno}`">
+              {{ article.subject }}
+            </router-link>
           </div>
-          <div v-if="filteredStates && modal" class="w-100" style="absolute;">
-            <div class="col-6 d-flex w-100 justify-content-center" style="width:90%;">
-              <ul class="list-group justify-content-center w-50"
-                style="list-style-image:url('https://i.postimg.cc/Zqq5xL0k/pin.png'); border-radius: 0px; margin-left: 0.75%; position: fixed; z-index: 2;">
-                <li class="list-group-item"
-                  style="border-width:0.5px; border-color: #d86057; font-weight: 700; color: #828282; width: 95%; text-align: left; margin-left: 10px;"
-                  v-for="filteredState in filteredStates" @click="setState(filteredState)"> {{ filteredState }}</li>
-              </ul>
-            </div>
+        </div>
+        <div style="margin-left: 80px; float: left; width: 370px; display: inline-block">
+          <li style="list-style-type: none; font-size: 18px; margin-bottom: 0px">
+            <b>오늘의뉴스</b>
+          </li>
+          <hr style="color: #d86057" />
+          <div style="text-align: left; margin-left: 10px" v-for="newss in news" :key="newss.link" :newss="newss">
+            <li style="list-style-type: none" v-html="newss.title" @click="readNews(newss)"></li>
+            <!-- <router-link style="text-decoration: none; color:black;" :to="/local"> {{ newss.title }}</router-link> -->
           </div>
         </div>
       </div>
     </section>
-    <div style="text-align: center;">
-      <div style="margin-left: 80px; width: 370px; float:left; display:inline-block">
-        <li style="list-style-type: none; font-size:18px; margin-bottom: 0px;"><b>즐겨찾기</b></li>
-        <hr style="color: #d86057;">
-        <div style="text-align:left; margin-left: 10px;" v-for="favorite in favorites" :key="favorite.userid"
-          :favorite="favorite">
-          <!-- <router-link style="text-decoration: none; color:black;" :to="`/board/view/${favorite."> -->
-          <ul style="list-style-image:url(https://i.postimg.cc/66zrhk3F/star.png)">
-            <!-- <router-link style="text-decoration: none; color: black;" :to="`/board/view/favorite/${favorite.aptCode}`"> -->
-              <li @click="aptDetail(favorite)"><b>{{ favorite.apartmentName }}</b> </li>
-            <!-- </router-link> -->
-          </ul>
-
-          <!-- </router-link> -->
-        </div>
-      </div>
-
-      <div style="margin-left: 80px; width: 370px; float:left; display:inline-block">
-        <li style="list-style-type: none; font-size:18px; margin-bottom: 0px;"><b>공지사항</b></li>
-        <hr style="color: #d86057;">
-
-
-        <div style="text-align:left; margin-left: 10px;" v-for="article in articles" :key="article.articleno"
-          :article="article">
-          <router-link style="text-decoration: none; color:black;" :to="`/board/view/${article.articleno}`">
-
-            {{ article.subject }}
-          </router-link>
-        </div>
-      </div>
-      <div style="margin-left: 80px; float:left; width: 370px; display:inline-block">
-        <li style="list-style-type: none; font-size:18px; margin-bottom: 0px;"><b>오늘의뉴스</b></li>
-        <hr style="color: #d86057;">
-        <div style="text-align:left; margin-left: 10px;" v-for="newss in news" :key="newss.link" :newss="newss">
-          <li style="list-style-type: none;" v-html="newss.title" @click="readNews(newss)"></li>
-          <!-- <router-link style="text-decoration: none; color:black;" :to="/local"> {{ newss.title }}</router-link> -->
-        </div>
-      </div>
-
-    </div>
   </div>
-</div></template>
+</template>
 
 <style scoped></style>
 
 <script>
-
 import axios from "axios";
 import BoardListItem from "@/components/board/BoardListItem";
 import http from "@/api/http";
 import { mapState } from "vuex";
 
 export default {
-
   name: "HomeView",
   props: {
     msg: String,
@@ -123,7 +136,7 @@ export default {
   created() {
     this.getSiGunGu();
 
-    http.get(`/board`, {}).then(response => {
+    http.get(`/board`, {}).then((response) => {
       this.articles = response.data;
     });
     this.listFavorites();
@@ -138,7 +151,7 @@ export default {
 
   data() {
     return {
-      state: '',
+      state: "",
       states: [],
       filteredStates: [],
       id: this.loginId,
@@ -158,33 +171,26 @@ export default {
   },
 
   methods: {
-  
     getSiGunGu() {
       axios({
-        method: 'get',
-        url: 'http://localhost:80/address/sigungu',
-        responseType: 'json',
+        method: "get",
+        url: "http://localhost:80/address/sigungu",
+        responseType: "json",
       }).then((response) => {
         var data = response.data;
-        console.log(data);
         for (var i = 0; i < data.length; i++) {
-          console.log(data[i]);
           var text = data[i].sidoName + " " + data[i].gugunName + " " + data[i].dongName;
-          // console.log(text);
           this.states.push(text);
         }
       });
-
     },
     filterStates(e) {
       var count = 0;
-      console.log(e.target.value);
-      
-      this.filteredStates = this.states.filter(state => {
-           if (state != "" && state != null && state != " ")
 
-           return state.toLowerCase().includes(e.target.value.toLowerCase()) && count++ < 5;
-       });
+      this.filteredStates = this.states.filter((state) => {
+        if (state != "" && state != null && state != " ")
+          return state.toLowerCase().includes(e.target.value.toLowerCase()) && count++ < 5;
+      });
     },
 
     setState(state) {
@@ -221,8 +227,7 @@ export default {
           var data = response.data;
           var options = '<option value="">시도 선택</option>';
           for (var i = 0; i < data.length; i++) {
-            options +=
-              '<option value="' + data[i] + '">' + data[i] + "</option>";
+            options += '<option value="' + data[i] + '">' + data[i] + "</option>";
           }
           sido.innerHTML = options; // city select 요소의 option 값을 업데이트
         })
@@ -230,7 +235,7 @@ export default {
           alert("An error occurred while processing your request: " + error);
         });
     },
- 
+
     changeGugun() {
       axios({
         method: "get",
@@ -278,8 +283,8 @@ export default {
         name: "news",
         params: {
           newss: newss,
-        }
-      })
+        },
+      });
     },
 
     aptDetail(apt) {
@@ -287,8 +292,8 @@ export default {
         name: "apt",
         params: {
           apt: apt,
-        }
-      })
+        },
+      });
     },
 
     showNews() {
@@ -296,7 +301,6 @@ export default {
         method: "get",
         url: "http://localhost:80/news",
         responseType: "json",
-
       }).then((response) => {
         console.log("response", response.data.items);
         this.news = response.data.items;
@@ -315,17 +319,16 @@ export default {
 
     listFavorites() {
       axios({
-        method: 'get',
-        url: 'http://localhost:80/favorite/list',
+        method: "get",
+        url: "http://localhost:80/favorite/list",
         params: {
           userId: this.loginId,
         },
-      }).then((response => {
+      }).then((response) => {
         console.log(this.loginId);
         this.favorites = response.data;
-
-      }))
-    }
+      });
+    },
   },
 };
 </script>
@@ -341,7 +344,7 @@ export default {
   width: 300px;
 }
 
-.vueautocomplete input[type=text] {
+.vueautocomplete input[type="text"] {
   width: 100%;
   padding: 5px;
 }
@@ -350,4 +353,5 @@ export default {
 .form-select:valid:focus {
   box-shadow: none;
   border: 3px solid #d86057;
-}</style>
+}
+</style>

@@ -1,58 +1,61 @@
 <template>
-  <div style="position: relative; width: 100%;  overflow: hidden;">
-    <div style=" 
-                    width: 400px;
-                    height: 100%;
-                    background-color: white;
-                    position: absolute;
-                    text-align: center;
-                    z-index: 2;
-                    border: 0.5px solid #d86057;
-
-                  ">
+  <div style="position: relative; width: 100%; overflow: hidden">
+    <div style="
+                width: 400px;
+                height: 100%;
+                background-color: white;
+                position: absolute;
+                text-align: center;
+                z-index: 2;
+                border: 0.5px solid #d86057;
+              ">
       <div id="showdetail"></div>
-      <div id="roadview" style="width: 400px; height: 300px;"></div>
-      <div v-if="favoriteFlag" style="text-align:right">
+      <div id="roadview" style="width: 400px; height: 300px"></div>
+      <div v-if="favoriteFlag" style="text-align: right">
         <img v-if="favoriteOnOff" @click="deleteFavorite()" src="../assets/favoriteon.png"
-          style="margin: 8px; width: 30px; height: 30px;">
+          style="margin: 8px; width: 30px; height: 30px" />
         <img v-else @click="addFavorite()" src="../assets/favoriteoff.png"
-          style="margin: 8px; width: 30px; height: 30px;">
+          style="margin: 8px; width: 30px; height: 30px" />
       </div>
-      <div v-if="favoriteFlag" style="text-align:center; margin: 10px;">
-        <div style="float:left;">
-          <img src="../assets/hospital.png" style="width: 40px; height: 40px;">
+      <div v-if="favoriteFlag" style="text-align: center; margin: 10px">
+        <div style="float: left">
+          <img src="../assets/hospital.png" style="width: 40px; height: 40px" />
           <p><b>병원</b></p>
         </div>
-        <div style="float:left; margin-top: 2.5%; margin-left: 5px;">
+        <div style="float: left; margin-top: 2.5%; margin-left: 5px">
           <p><b>0</b>개</p>
         </div>
-        <div style="float:left;">
-          <img src="../assets/store.png" style="width: 40px; height: 40px;">
+        <div style="float: left">
+          <img src="../assets/store.png" style="width: 40px; height: 40px" />
           <p><b>마트</b></p>
         </div>
-        <div style="float:left; margin-top: 2.5%; margin-left: 5px;">
+        <div style="float: left; margin-top: 2.5%; margin-left: 5px">
           <p><b>0</b>개</p>
         </div>
-        <div style="float:left;">
-          <img src="../assets/school.png" style="width: 40px; height: 40px;">
+        <div style="float: left">
+          <img src="../assets/school.png" style="width: 40px; height: 40px" />
           <p><b>학교</b></p>
         </div>
-        <div style="float:left; margin-top: 2.5%; margin-left: 5px;">
+        <div style="float: left; margin-top: 2.5%; margin-left: 5px">
           <p><b>0</b>개</p>
         </div>
-        <div style="float:left;">
-          <img src="../assets/train-station.png" style="width: 40px; height: 40px;">
+        <div style="float: left">
+          <img src="../assets/train-station.png" style="width: 40px; height: 40px" />
           <p><b>역</b></p>
         </div>
-        <div style="float:left; margin-top: 2.5%; margin-left: 5px;">
+        <div style="float: left; margin-top: 2.5%; margin-left: 5px">
           <p><b>0</b>개</p>
         </div>
       </div>
       <h3 v-if="favoriteFlag">정보</h3>
       <h3 v-if="favoriteFlag">거래내역</h3>
-      <div id="content" style=" height: 100%; overflow: auto"></div>
+      <div id="content" style="height: 100%; overflow: auto"></div>
     </div>
-    <div id="map" style="width: 100%; height: 100%; border: 0.5px solid #d86057;"></div>
+
+    <div v-show="housesFlag" id="map" style="width: 100%; height: 100%; border: 0.5px solid #f3cfcc"></div>
+    <div v-if="!housesFlag" style="width: 100%; height: 100%; border: 0.5px solid #f3cfcc; text-align: center">
+      <img src="../assets/search.png" style="width: 350px; height: 350px; margin-left: 300px" />
+    </div>
   </div>
 </template>
 
@@ -80,6 +83,7 @@ export default {
   name: "KakaoMap",
   data() {
     return {
+      housesFlag: true,
       url: "",
       aptCode: "",
       map: null,
@@ -108,7 +112,7 @@ export default {
     houses() {
       console.log("test");
       this.loadMaker(this.houses);
-    }
+    },
   },
   methods: {
     loadScript() {
@@ -120,6 +124,11 @@ export default {
       document.head.appendChild(script);
     },
     loadMap() {
+      if (this.houses.length != 0) {
+        this.housesFlag = true;
+      } else {
+        this.housesFlag = false;
+      }
       this.favoriteFlag = false;
       const container = document.getElementById("map");
       const options = {
@@ -158,7 +167,7 @@ export default {
       }).then((response) => {
         this.favoriteOnOff = false;
         console.log("delete");
-      })
+      });
     },
 
     checkFavorite(userid, aptCode) {
@@ -174,10 +183,15 @@ export default {
         if (response.data == 1) {
           this.favoriteOnOff = true;
         }
-      })
+      });
     },
 
     loadMaker(houses) {
+      if (houses.length != 0) {
+        this.housesFlag = true;
+      } else {
+        this.housesFlag = false;
+      }
       var imageSrc = "https://i.postimg.cc/ZRcqsDZ9/location.png";
       this.favoriteOnOff = false;
       var imageSize = new kakao.maps.Size(36, 42); // 마커이미지의 크기입니다
@@ -221,11 +235,11 @@ export default {
               this.showContent(text2[0]);
               this.aptCode = text2[1];
 
-              this.showFacilities('HP8', 'https://i.postimg.cc/T13Ng1FP/hospital.png');
-              this.showFacilities('MT1', 'https://i.postimg.cc/zv4wvf16/store.png');
-              this.showFacilities('SC4', 'https://i.postimg.cc/s25LRt53/school.png');
-              this.showFacilities('SW8', 'https://i.postimg.cc/nz00FZrf/train-station.png');
-              this.showFacilities('CS2', 'https://i.postimg.cc/YCWn1JnQ/convenience-store.png');
+              this.showFacilities("HP8", "https://i.postimg.cc/T13Ng1FP/hospital.png");
+              this.showFacilities("MT1", "https://i.postimg.cc/zv4wvf16/store.png");
+              this.showFacilities("SC4", "https://i.postimg.cc/s25LRt53/school.png");
+              this.showFacilities("SW8", "https://i.postimg.cc/nz00FZrf/train-station.png");
+              this.showFacilities("CS2", "https://i.postimg.cc/YCWn1JnQ/convenience-store.png");
             }
             // roadview.setPanoId(panoId, marker.getPosition()); //panoId와 중심좌표를 통해 로드뷰 실행
           });
@@ -238,8 +252,6 @@ export default {
       var ps = new kakao.maps.services.Places(this.map);
       this.url = url;
       ps.categorySearch(category, this.placesSearchCB, { useMapBounds: true });
-
-
     },
 
     displayMarker(place) {
@@ -251,7 +263,7 @@ export default {
       var marker = new kakao.maps.Marker({
         map: this.map,
         position: new kakao.maps.LatLng(place.y, place.x),
-        image: markerImage
+        image: markerImage,
       });
     },
 
@@ -273,7 +285,6 @@ export default {
         responseType: "json",
       })
         .then((response) => {
-
           if (this.loginId != null) {
             this.checkFavorite(this.loginId, this.aptCode);
           }
@@ -324,6 +335,6 @@ export default {
 }
 
 hr {
-  border: 0.5px solid #d86057;
+  border: 0.5px solid #f3cfcc;
 }
 </style>
