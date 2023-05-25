@@ -1,36 +1,41 @@
 <template>
   <section>
-    <div class="input-group col-6 d-flex justify-content-center">
-      <div class="w-50 justify-content-center text-center">
-        <input type="text" id="word" class="form-control" onfocus="this.value = this.value;" autocomplete="off"
-          v-model="state" @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
+    <div class="input-group justify-content-center" style="width:400px; ">
+      <div class="justify-content-center text-center" style="width:400px;">
+
+        <input type=" text" id="word" class="form-control" onfocus="this.value = this.value;" autocomplete="off"
+          style="z-index:4;" v-model="state" @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
           aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2" />
       </div>
     </div>
-    <div v-if="filteredStates && modal" class="w-100" style="absolute;">
-      <div class="col-6 d-flex w-100 justify-content-center" style="width: 90%">
-        <ul class="list-group justify-content-center w-50" style="
-                                                      list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
-                                                      border-radius: 0px;
-                                                      position: fixed;
-                                                      z-index: 3;
-                                                    ">
-          <li class="list-group-item" style="
-                                                        border-width: 0.5px;
-                                                        border-color: #f3cfcc;
-                                                        font-weight: 700;
-                                                        color: #828282;
-                                                        width: 100%;
-                                                        text-align: left;
-                                                        font-size: 14px;
-                                                      " v-for="filteredState in filteredStates"
-            @click="setState(filteredState)">
+    <div v-if="filteredStates && modal" class="w-100" style="absolute;  width:400px; float:left">
+      <div class="col-6 d-flex w-100 justify-content-center">
+        <ul id="complete" class="list-group justify-content-center w-100"
+          style="
+                                                                                                                                                                                                                                                    list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
+                                                                                                                                                                                                                                                    border-radius: 0px;
+                                                                                                                                                                                                                                                    position: fixed;
+                                                                                                                                                                                                                                                    z-index: 3;
+                                                                                                                                                                                                                                                    width: 400px;
+                                                                                                                                                                                                                                                  ">
+          <li class="list-group-item"
+            style="                                 
+                                                                                                                                                                                                                                                      border-width: 0.5px;
+                                                                                                                                                                                                                                                      border-color: #f3cfcc;
+                                                                                                                                                                                                                                                      font-weight: 700;
+                                                                                                                                                                                                                                                      color: #828282;
+                                                                                                                                                                                                                                                      width: 400px;
+                                                                                                                                                                                                                                                      text-align: left;
+                                                                                                                                                                                                                                                      font-size: 14px;
+                                                                                                                                                                                                                                                    "
+            v-for="filteredState in filteredStates" @click="setState(filteredState)">
             {{ filteredState }}
           </li>
         </ul>
       </div>
     </div>
-    <div class="row col-md-12 justify-content-center mt-3 mb-2" style="margin: 0px; margin-bottom: 10px;">
+
+    <!-- <div class="row col-md-12 justify-content-center mt-3 mb-2" style="margin: 0px; margin-bottom: 10px;">
       <div class="form-group col-md-2 justify-content-center">
         <select v-model="sidoValue" @change="changeGugun()" class="form-select" id="sido" name="sido">
           <option value="">시도 선택</option>
@@ -46,7 +51,7 @@
           <option value="">동 선택</option>
         </select>
       </div>
-      <!-- <div class="form-group col-md-2">
+       <div class="form-group col-md-2">
         <button
           @click="getAptList2()"
           type="submit"
@@ -57,7 +62,7 @@
           검색
         </button>
       </div> -->
-    </div>
+    <!-- </div>  -->
 
     <section>
       <!--
@@ -103,6 +108,8 @@
 <script>
 import axios from "axios";
 import KakaoMap from "../components/KakaoMap.vue";
+
+
 
 export default {
   name: "SearchView",
@@ -152,6 +159,10 @@ export default {
   },
 
   methods: {
+
+    deleteList() {
+      this.filteredStates = [];
+    },
     getSiGunGu() {
       axios({
         method: "get",
@@ -172,7 +183,7 @@ export default {
       var count = 0;
       this.filteredStates = this.states.filter((state) => {
         if (state != "" && state != null && state != " ")
-          return state.toLowerCase().includes(e.target.value.toLowerCase()) && count++ < 5;
+          return state.toLowerCase().includes(e.target.value.toLowerCase()) && count++ < 8;
       });
     },
 
@@ -306,12 +317,14 @@ export default {
 <style scoped>
 .form-control,
 .form-select {
-  border-width: 3px;
+  border-width: 0.5px;
+  border-radius: 0px;
 }
 
 .form-control:focus,
 .form-select:valid:focus {
   box-shadow: none;
-  border: 3px solid #d86057;
+  border: 0.1px solid #d86057;
+  border-radius: 0px;
 }
 </style>

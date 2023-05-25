@@ -1,13 +1,10 @@
 <template>
-  <div class="py-5 text-center container">
-    <h1 class="underline">목록</h1>
-    <div style="text-align: right">
-      <button @click="movePage">글작성</button>
-    </div>
+  <div class="py-5 text-center container justify-content-center">
+    <h1 class="underline" style="font-size: 28px; margin-bottom:15px;">목록</h1>
+
     <!-- 추가 -->
-    <b-form-group label="Filter" label-for="filter-input" label-cols-sm="3" label-align-sm="right" label-size="sm"
-      class="mb-0">
-      <b-input-group size="sm">
+    <b-form-group class="mb-0 w-75 justify-content-center" style="float:left; margin-left: 10%;">
+      <b-input-group size="mb">
         <b-form-input id="filter-input" v-model="filter" type="search" placeholder="Type to Search"></b-form-input>
 
         <b-input-group-append>
@@ -15,13 +12,17 @@
         </b-input-group-append>
       </b-input-group>
     </b-form-group>
+    <div style="text-align: right; float:left;">
+      <button class="btn btn-primary" @click="movePage" style="margin-left: 15px;">글작성</button>
+    </div>
 
     <!-- 추가 끝 -->
 
     <!-- board list area -->
     <b-container fluid class="my-table-container">
-      <b-table class="my-table" hover :items="articles" :per-page="perPage" :current-page="currentPage" :fields="fields"
-        sort-icon-left label-sort-asc="" label-sort-desc="" label-sort-clear="" :filter="filter" @filtered="onFiltered">
+      <b-table style="margin-top: 120px;" class="my-table" hover :items="articles" :per-page="perPage"
+        :current-page="currentPage" :fields="fields" sort-icon-left label-sort-asc="" label-sort-desc=""
+        label-sort-clear="" :filter="filter" @filtered="onFiltered">
         <template #cell(subject)="data">
           <!-- `data.value` is the value after formatted by the Formatter -->
           <a :href="`/board/post/${data.item.articleno}`">{{ data.value }}</a>

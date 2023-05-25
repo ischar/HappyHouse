@@ -2,57 +2,25 @@
   <div style="position: relative; width: 100%; overflow: hidden">
 
     <div style="
-                width: 400px;
-                height: 100%;
-                background-color: white;
-                position: absolute;
-                text-align: center;
-                z-index: 2;
-                border: 0.5px solid #d86057;
-              ">
+                                              width: 400px;
+                                              height: 100%;
+                                              background-color: white;
+                                              position: absolute;
+                                              text-align: center;
+                                              z-index: 2;
+                                              border: 0.5px solid #f3cfcc;
+                                            ">
       <div id="showdetail"></div>
       <div id="roadview" style="width: 400px; height: 300px"></div>
       <div v-if="favoriteFlag" style="text-align: right">
         <img v-if="favoriteOnOff" @click="deleteFavorite()" src="../assets/favoriteon.png"
           style="margin: 8px; width: 30px; height: 30px" />
         <img v-else @click="addFavorite()" src="../assets/favoriteoff.png"
-
           style="margin: 8px; width: 30px; height: 30px" />
       </div>
       <div v-if="favoriteFlag" style="text-align: center; margin: 10px">
-        <div style="float: left">
-          <img src="../assets/hospital.png" style="width: 40px; height: 40px" />
-          <p><b>병원</b></p>
-        </div>
-        <div style="float: left; margin-top: 2.5%; margin-left: 5px">
-          <p><b>0</b>개</p>
-        </div>
-        <div style="float: left">
-          <img src="../assets/store.png" style="width: 40px; height: 40px" />
-          <p><b>마트</b></p>
-        </div>
-        <div style="float: left; margin-top: 2.5%; margin-left: 5px">
-          <p><b>0</b>개</p>
-        </div>
-        <div style="float: left">
-          <img src="../assets/school.png" style="width: 40px; height: 40px" />
-          <p><b>학교</b></p>
-        </div>
-        <div style="float: left; margin-top: 2.5%; margin-left: 5px">
-          <p><b>0</b>개</p>
-        </div>
-        <div style="float: left">
-
-          <img src="../assets/train-station.png" style="width: 40px; height: 40px" />
-
-          <p><b>역</b></p>
-        </div>
-        <div style="float: left; margin-top: 2.5%; margin-left: 5px">
-          <p><b>0</b>개</p>
-        </div>
       </div>
-      <h3 v-if="favoriteFlag">정보</h3>
-      <h3 v-if="favoriteFlag">거래내역</h3>
+      <h3 style="font-size: 20px;" v-if="favoriteFlag">거래내역</h3>
       <div id="content" style="height: 100%; overflow: auto"></div>
 
     </div>
@@ -66,9 +34,9 @@
 </template>
 
 <script>
-import {left} from "@popperjs/core";
+import { left } from "@popperjs/core";
 import axios from "axios";
-import {mapState, mapActions} from "vuex";
+import { mapState, mapActions } from "vuex";
 import store from "@/store";
 import router from "@/router/index";
 // 마커이미지의 크기입니다
@@ -91,8 +59,6 @@ export default {
   name: "KakaoMap",
   data() {
     return {
-
-
       housesFlag: true,
 
       url: "",
@@ -105,8 +71,10 @@ export default {
     };
   },
 
-  setup() {},
-  created() {},
+  setup() { },
+  created() {
+    console.log(this.sidoValue);
+  },
   computed: {
     ...mapState(["loginId"]),
   },
@@ -117,7 +85,7 @@ export default {
       this.loadScript();
     }
   },
-  unmounted() {},
+  unmounted() { },
 
   watch: {
     houses() {
@@ -158,7 +126,7 @@ export default {
       if (!checkUserInfo) {
         alert("로그인이 필요한 서비스입니다.");
         // next({ name: "login" });
-        router.push({name: "userlogin"}).catch(() => {});
+        router.push({ name: "userlogin" }).catch(() => { });
       } else {
         axios({
           method: "post",
@@ -213,8 +181,8 @@ export default {
       }
       var imageSrc = "https://i.postimg.cc/ZRcqsDZ9/location.png";
       this.favoriteOnOff = false;
-      var imageSize = new kakao.maps.Size(36, 42); // 마커이미지의 크기입니다
-      var imageOption = {offset: new kakao.maps.Point(14, 39)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      var imageSize = new kakao.maps.Size(28, 36); // 마커이미지의 크기입니다
+      var imageOption = { offset: new kakao.maps.Point(14, 39) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
       var markerImage = new kakao.maps.MarkerImage(
         imageSrc,
         imageSize,
@@ -327,11 +295,11 @@ export default {
           this.favoriteFlag = true;
           for (var i = 0; i < data.length; i++) {
             options +=
-              "<div><hr style='border: 0.5px solid #d86057;'><div style='float:left;''><img src='../house.png' style='width: 50px; height: 50px; margin-left: 30px; margin-top: 10px; margin-right: 30px;'></div><div style='text-align: left; margin-left:50px;'><li style='font-size: 18px;'> 거래금액 : <b>" +
+              "<div><hr style='border: 0.5px solid #d86057;'><div style='float:left;''><img src='../house.png' style='width: 50px; height: 50px; margin-left: 30px; margin-top: 10px; margin-right: 30px;'></div><div style='list-style-type:none; text-align: left; margin-left:50px;'><li style='font-size: 18px;'> 거래금액 : <b>" +
               data[i].dealAmount +
-              "만원</b> </li><li>거래년도 : <b style='color:#808080;'> " +
+              "만원</b> </li><li style='list-style-type:none;'>거래년도 : <b style='color:#808080;'> " +
               data[i].dealYear +
-              "년</b></li>  <li> 면적 :<b style='color: #808080;'> " +
+              "년</b></li>  <li style='list-style-type:none;'> 면적 :<b style='color: #808080;'> " +
               data[i].area +
               "</b></li></div><hr style='border: 0.5px solid #d86057;'></div>";
             // options +=

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header-nav-bar />
-    <hr style="color: #d86057;">
+    <hr style="color: #d86057; margin-bottom: 0px;">
     <router-view />
   </div>
 </template>

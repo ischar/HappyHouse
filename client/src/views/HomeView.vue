@@ -8,44 +8,47 @@
       </div>
       <div class="py-lg-5"
         style="fixed; position: relative; z-index:2 ;
-                                                                                                                              margin: 20px; 
-                                                                                                                              background: rgba(255, 255, 255, 0.2);
-                                                                                                                              border-radius: 16px;
-                                                                                                                              box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-                                                                                                                              backdrop-filter: blur(5px);
-                                                                                                                              -webkit-backdrop-filter: blur(5px);
-                                                                                                                              border: 3px solid rgba(216, 96, 87, 0.3);
-                                                                                                                              padding: 25px;
-                                                                                                                            ">
+                                                                                                                                      margin: 20px; 
+                                                                                                                                      background: rgba(255, 255, 255, 0.2);
+                                                                                                                                      border-radius: 16px;
+                                                                                                                                      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                                                                                                                      backdrop-filter: blur(5px);
+                                                                                                                                      -webkit-backdrop-filter: blur(5px);
+                                                                                                                                      border: 3px solid rgba(216, 96, 87, 0.3);
+                                                                                                                                      padding: 25px;
+                                                                                                                                    ">
 
         <div>
           <div class="input-group col-6 d-flex justify-content-center">
             <div class="w-50 justify-content-center text-center">
-              <input type="text" id="word" class="form-control" autocomplete="off" v-model="state" @input="filterStates"
-                @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요." aria-label="원하는 시,구,동을 입력하세요."
-                aria-describedby="button-addon2" />
+              <input type="text" id="word" class="form-control" autocomplete="off" v-model="state" @mouseout="deleteList"
+                @input="filterStates" @focus="modal = true" placeholder="원하는 시, 군, 구를 입력하세요."
+                aria-label="원하는 시,구,동을 입력하세요." aria-describedby="button-addon2" />
               <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
             </div>
           </div>
           <div v-if="filteredStates && modal" class="w-100" style="absolute;">
             <div class="col-6 d-flex w-100 justify-content-center" style="width: 90%">
-              <ul class="list-group justify-content-center w-50" style="
-                                                                                                                        list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
-                                                                                                                        border-radius: 0px;
-                                                                                                                        margin-left: 0.75%;
-                                                                                                                        position: fixed;
-                                                                                                                        z-index: 2;
-                                                                                                                      ">
-                <li class="list-group-item" style="
-                                                                                                                          border-width: 0.5px;
-                                                                                                                          border-color: #F3CFCC;
-                                                                                                                          font-weight: 700;
-                                                                                                                          color: #828282;
-                                                                                                                          width: 95%; 
-                                                                                                                          text-align: left;
-                                                                                                                          margin-left: 10px;
-                                                                                                                          font-size:14px;
-                                                                                                                        "
+              <ul class="list-group justify-content-center w-50"
+                style="
+                                                                                                                                list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
+                                                                                                                                border-radius: 0px;
+                                                                                                                                width: 400px;
+                                                                                                                                margin-left: 0.75%;
+                                                                                                                                position: fixed;
+                                                                                                                                z-index: 2;
+                                                                                                                              ">
+                <li class="list-group-item"
+                  style="
+                                                                                                                                  border-width: 0.5px;
+                                                                                                                                  border-color: #F3CFCC;
+                                                                                                                                  font-weight: 700;
+                                                                                                                                  color: #828282;
+                                                                                                                                  width: 95%; 
+                                                                                                                                  text-align: left;
+                                                                                                                                  margin-left: 10px;
+                                                                                                                                  font-size:14px;
+                                                                                                                                "
                   v-for="filteredState in filteredStates" @click="setState(filteredState)">
                   {{ filteredState }}
                 </li>
@@ -177,6 +180,9 @@ export default {
   },
 
   methods: {
+    deleteList() {
+      this.filteredStates = [];
+    },
     getSiGunGu() {
       axios({
         method: "get",
