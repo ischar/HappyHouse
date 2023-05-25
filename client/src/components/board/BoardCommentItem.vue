@@ -29,8 +29,6 @@
           <li><i class="fa fa-thumbs-up"></i>{{ comment.hit }}</li>
         </ul>
         <ul class="list-unstyled list-inline media-detail pull-right">
-          <li class=""><a href="">Like</a></li>
-          <li class=""><a href="">Reply</a></li>
           <li class="" v-if="loginId == comment.userid" @click="updateComment">
             수정
           </li>

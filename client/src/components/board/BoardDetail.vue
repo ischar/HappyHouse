@@ -1,10 +1,7 @@
 <template>
-  <div class="justify-content-center">
+  <div class="board">
     <div class="regist">
       <div class="regist_form">
-        <!-- <label>글번호</label> -->
-        <!-- <div class="view">{{ article.articleno }}</div> -->
-        <!-- <br /> -->
         <label>글제목</label>
         <div class="view">{{ article.subject }}</div>
         <br />
@@ -20,20 +17,24 @@
         <label>내용</label>
         <div class="view">{{ article.content }}</div>
 
+
         <div style="padding-top: 15px">
           <div v-if="loginId == article.userid">
             <router-link :to="{ name: 'boardmodify', params: { articleno: article.articleno } }" class="btn">
               수정
             </router-link>
           </div>
+          
           <div v-if="loginId == article.userid">
             <router-link :to="{ name: 'boarddelete', params: { articleno: article.articleno } }" class="btn">
               삭제
             </router-link>
           </div>
+          
           <router-link :to="{ name: 'boardlist' }" class="btn">목록</router-link>
         </div>
       </div>
+   
       <div class="d-flex flex-row add-comment-section mt-4 mb-4">
         <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38" />
         <input type="text" class="form-control mr-3" placeholder="Add comment" v-model="newComment" />
@@ -44,6 +45,7 @@
       <board-comment-item v-for="comment in comments" :key="comment.commentno" :comment="comment"
         :articleno="article.articleno" @refresh="refreshComments"></board-comment-item>
     </div>
+    
   </div>
 </template>
 
@@ -105,4 +107,55 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.regist_form {
+  text-align: center;
+}
+
+.regist_form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.regist_form .view {
+  margin-bottom: 10px;
+}
+
+.regist_form .btn {
+  margin-right: 10px;
+}
+
+.add-comment-section {
+  justify-content: center;
+}
+
+.add-comment-section img {
+  display: block;
+  margin-right: 10px;
+  width: 38px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.add-comment-section input[type="text"] {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.board-comment-item {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.btn{
+  display: inline-block;
+  margin-right: 10px;
+}
+</style>

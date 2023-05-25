@@ -1,0 +1,66 @@
+<html>
+  <div class="board">
+    <div class="regist">
+      <div class="regist_form">
+        <label>글제목</label>
+        <div class="view">{{ article.subject }}</div>
+        <br />
+        <label>작성자</label>
+        <div class="view">{{ article.userid }}</div>
+        <br />
+        <label>조회수</label>
+        <div class="view">{{ article.hit }}</div>
+        <br />
+        <label>작성시간</label>
+        <div class="view">{{ article.regtime }}</div>
+        <br />
+        <label>내용</label>
+        <div class="view">{{ article.content }}</div>
+
+        <div style="padding-top: 15px">
+          <div v-if="loginId == article.userid">
+            <router-link
+              :to="{ name: 'boardmodify', params: { articleno: article.articleno } }"
+              class="btn"
+            >
+              수정
+            </router-link>
+          </div>
+
+          <div v-if="loginId == article.userid">
+            <router-link
+              :to="{ name: 'boarddelete', params: { articleno: article.articleno } }"
+              class="btn"
+            >
+              삭제
+            </router-link>
+          </div>
+
+          <router-link :to="{ name: 'boardlist' }" class="btn">목록</router-link>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+        <img
+          class="img-fluid img-responsive rounded-circle mr-2"
+          src="https://i.imgur.com/qdiP4DB.jpg"
+          width="38"
+        />
+        <input
+          type="text"
+          class="form-control mr-3"
+          placeholder="Add comment"
+          v-model="newComment"
+        />
+        <button class="btn btn-primary" type="button" @click="commentAdd">Comment</button>
+      </div>
+      <board-comment-item
+        v-for="comment in comments"
+        :key="comment.commentno"
+        :comment="comment"
+        :articleno="article.articleno"
+        @refresh="refreshComments"
+      ></board-comment-item>
+    </div>
+  </div>
+</html>
