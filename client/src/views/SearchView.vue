@@ -12,22 +12,22 @@
       <div class="col-6 d-flex w-100 justify-content-center">
         <ul id="complete" class="list-group justify-content-center w-100"
           style="
-                                                                                                                                                                                                                                                    list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
-                                                                                                                                                                                                                                                    border-radius: 0px;
-                                                                                                                                                                                                                                                    position: fixed;
-                                                                                                                                                                                                                                                    z-index: 3;
-                                                                                                                                                                                                                                                    width: 400px;
-                                                                                                                                                                                                                                                  ">
+                                                                                                                                                                                                                                                          list-style-image: url('https://i.postimg.cc/Zqq5xL0k/pin.png');
+                                                                                                                                                                                                                                                          border-radius: 0px;
+                                                                                                                                                                                                                                                          position: fixed;
+                                                                                                                                                                                                                                                          z-index: 3;
+                                                                                                                                                                                                                                                          width: 400px;
+                                                                                                                                                                                                                                                        ">
           <li class="list-group-item"
             style="                                 
-                                                                                                                                                                                                                                                      border-width: 0.5px;
-                                                                                                                                                                                                                                                      border-color: #f3cfcc;
-                                                                                                                                                                                                                                                      font-weight: 700;
-                                                                                                                                                                                                                                                      color: #828282;
-                                                                                                                                                                                                                                                      width: 400px;
-                                                                                                                                                                                                                                                      text-align: left;
-                                                                                                                                                                                                                                                      font-size: 14px;
-                                                                                                                                                                                                                                                    "
+                                                                                                                                                                                                                                                            border-width: 0.5px;
+                                                                                                                                                                                                                                                            border-color: #f3cfcc;
+                                                                                                                                                                                                                                                            font-weight: 700;
+                                                                                                                                                                                                                                                            color: #828282;
+                                                                                                                                                                                                                                                            width: 400px;
+                                                                                                                                                                                                                                                            text-align: left;
+                                                                                                                                                                                                                                                            font-size: 14px;
+                                                                                                                                                                                                                                                          "
             v-for="filteredState in filteredStates" @click="setState(filteredState)">
             {{ filteredState }}
           </li>
@@ -215,7 +215,7 @@ export default {
           for (var i = 0; i < data.length; i++) {
             options += '<option value="' + data[i] + '">' + data[i] + "</option>";
           }
-          sido.innerHTML = options; // city select 요소의 option 값을 업데이트
+          // sido.innerHTML = options; // city select 요소의 option 값을 업데이트
         })
         .catch((error) => {
           alert("An error occurred while processing your request: " + error);

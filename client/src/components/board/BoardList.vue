@@ -25,7 +25,7 @@
         label-sort-clear="" :filter="filter" @filtered="onFiltered">
         <template #cell(subject)="data">
           <!-- `data.value` is the value after formatted by the Formatter -->
-          <a :href="`/board/post/${data.item.articleno}`">{{ data.value }}</a>
+          <a style="text-decoration: none; color:black;" :href="`/board/post/${data.item.articleno}`">{{ data.value }}</a>
         </template></b-table>
     </b-container>
     <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="my-table"

@@ -18,7 +18,7 @@
         label-sort-clear="" @filtered="onFiltered">
         <template #cell(title)="data">
           <!-- `data.value` is the value after formatted by the Formatter -->
-          <a :href="`${data.item.originallink}`">
+          <a style="text-decoration:none; color:black;" :href="`${data.item.originallink}`">
             <p v-html="data.value"></p>
           </a>
         </template>

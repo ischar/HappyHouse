@@ -1,15 +1,16 @@
 <template>
   <div style="position: relative; width: 100%; overflow: hidden">
 
-    <div style="
-                                              width: 400px;
-                                              height: 100%;
-                                              background-color: white;
-                                              position: absolute;
-                                              text-align: center;
-                                              z-index: 2;
-                                              border: 0.5px solid #f3cfcc;
-                                            ">
+    <div
+      style="
+                                                                                                                                              width: 400px;
+                                                                                                                                              height: 100%;
+                                                                                                                                              background-color: white;
+                                                                                                                                              position: absolute;
+                                                                                                                                              text-align: center;
+                                                                                                                                              z-index: 2;
+                                                                                                                                              border: 0.5px solid #f3cfcc;
+                                                                                                                                            ">
       <div id="showdetail"></div>
       <div id="roadview" style="width: 400px; height: 300px"></div>
       <div v-if="favoriteFlag" style="text-align: right">
@@ -73,7 +74,7 @@ export default {
 
   setup() { },
   created() {
-    console.log(this.sidoValue);
+    // console.log(this.sidoValue);
   },
   computed: {
     ...mapState(["loginId"]),
@@ -142,6 +143,7 @@ export default {
         });
       }
     },
+
     deleteFavorite() {
       axios({
         method: "get",
@@ -191,10 +193,12 @@ export default {
       let positions = [];
 
       for (var i = 0; i < houses.length; i++) {
+
         positions.push({
           content: houses[i],
           latlng: new kakao.maps.LatLng(houses[i].lat, houses[i].lng),
         });
+
       }
 
       let bounds = new kakao.maps.LatLngBounds();
@@ -229,12 +233,11 @@ export default {
               this.showContent(text2[0]);
               this.aptCode = text2[1];
 
-
-              this.showFacilities("HP8", "https://i.postimg.cc/T13Ng1FP/hospital.png");
-              this.showFacilities("MT1", "https://i.postimg.cc/zv4wvf16/store.png");
-              this.showFacilities("SC4", "https://i.postimg.cc/s25LRt53/school.png");
-              this.showFacilities("SW8", "https://i.postimg.cc/nz00FZrf/train-station.png");
-              this.showFacilities("CS2", "https://i.postimg.cc/YCWn1JnQ/convenience-store.png");
+              // this.showFacilities("HP8", "https://i.postimg.cc/T13Ng1FP/hospital.png");
+              // this.showFacilities("MT1", "https://i.postimg.cc/zv4wvf16/store.png");
+              // this.showFacilities("SC4", "https://i.postimg.cc/s25LRt53/school.png");
+              // this.showFacilities("SW8", "https://i.postimg.cc/nz00FZrf/train-station.png");
+              // this.showFacilities("CS2", "https://i.postimg.cc/YCWn1JnQ/convenience-store.png");
 
             }
             // roadview.setPanoId(panoId, marker.getPosition()); //panoId와 중심좌표를 통해 로드뷰 실행
@@ -294,13 +297,19 @@ export default {
           var options = "";
           this.favoriteFlag = true;
           for (var i = 0; i < data.length; i++) {
+            var obj = "";
+            if (data[i].dealAmount.length >= 6) {
+              obj += data[i].dealAmount.substr(0, data[i].dealAmount.length - 5) + "억";
+              obj += data[i].dealAmount.substr(data[i].dealAmount.length - 5, 5);
+            } else {
+              obj = data[i].dealAmount;
+            }
             options +=
               "<div><hr style='border: 0.5px solid #d86057;'><div style='float:left;''><img src='../house.png' style='width: 50px; height: 50px; margin-left: 30px; margin-top: 10px; margin-right: 30px;'></div><div style='list-style-type:none; text-align: left; margin-left:50px;'><li style='font-size: 18px;'> 거래금액 : <b>" +
-              data[i].dealAmount +
-              "만원</b> </li><li style='list-style-type:none;'>거래년도 : <b style='color:#808080;'> " +
+              obj + "만원" + "</li><li style='list-style-type:none;'> 거래년도 :<b style='color: #808080;'>" +
               data[i].dealYear +
               "년</b></li>  <li style='list-style-type:none;'> 면적 :<b style='color: #808080;'> " +
-              data[i].area +
+              data[i].area + "㎡" +
               "</b></li></div><hr style='border: 0.5px solid #d86057;'></div>";
             // options +=
             //   "<li>" +

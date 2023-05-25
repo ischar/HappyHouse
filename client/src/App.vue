@@ -11,7 +11,8 @@
   /* background-image: url("assets/background.jpg");
   background-size: cover;
   @import url("https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500&display=swap"); */
-  font-family: "Sunflower", sans-serif;
+  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 16px;
 }
 </style>

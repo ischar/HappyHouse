@@ -10,54 +10,27 @@
             <div class="p-4">
               <!--<input type="hidden" name="action" />-->
               <div class="input-group mb-3">
-                <span
-                  class="input-group-text"
-                  style="background-color: #929292">
-                  <img src="/img/user.png" style="width: 20px; height: 20px" />
+                <span class="input-group-text" style="background-color: #929292">
+                  <img src="../../assets/users.png" style="width: 20px; height: 20px" />
                   <i class="bi bi-person-plus-fill text-white"></i>
                 </span>
-                <input
-                  id="userid"
-                  type="text"
-                  class="form-control"
-                  placeholder="ID"
-                  name="id"
-                  v-model="id" />
+                <input id="userid" type="text" class="form-control" placeholder="ID" name="id" v-model="id" />
               </div>
               <div class="input-group mb-3">
-                <span
-                  class="input-group-text"
-                  style="background-color: #929292">
-                  <img src="/img/user.png" style="width: 20px; height: 20px" />
+                <span class="input-group-text" style="background-color: #929292">
+                  <img src="../../assets/users.png" style="width: 20px; height: 20px" />
                   <i class="bi bi-person-plus-fill text-white"></i>
                 </span>
-                <input
-                  id="username"
-                  type="text"
-                  class="form-control"
-                  placeholder="Name"
-                  name="name"
-                  v-model="name" />
+                <input id="username" type="text" class="form-control" placeholder="Name" name="name" v-model="name" />
               </div>
               <div class="input-group mb-3">
-                <span
-                  class="input-group-text"
-                  style="background-color: #929292">
-                  <img src="/img/phone.png" style="width: 20px; height: 20px" />
+                <span class="input-group-text" style="background-color: #929292">
+                  <img src="../../assets/phone.png" style="width: 20px; height: 20px" />
                   <i class="bi bi-phone-fill text-white"></i>
                 </span>
-                <input
-                  id="userphone"
-                  type="text"
-                  class="form-control"
-                  placeholder="Phone"
-                  name="phone"
-                  v-model="phone" />
+                <input id="userphone" type="text" class="form-control" placeholder="Phone" name="phone" v-model="phone" />
               </div>
-              <button
-                id="submitBtn"
-                class="btn btn-primary text-center mt-2"
-                @click="recoverPassword"
+              <button id="submitBtn" class="btn btn-primary text-center mt-2" @click="recoverPassword"
                 style="background-color: #d86057">
                 비밀번호 찾기
               </button>
@@ -84,7 +57,7 @@ export default {
       result: {},
     };
   },
-  created() {},
+  created() { },
   methods: {
     recoverPassword() {
       if (this.id === "" || this.name === "" || this.phone === "") {
@@ -98,7 +71,7 @@ export default {
       }),
         http.post("/search", this.result).then(response => {
           alert("비밀번호는 " + response.data + "입니다.");
-          this.$router.push({name: "userlogin"});
+          this.$router.push({ name: "userlogin" });
         });
     },
   },

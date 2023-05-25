@@ -10,52 +10,34 @@
             <div class="p-4">
               <!--<input type="hidden" name="action" />-->
               <div class="input-group mb-3">
-                <span
-                  class="input-group-text"
-                  style="background-color: #929292">
-                  <img
-                    src="/img/user.png"
-                    style="width: 20px; height: 20px" /><i
-                    class="bi bi-person-plus-fill text-white"></i
-                ></span>
-                <input
-                  id="userid"
-                  type="text"
-                  class="form-control"
-                  placeholder="ID"
-                  name="id"
-                  v-model="id" />
+                <span class="input-group-text" style="background-color: #929292">
+                  <img src="../../assets/users.png" style="width: 20px; height: 20px" /><i
+                    class="bi bi-person-plus-fill text-white"></i></span>
+                <input id="userid" type="text" class="form-control" placeholder="ID" name="id" v-model="id" />
               </div>
               <div class="input-group mb-3">
-                <span class="input-group-text" style="background-color: #929292"
-                  ><img
-                    src="/img/lock.png"
-                    style="width: 20px; height: 20px" /><i
-                    class="bi bi-key-fill text-white"></i
-                ></span>
-                <input
-                  id="userpwd"
-                  type="password"
-                  class="form-control"
-                  placeholder="password"
-                  name="pwd"
+                <span class="input-group-text" style="background-color: #929292"><img src="../../assets/lock.png"
+                    style="width: 20px; height: 20px" /><i class="bi bi-key-fill text-white"></i></span>
+                <input id="userpwd" type="password" class="form-control" placeholder="password" name="pwd"
                   v-model="pwd" />
               </div>
-              <button
-                id="submitBtn"
-                class="btn btn-primary text-center mt-2"
-                @click="loginSubmit"
+              <button id="submitBtn" class="btn btn-primary text-center mt-2" @click="loginSubmit"
                 style="background-color: #d86057">
                 Login
               </button>
-              <p class="text-center mt-5">
-                Don't have an account?
-                <a href="${root }/user/signup">Sign Up</a>
-              </p>
-              Forgot your password?
-              <router-link :to="{name: 'passwordfind'}"
-                >Find Password</router-link
-              >
+
+              <div class="justify-content-center">
+                <p style="color:#828282 font-size:12px;" class="text-center mt-5">
+                  아이디가 없나요?
+                  <router-link :to="{ name: 'signup' }">회원가입</router-link>
+                </p>
+                <div class="justify-content-center">
+                  <p style="color:#828282 font-size:12px; float:left;" class="text-center">
+                    비밀번호가 기억나지 않나요?
+                  </p>
+                  <router-link style="float:left;" :to="{ name: 'passwordfind' }">비밀번호찾기</router-link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -66,7 +48,7 @@
 
 <script>
 //import axios from "@/api/http";
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "UserLogin",
@@ -78,7 +60,7 @@ export default {
       pwd: "",
     };
   },
-  created() {},
+  created() { },
   methods: {
     ...mapActions(["login"]),
     loginSubmit() {
