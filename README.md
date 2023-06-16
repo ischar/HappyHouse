@@ -18,7 +18,7 @@
 
 ## 팀원 소개 및 역할 
 
-<center>
+<div align="center">
 
 |<img src="https://github.com/ischar.png" width="150">|<img src="https://github.com/hjin2.png" width="150">|
 |:---:|:---:|
@@ -26,7 +26,7 @@
 |팀장|팀원|
 |아파트 거래 정보 조회<br>뉴스 기사 크롤링<br>DB설계|로그인, 회원가입<br>공지사항|
 
-</center>
+</div>
 <br>
 
 ## 기술스택
