@@ -17,7 +17,7 @@
 <br>
 
 ## 팀원 소개 및 역할 
-
+<br>
 <div align="center">
 
 |<img src="https://github.com/ischar.png" width="150">|<img src="https://github.com/hjin2.png" width="150">|
